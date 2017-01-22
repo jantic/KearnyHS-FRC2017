@@ -1,7 +1,8 @@
 package org.usfirst.frc.team1572.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
-
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.Joystick;
 import org.usfirst.frc.team1572.robot.commands.ExampleCommand;
 
 /**
@@ -14,8 +15,10 @@ public class OI {
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
+
+	private final Joystick joyPilot = new Joystick(0);
+	private final Joystick joyCoPilot = new Joystick(1);
+	private final Button button  = new JoystickButton(joyPilot, 1);
 
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
@@ -36,4 +39,8 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
+	public Joystick getJoyPilot() {
+	    return joyPilot;
+	}
+
 }
