@@ -22,7 +22,11 @@ public class JoyDrive extends Subsystem {
   
     	// Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	//leftDrive.getPostion;
+    	//leftDrive.getSpeed()
+    	//leftDrive.setPosition(0);
     }
+    
 	public void arcadeDrive(Joystick stick) {
 		robotDrive.arcadeDrive(stick);
 	}
@@ -30,6 +34,7 @@ public class JoyDrive extends Subsystem {
 	public void stop() {
 		robotDrive.drive(0, 0);
 	}
+	
 	  
 }
 
