@@ -1,8 +1,12 @@
 package org.usfirst.frc.team1572.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Victor;
+
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import java.util.Scanner;
 import com.ctre.CANTalon;
@@ -19,6 +23,7 @@ public class RobotMap {
 	public static int leftDriveSlave2Port = 4;
 	public static int rightDriveSlave1Port = 5;
 	public static int rightDriveSlave2Port = 6;
+	public static int liftPort = 7;
 	
 	
 	
@@ -29,10 +34,16 @@ public class RobotMap {
 	public static CANTalon leftDriveSlave2;
 	public static CANTalon rightDriveSlave1;
 	public static CANTalon rightDriveSlave2;
+	public static DoubleSolenoid clawHand;
+	public static DoubleSolenoid rightArm;
+	public static DoubleSolenoid leftArm;
+	public static Victor lift;
 	
 	public static void init() {
 		leftDrivetrain = new CANTalon(leftDrivetrainPort);
+		leftDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rightDrivetrain = new CANTalon(rightDrivetrainPort);
+		rightDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		robotDrive = new RobotDrive(leftDrivetrain, rightDrivetrain);
 		leftDriveSlave1 = new CANTalon(leftDriveSlave1Port);
 		leftDriveSlave2 = new CANTalon(leftDriveSlave2Port);
@@ -46,6 +57,16 @@ public class RobotMap {
 		rightDriveSlave1.set(rightDrivetrainPort);
 		rightDriveSlave2.changeControlMode(TalonControlMode.Follower);
 		rightDriveSlave2.set(rightDrivetrainPort);
+		
+		// may need to set up ports?
+		clawHand = new DoubleSolenoid(1,2);
+		clawHand.set(DoubleSolenoid.Value.kOff);
+		rightArm = new DoubleSolenoid(1,2);
+		rightArm.set(DoubleSolenoid.Value.kOff);
+		leftArm = new DoubleSolenoid(1,2);
+		leftArm.set(DoubleSolenoid.Value.kOff);
+		
+		 lift = new Victor(7);
 	}
 	 
 	// [IMPORTANT!]: Use ChipotleArm as variable

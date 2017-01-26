@@ -8,10 +8,14 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team1572.robot.commands.DriveDistance;
 import org.usfirst.frc.team1572.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
+import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
+import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
 import org.usfirst.frc.team1572.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.JoyDrive;
+import org.usfirst.frc.team1572.robot.subsystems.Lift;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,6 +30,10 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static JoyDrive joydrive;
 	public static TeleDrive teledrive;
+	public static DriveDistance drivedistance;
+	public static ClawHand clawhand;
+	public static ChipotleArm chipotlearm;
+	public static Lift lift;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -38,7 +46,13 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		RobotMap.init();
 		 joydrive = new JoyDrive();
+		 clawhand = new ClawHand();
+		 chipotlearm = new ChipotleArm();
+		 lift = new Lift();
 		 teledrive = new TeleDrive();
+		 
+		 //drivedistance = new DriveDistance(dist);
+		 //Does not take varible dist, may need to put 0 to define
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		SmartDashboard.putData("Auto mode", chooser);
