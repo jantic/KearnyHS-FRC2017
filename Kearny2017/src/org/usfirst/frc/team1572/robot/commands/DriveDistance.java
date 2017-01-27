@@ -23,7 +23,7 @@ public class DriveDistance extends Command {
 	
     public DriveDistance(double dist) {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.joydrive);
+    	//requires(Robot.joydrive);
     	m_finalDistance = dist;
     	
     }
@@ -35,13 +35,13 @@ public class DriveDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double leftSpeed = RobotMap.leftDrivetrain.getSpeed();
-    	double rightSpeed = RobotMap.rightDrivetrain.getSpeed();
-    	double time = 20;
-    	double totalSpeed = leftSpeed + rightSpeed;
-    	double speed = totalSpeed/2;
-    	double distanceTraveled = time * speed;
-    	m_currentDistance = distanceTraveled + m_currentDistance;
+    //	double leftSpeed = RobotMap.leftDrivetrain.getSpeed();
+    	//double rightSpeed = RobotMap.rightDrivetrain.getSpeed();
+    	//double time = 20;
+    	//double totalSpeed = leftSpeed + rightSpeed;
+    	//double speed = totalSpeed/2;
+    //	double distanceTraveled = time * speed;
+    	//m_currentDistance = distanceTraveled + m_currentDistance;
     	
     	//turn on motors here?
     

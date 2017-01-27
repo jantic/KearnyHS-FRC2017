@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 import org.usfirst.frc.team1572.robot.commands.DriveDistance;
 import org.usfirst.frc.team1572.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
@@ -30,10 +31,11 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static JoyDrive joydrive;
 	public static TeleDrive teledrive;
-	public static DriveDistance drivedistance;
-	public static ClawHand clawhand;
-	public static ChipotleArm chipotlearm;
-	public static Lift lift;
+	//public static DriveDistance drivedistance;
+	//public static ClawHand clawhand;
+	//public static ChipotleArm chipotlearm;
+	//public static Lift lift;
+	public static LogitechF310Map logitechF310Map;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -46,9 +48,9 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		RobotMap.init();
 		 joydrive = new JoyDrive();
-		 clawhand = new ClawHand();
-		 chipotlearm = new ChipotleArm();
-		 lift = new Lift();
+		 //clawhand = new ClawHand();
+		// chipotlearm = new ChipotleArm();
+		 //lift = new Lift();
 		 teledrive = new TeleDrive();
 		 
 		 //drivedistance = new DriveDistance(dist);
@@ -56,6 +58,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		
+		logitechF310Map = new LogitechF310Map(oi.getJoyPilot());
 	}
 
 	/**
@@ -126,6 +130,23 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		logitechF310Map.getButtonA();
+		logitechF310Map.getButtonB();
+		logitechF310Map.getButtonBack();
+		logitechF310Map.getButtonL3();
+		logitechF310Map.getButtonLB();
+		logitechF310Map.getButtonR3();
+		logitechF310Map.getButtonRB();
+		logitechF310Map.getButtonStart();
+		logitechF310Map.getButtonX();
+		logitechF310Map.getButtonY();
+		logitechF310Map.getLeftTrigger();
+		logitechF310Map.getLeftXAxis();
+		logitechF310Map.getLeftYAxis();
+		logitechF310Map.getRightTrigger();
+		logitechF310Map.getRightXAxis();
+		logitechF310Map.getRightYAxis();
+		logitechF310Map.getPOV();
 		
 		Scheduler.getInstance().run();
 		System.out.println("after run");

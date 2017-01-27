@@ -18,7 +18,7 @@ public class lifter extends Command {
     	m_speed = speed;
     	
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.lift);
+    	//requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -27,7 +27,7 @@ public class lifter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	RobotMap.lift.set(m_speed);
+    	//RobotMap.lift.set(m_speed);
     	//may change!
     }
 

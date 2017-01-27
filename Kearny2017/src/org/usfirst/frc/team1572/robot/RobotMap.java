@@ -45,7 +45,7 @@ public class RobotMap {
 		rightDrivetrain = new CANTalon(rightDrivetrainPort);
 		rightDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		robotDrive = new RobotDrive(leftDrivetrain, rightDrivetrain);
-		leftDriveSlave1 = new CANTalon(leftDriveSlave1Port);
+		/* leftDriveSlave1 = new CANTalon(leftDriveSlave1Port);
 		leftDriveSlave2 = new CANTalon(leftDriveSlave2Port);
 		rightDriveSlave1 = new CANTalon(rightDriveSlave1Port);
 		rightDriveSlave2 = new CANTalon(rightDriveSlave2Port);
@@ -53,20 +53,21 @@ public class RobotMap {
 		leftDriveSlave1.set(leftDrivetrainPort);
 		leftDriveSlave2.changeControlMode(TalonControlMode.Follower);
 		leftDriveSlave2.set(leftDrivetrainPort);
-		rightDriveSlave1.changeControlMode(TalonControlMode.Follower);
-		rightDriveSlave1.set(rightDrivetrainPort);
-		rightDriveSlave2.changeControlMode(TalonControlMode.Follower);
-		rightDriveSlave2.set(rightDrivetrainPort);
+		*/
+		//rightDriveSlave1.changeControlMode(TalonControlMode.Follower);
+		//rightDriveSlave1.set(rightDrivetrainPort);
+		//rightDriveSlave2.changeControlMode(TalonControlMode.Follower);
+		//rightDriveSlave2.set(rightDrivetrainPort);
 		
 		// may need to set up ports?
-		clawHand = new DoubleSolenoid(1,2);
-		clawHand.set(DoubleSolenoid.Value.kOff);
-		rightArm = new DoubleSolenoid(1,2);
-		rightArm.set(DoubleSolenoid.Value.kOff);
-		leftArm = new DoubleSolenoid(1,2);
-		leftArm.set(DoubleSolenoid.Value.kOff);
+		//clawHand = new DoubleSolenoid(1,2);
+		//clawHand.set(DoubleSolenoid.Value.kOff);
+		//rightArm = new DoubleSolenoid(1,2);
+		//rightArm.set(DoubleSolenoid.Value.kOff);
+		//leftArm = new DoubleSolenoid(1,2);
+		//leftArm.set(DoubleSolenoid.Value.kOff);
 		
-		 lift = new Victor(7);
+		 //lift = new Victor(7);
 	}
 	 
 	// [IMPORTANT!]: Use ChipotleArm as variable
