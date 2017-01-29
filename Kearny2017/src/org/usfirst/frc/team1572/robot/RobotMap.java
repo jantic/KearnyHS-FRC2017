@@ -10,6 +10,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import java.util.Scanner;
 import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.Ultrasonic;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -39,11 +40,37 @@ public class RobotMap {
 	public static DoubleSolenoid leftArm;
 	public static Victor lift;
 	
+	public static Ultrasonic sensor;
+	
 	public static void init() {
 		leftDrivetrain = new CANTalon(leftDrivetrainPort);
+		leftDrivetrain.reverseOutput(true);
 		leftDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		leftDrivetrain.configEncoderCodesPerRev(1440);
+		leftDrivetrain.changeControlMode(TalonControlMode.Speed);
+		leftDrivetrain.configNominalOutputVoltage(0, 0);
+		leftDrivetrain.configPeakOutputVoltage(12.0, -12.0);
+		leftDrivetrain.setProfile(0);
+		leftDrivetrain.setF(0.1);
+		leftDrivetrain.setP(0.45);
+		leftDrivetrain.setI(0);
+		leftDrivetrain.setD(0);
+		leftDrivetrain.set(0);
+		
 		rightDrivetrain = new CANTalon(rightDrivetrainPort);
+		rightDrivetrain.reverseOutput(false);
 		rightDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		rightDrivetrain.configEncoderCodesPerRev(1440);
+		rightDrivetrain.changeControlMode(TalonControlMode.Speed);
+		rightDrivetrain.configNominalOutputVoltage(0, 0);
+		rightDrivetrain.configPeakOutputVoltage(12.0, -12.0);
+		rightDrivetrain.setProfile(0);
+		rightDrivetrain.setF(0.1);
+		rightDrivetrain.setP(0.45);
+		rightDrivetrain.setI(0);
+		rightDrivetrain.setD(0);
+		rightDrivetrain.set(0);
+		
 		robotDrive = new RobotDrive(leftDrivetrain, rightDrivetrain);
 		/* leftDriveSlave1 = new CANTalon(leftDriveSlave1Port);
 		leftDriveSlave2 = new CANTalon(leftDriveSlave2Port);
@@ -68,6 +95,9 @@ public class RobotMap {
 		//leftArm.set(DoubleSolenoid.Value.kOff);
 		
 		 //lift = new Victor(7);
+		
+		//sensor = new Ultrasonic(pingChannel, echoChannel);
+		// FIX THIS SO AGUREMNTS MAKES SENSE
 	}
 	 
 	// [IMPORTANT!]: Use ChipotleArm as variable

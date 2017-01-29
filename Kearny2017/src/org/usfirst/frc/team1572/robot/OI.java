@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1572.robot;
 
+import org.usfirst.frc.team1572.robot.RobotMap;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,9 +19,10 @@ public class OI {
 
 	private final Joystick joyPilot = new Joystick(0);
 	private final Joystick joyCoPilot = new Joystick(1);
-	private final Button button1 = new JoystickButton(joyPilot, 1);
+	private final Button button = new JoystickButton(joyPilot, 1);
 	private final Button button2 = new JoystickButton(joyPilot, 2);
 	
+	//button.whenPressed(new Robot.drivedistance(10));
 	
 
 	// There are a few additional built in buttons you can use. Additionally,

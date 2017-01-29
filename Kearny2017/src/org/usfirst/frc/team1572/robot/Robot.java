@@ -17,6 +17,7 @@ import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
 import org.usfirst.frc.team1572.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.JoyDrive;
 import org.usfirst.frc.team1572.robot.subsystems.Lift;
+import org.usfirst.frc.team1572.robot.subsystems.Sensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,11 +32,12 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static JoyDrive joydrive;
 	public static TeleDrive teledrive;
-	//public static DriveDistance drivedistance;
+	public static DriveDistance drivedistance;
 	//public static ClawHand clawhand;
 	//public static ChipotleArm chipotlearm;
 	//public static Lift lift;
 	public static LogitechF310Map logitechF310Map;
+	public static Sensor sensor;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -48,6 +50,8 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		RobotMap.init();
 		 joydrive = new JoyDrive();
+		 drivedistance = new DriveDistance(1.0);
+		 
 		 //clawhand = new ClawHand();
 		// chipotlearm = new ChipotleArm();
 		 //lift = new Lift();
@@ -59,7 +63,7 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		
-		logitechF310Map = new LogitechF310Map(oi.getJoyPilot());
+		sensor = new Sensor();
 	}
 
 	/**
@@ -130,6 +134,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		/*
 		logitechF310Map.getButtonA();
 		logitechF310Map.getButtonB();
 		logitechF310Map.getButtonBack();
@@ -146,10 +151,12 @@ public class Robot extends IterativeRobot {
 		logitechF310Map.getRightTrigger();
 		logitechF310Map.getRightXAxis();
 		logitechF310Map.getRightYAxis();
-		logitechF310Map.getPOV();
-		
+		//logitechF310Map.getPOV();
+		 */
+		//Scheduler.getInstance().add(drivedistance);
 		Scheduler.getInstance().run();
-		System.out.println("after run");
+		System.out.println(RobotMap.leftDrivetrain.getSpeed() + " left rpm");
+		System.out.println(RobotMap.rightDrivetrain.getSpeed() + " right rpm");
 	}
 
 	/**

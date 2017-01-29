@@ -1,99 +1,99 @@
 package org.usfirst.frc.team1572.robot.utls;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class LogitechF310Map {
 	
-	private Joystick m_stick;
+	private Joystick stick;
 	
-	public LogitechF310Map(Joystick stick) {
-		m_stick = stick;
-		//m_stick.getButtonCount();
+	public LogitechF310Map() {
+		
 	}
 	
-	public boolean getButtonA() {
-		//System.out.println("A = " + m_stick.getRawButton(1));
-		return m_stick.getRawButton(1);
+	public boolean getButtonA(Joystick stick) {
+		//System.out.println("A = " + stick.getRawButton(1));
+		return stick.getRawButton(1);
 	}
 	
-	public boolean getButtonB() {
-		//System.out.println("B = " + m_stick.getRawButton(2));
-		return m_stick.getRawButton(2);
+	public boolean getButtonB(Joystick stick) {
+		//System.out.println("B = " + stick.getRawButton(2));
+		return stick.getRawButton(2);
 	}
 	
-	public boolean getButtonX() {
-		//System.out.println("X = " + m_stick.getRawButton(3));
-		return m_stick.getRawButton(3);
+	public boolean getButtonX(Joystick stick) {
+		//System.out.println("X = " + stick.getRawButton(3));
+		return stick.getRawButton(3);
 	}
 	
-	public boolean getButtonY() {
-		//System.out.println("Y = " + m_stick.getRawButton(4));
-		return m_stick.getRawButton(4);
+	public boolean getButtonY(Joystick stick) {
+		//System.out.println("Y = " + stick.getRawButton(4));
+		return stick.getRawButton(4);
 	}
 	
-	public boolean getButtonLB() {
-		//System.out.println("LB = " + m_stick.getRawButton(5));
-		return m_stick.getRawButton(5);
+	public boolean getButtonLB(Joystick stick) {
+		//System.out.println("LB = " + stick.getRawButton(5));
+		return stick.getRawButton(5);
 	}
 	
-	public boolean getButtonRB() {
-		//System.out.println("RB = " + m_stick.getRawButton(6));
-		return m_stick.getRawButton(6);
+	public boolean getButtonRB(Joystick stick) {
+		//System.out.println("RB = " + stick.getRawButton(6));
+		return stick.getRawButton(6);
 	}
 	
-	public boolean getButtonBack() {
-		//System.out.println("BACK = " + m_stick.getRawButton(7));
-		return m_stick.getRawButton(7);
+	public boolean getButtonBack(Joystick stick) {
+		//System.out.println("BACK = " + stick.getRawButton(7));
+		return stick.getRawButton(7);
 	}
 	
-	public boolean getButtonStart() {
-		//System.out.println("START = " + m_stick.getRawButton(8));
-		return m_stick.getRawButton(8);
+	public boolean getButtonStart(Joystick stick) {
+		//System.out.println("START = " + stick.getRawButton(8));
+		return stick.getRawButton(8);
 	}
 	
-	public boolean getButtonL3() {
-		//System.out.println("L3 = " + m_stick.getRawButton(9));
-		return m_stick.getRawButton(9);
+	public boolean getButtonL3(Joystick stick) {
+		//System.out.println("L3 = " + stick.getRawButton(9));
+		return stick.getRawButton(9);
 	}
 	
-	public boolean getButtonR3() {
-		//System.out.println("R3 = " + m_stick.getRawButton(10));
-		return m_stick.getRawButton(10);
+	public boolean getButtonR3(Joystick stick) {
+		//System.out.println("R3 = " + stick.getRawButton(10));
+		return stick.getRawButton(10);
 	}
 	
-	public double getLeftXAxis() {
-		//System.out.println("LX = " + m_stick.getRawAxis(0));
-		return m_stick.getRawAxis(0);
+	public double getLeftXAxis(Joystick stick) {
+		//System.out.println("LX = " + stick.getRawAxis(0));
+		return stick.getRawAxis(0);
 	}
 	
-	public double getLeftYAxis() {
-		//System.out.println("LY = " + m_stick.getRawAxis(1));
-		return m_stick.getRawAxis(1);
+	public double getLeftYAxis(Joystick stick) {
+		//System.out.println("LY = " + stick.getRawAxis(1));
+		return stick.getRawAxis(1);
 	}
 	
-	public double getLeftTrigger() {
-		//System.out.println("LT = " + m_stick.getRawAxis(2));
-		return m_stick.getRawAxis(2);
+	public double getLeftTrigger(Joystick stick) {
+		//System.out.println("LT = " + stick.getRawAxis(2));
+		return stick.getRawAxis(2);
 	}
 	
-	public double getRightTrigger() {
-		//System.out.println("RT = " + m_stick.getRawAxis(3));
-		return m_stick.getRawAxis(3);
+	public double getRightTrigger(Joystick stick) {
+		//System.out.println("RT = " + stick.getRawAxis(3));
+		return stick.getRawAxis(3);
 	}
 	
-	public double getRightXAxis() {
-		//System.out.println("RX = " + m_stick.getRawAxis(4));
-		return m_stick.getRawAxis(4);
+	public double getRightXAxis(Joystick stick) {
+		//System.out.println("RX = " + stick.getRawAxis(4));
+		return stick.getRawAxis(4);
 	}
 	
-	public double getRightYAxis() {
-		//System.out.println("RY = " + m_stick.getRawAxis(5));
-		return m_stick.getRawAxis(5);
+	public double getRightYAxis(Joystick stick) {
+		//System.out.println("RY = " + stick.getRawAxis(5));
+		return stick.getRawAxis(5);
 	}
 	
 	//public void getPOV() {
-	//	for (int i=0; i < m_stick.getPOVCount(); ++i) {
-			System.out.println("POV " + i + " = " + m_stick.getPOV(i));
+	//	for (int i=0; i < stick.getPOVCount(); ++i) {
+	//		System.out.println("POV " + i + " = " + stick.getPOV(i));
 	//	}
 	//}
 	
