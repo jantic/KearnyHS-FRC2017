@@ -41,37 +41,42 @@ public class RobotMap {
 	public static Victor lift;
 	
 	public static Ultrasonic sensor;
+
 	
 	public static void init() {
 		leftDrivetrain = new CANTalon(leftDrivetrainPort);
 		leftDrivetrain.reverseOutput(true);
+		leftDrivetrain.reverseSensor(true);
 		leftDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		leftDrivetrain.configEncoderCodesPerRev(1440);
 		leftDrivetrain.changeControlMode(TalonControlMode.Speed);
 		leftDrivetrain.configNominalOutputVoltage(0, 0);
 		leftDrivetrain.configPeakOutputVoltage(12.0, -12.0);
 		leftDrivetrain.setProfile(0);
-		leftDrivetrain.setF(0.1);
-		leftDrivetrain.setP(0.45);
+		leftDrivetrain.setF(0.5);
+		leftDrivetrain.setP(0.01);
 		leftDrivetrain.setI(0);
 		leftDrivetrain.setD(0);
 		leftDrivetrain.set(0);
 		
 		rightDrivetrain = new CANTalon(rightDrivetrainPort);
 		rightDrivetrain.reverseOutput(false);
+		rightDrivetrain.reverseSensor(false);
 		rightDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rightDrivetrain.configEncoderCodesPerRev(1440);
 		rightDrivetrain.changeControlMode(TalonControlMode.Speed);
 		rightDrivetrain.configNominalOutputVoltage(0, 0);
 		rightDrivetrain.configPeakOutputVoltage(12.0, -12.0);
 		rightDrivetrain.setProfile(0);
-		rightDrivetrain.setF(0.1);
-		rightDrivetrain.setP(0.45);
+		rightDrivetrain.setF(0.5);
+		rightDrivetrain.setP(0.01);
 		rightDrivetrain.setI(0);
 		rightDrivetrain.setD(0);
 		rightDrivetrain.set(0);
 		
 		robotDrive = new RobotDrive(leftDrivetrain, rightDrivetrain);
+		
+		
 		/* leftDriveSlave1 = new CANTalon(leftDriveSlave1Port);
 		leftDriveSlave2 = new CANTalon(leftDriveSlave2Port);
 		rightDriveSlave1 = new CANTalon(rightDriveSlave1Port);
@@ -87,8 +92,8 @@ public class RobotMap {
 		//rightDriveSlave2.set(rightDrivetrainPort);
 		
 		// may need to set up ports?
-		//clawHand = new DoubleSolenoid(1,2);
-		//clawHand.set(DoubleSolenoid.Value.kOff);
+		clawHand = new DoubleSolenoid(1,2);
+		clawHand.set(DoubleSolenoid.Value.kOff);
 		//rightArm = new DoubleSolenoid(1,2);
 		//rightArm.set(DoubleSolenoid.Value.kOff);
 		//leftArm = new DoubleSolenoid(1,2);
@@ -97,6 +102,8 @@ public class RobotMap {
 		 //lift = new Victor(7);
 		
 		//sensor = new Ultrasonic(pingChannel, echoChannel);
+		sensor = new Ultrasonic(0,1);
+		
 		// FIX THIS SO AGUREMNTS MAKES SENSE
 	}
 	 

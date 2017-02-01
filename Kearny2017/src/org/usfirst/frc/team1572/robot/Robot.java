@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 	public static JoyDrive joydrive;
 	public static TeleDrive teledrive;
 	public static DriveDistance drivedistance;
-	//public static ClawHand clawhand;
+	public static ClawHand clawhand;
 	//public static ChipotleArm chipotlearm;
 	//public static Lift lift;
 	public static LogitechF310Map logitechF310Map;
@@ -52,8 +52,8 @@ public class Robot extends IterativeRobot {
 		 joydrive = new JoyDrive();
 		 drivedistance = new DriveDistance(1.0);
 		 
-		 //clawhand = new ClawHand();
-		// chipotlearm = new ChipotleArm();
+		 clawhand = new ClawHand();
+		 //chipotlearm = new ChipotleArm();
 		 //lift = new Lift();
 		 teledrive = new TeleDrive();
 		 
@@ -157,6 +157,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		System.out.println(RobotMap.leftDrivetrain.getSpeed() + " left rpm");
 		System.out.println(RobotMap.rightDrivetrain.getSpeed() + " right rpm");
+		System.out.println(RobotMap.rightDrivetrain.getEncPosition() + " RightEncPos");
+		System.out.println(RobotMap.leftDrivetrain.getEncPosition() + " leftEncPos");
 	}
 
 	/**
