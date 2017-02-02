@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 import org.usfirst.frc.team1572.robot.commands.ExampleCommand;
-
+import edu.wpi.first.wpilibj.buttons.Trigger;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -17,11 +17,27 @@ public class OI {
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
 
-	private final Joystick joyPilot = new Joystick(0);
+	private final static Joystick joyPilot = new Joystick(0);
 	private final Joystick joyCoPilot = new Joystick(1);
-	private final Button button = new JoystickButton(joyPilot, 1);
-	private final Button button2 = new JoystickButton(joyPilot, 2);
+	private final static Button button = new JoystickButton(joyPilot, 1);
+	private final static Button button2 = new JoystickButton(joyPilot, 2);
 	
+
+	public Button getButton() {
+		return button;
+	}
+	
+	public static void OpenHandCommand() {
+	
+		button.whenPressed(Robot.openhand);
+	
+	}
+	
+	public static void CloseHandCommand() {
+	
+		button2.whenPressed(Robot.closehand);
+	
+	}
 	//button.whenPressed(new Robot.drivedistance(10));
 	
 

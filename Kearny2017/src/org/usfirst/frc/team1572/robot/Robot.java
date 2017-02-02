@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
+import org.usfirst.frc.team1572.robot.commands.CloseHand;
 import org.usfirst.frc.team1572.robot.commands.DriveDistance;
 import org.usfirst.frc.team1572.robot.commands.ExampleCommand;
+import org.usfirst.frc.team1572.robot.commands.OpenHand;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
 import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
 import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
@@ -38,6 +40,8 @@ public class Robot extends IterativeRobot {
 	//public static Lift lift;
 	public static LogitechF310Map logitechF310Map;
 	public static Sensor sensor;
+	public static OpenHand openhand;
+	public static CloseHand closehand;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -56,6 +60,8 @@ public class Robot extends IterativeRobot {
 		 //chipotlearm = new ChipotleArm();
 		 //lift = new Lift();
 		 teledrive = new TeleDrive();
+		 openhand = new OpenHand();
+		 closehand = new CloseHand();
 		 
 		 //drivedistance = new DriveDistance(dist);
 		 //Does not take varible dist, may need to put 0 to define
@@ -135,6 +141,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		/*
+		 * 
 		logitechF310Map.getButtonA();
 		logitechF310Map.getButtonB();
 		logitechF310Map.getButtonBack();
@@ -154,6 +161,11 @@ public class Robot extends IterativeRobot {
 		//logitechF310Map.getPOV();
 		 */
 		//Scheduler.getInstance().add(drivedistance);
+		
+		//OI.OpenHandCommand();
+		//OI.CloseHandCommand();
+		//FROM THE SUN GOD RA
+		
 		Scheduler.getInstance().run();
 		System.out.println(RobotMap.leftDrivetrain.getSpeed() + " left rpm");
 		System.out.println(RobotMap.rightDrivetrain.getSpeed() + " right rpm");
