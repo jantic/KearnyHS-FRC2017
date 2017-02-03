@@ -19,25 +19,15 @@ public class OI {
 
 	private final static Joystick joyPilot = new Joystick(0);
 	private final Joystick joyCoPilot = new Joystick(1);
-	private final static Button button = new JoystickButton(joyPilot, 1);
-	private final static Button button2 = new JoystickButton(joyPilot, 2);
+	private final static Button button = new JoystickButton(joyPilot, 2);
+	private final static Button button2 = new JoystickButton(joyPilot, 3);
 	
-
-	public Button getButton() {
-		return button;
-	}
-	
-	public static void OpenHandCommand() {
-	
+	public static void init() {
 		button.whenPressed(Robot.openhand);
-	
-	}
-	
-	public static void CloseHandCommand() {
-	
 		button2.whenPressed(Robot.closehand);
-	
 	}
+	
+	
 	//button.whenPressed(new Robot.drivedistance(10));
 	
 

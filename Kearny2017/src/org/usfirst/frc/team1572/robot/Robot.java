@@ -66,6 +66,7 @@ public class Robot extends IterativeRobot {
 		 //drivedistance = new DriveDistance(dist);
 		 //Does not take varible dist, may need to put 0 to define
 		oi = new OI();
+		oi.init();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		
@@ -162,9 +163,7 @@ public class Robot extends IterativeRobot {
 		 */
 		//Scheduler.getInstance().add(drivedistance);
 		
-		//OI.OpenHandCommand();
-		//OI.CloseHandCommand();
-		//FROM THE SUN GOD RA
+
 		
 		Scheduler.getInstance().run();
 		System.out.println(RobotMap.leftDrivetrain.getSpeed() + " left rpm");

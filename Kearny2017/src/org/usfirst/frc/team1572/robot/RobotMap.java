@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1572.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -41,7 +42,7 @@ public class RobotMap {
 	public static Victor lift;
 	
 	public static Ultrasonic sensor;
-
+	public static Compressor compressor; 
 	
 	public static void init() {
 		leftDrivetrain = new CANTalon(leftDrivetrainPort);
@@ -92,7 +93,8 @@ public class RobotMap {
 		//rightDriveSlave2.set(rightDrivetrainPort);
 		
 		// may need to set up ports?
-		clawHand = new DoubleSolenoid(1,2);
+		compressor = new Compressor(0);
+		clawHand = new DoubleSolenoid(0,1);
 		clawHand.set(DoubleSolenoid.Value.kOff);
 		//rightArm = new DoubleSolenoid(1,2);
 		//rightArm.set(DoubleSolenoid.Value.kOff);
