@@ -107,6 +107,7 @@ public class Robot extends IterativeRobot {
 		OpenHandCommand();
 		CloseHandCommand();
 		
+		System.out.println(joyPilot.getRawAxis(3));
 
 	}
 

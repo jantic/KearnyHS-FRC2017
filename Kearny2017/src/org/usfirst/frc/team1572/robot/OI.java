@@ -17,14 +17,13 @@ public class OI {
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
 
-	private final static Joystick joyPilot = new Joystick(0);
+	public final static Joystick joyPilot = new Joystick(0);
 	private final Joystick joyCoPilot = new Joystick(1);
 	private final static Button button = new JoystickButton(joyPilot, 2);
 	private final static Button button2 = new JoystickButton(joyPilot, 3);
 	
 	public static void init() {
-		button.whenPressed(Robot.openhand);
-		button2.whenPressed(Robot.closehand);
+		
 	}
 	
 	

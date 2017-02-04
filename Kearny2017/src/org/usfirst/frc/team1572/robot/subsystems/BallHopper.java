@@ -9,22 +9,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Lift extends Subsystem {
-	public static Victor lift = RobotMap.lift;
+public class BallHopper extends Subsystem {
+	public static Victor hopper = RobotMap.ballHopper;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-    	
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    
-    public static void Lifter() {
-    	if (OI.joyPilot.getRawAxis(3) > 0.0) {
-        	lift.set(OI.joyPilot.getRawAxis(3));;
-    	}
+    public static void ballIntake() {
+        	hopper.set(0.75);
     }
-
 }
 

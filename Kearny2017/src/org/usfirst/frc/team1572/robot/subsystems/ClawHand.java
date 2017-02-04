@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1572.robot.subsystems;
 
+import org.usfirst.frc.team1572.robot.OI;
 import org.usfirst.frc.team1572.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -12,18 +13,23 @@ public class ClawHand extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	DoubleSolenoid claw = RobotMap.clawHand;
+	public static DoubleSolenoid claw = RobotMap.clawHand;
 	
     public void initDefaultCommand() {
     	claw.set(DoubleSolenoid.Value.kOff);
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    public void openClaw() {
-    	claw.set(DoubleSolenoid.Value.kForward);
+    public static void openClaw() {
+    	
+    	if (OI.joyPilot.getRawButton(3)) {
+        	claw.set(DoubleSolenoid.Value.kForward);
+    	}
     }
-    public void closeClaw() {
-    	claw.set(DoubleSolenoid.Value.kReverse);
+    public static void closeClaw() {
+    	if (OI.joyPilot.getRawButton(4)) {
+        	claw.set(DoubleSolenoid.Value.kReverse);
+    	}
     }
 }
 //82984285

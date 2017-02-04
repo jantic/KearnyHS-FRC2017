@@ -28,7 +28,6 @@ public class RobotMap {
 	public static int liftPort = 7;
 	
 	
-	
 	public static CANTalon leftDrivetrain;
 	public static CANTalon rightDrivetrain;
 	public static RobotDrive robotDrive;
@@ -40,6 +39,9 @@ public class RobotMap {
 	public static DoubleSolenoid rightArm;
 	public static DoubleSolenoid leftArm;
 	public static Victor lift;
+	public static Victor clawIntake;
+	public static Victor ballHopper;
+	public static CANTalon shooter;
 	
 	public static Ultrasonic sensor;
 	public static Compressor compressor; 
@@ -78,31 +80,35 @@ public class RobotMap {
 		robotDrive = new RobotDrive(leftDrivetrain, rightDrivetrain);
 		
 		
-		/* leftDriveSlave1 = new CANTalon(leftDriveSlave1Port);
+
+		leftDriveSlave1 = new CANTalon(leftDriveSlave1Port);
 		leftDriveSlave2 = new CANTalon(leftDriveSlave2Port);
 		rightDriveSlave1 = new CANTalon(rightDriveSlave1Port);
 		rightDriveSlave2 = new CANTalon(rightDriveSlave2Port);
+		
 		leftDriveSlave1.changeControlMode(TalonControlMode.Follower);
 		leftDriveSlave1.set(leftDrivetrainPort);
 		leftDriveSlave2.changeControlMode(TalonControlMode.Follower);
 		leftDriveSlave2.set(leftDrivetrainPort);
-		*/
-		//rightDriveSlave1.changeControlMode(TalonControlMode.Follower);
-		//rightDriveSlave1.set(rightDrivetrainPort);
-		//rightDriveSlave2.changeControlMode(TalonControlMode.Follower);
-		//rightDriveSlave2.set(rightDrivetrainPort);
+		rightDriveSlave1.changeControlMode(TalonControlMode.Follower);
+		rightDriveSlave1.set(rightDrivetrainPort);
+		rightDriveSlave2.changeControlMode(TalonControlMode.Follower);
+		rightDriveSlave2.set(rightDrivetrainPort);
 		
+		shooter = new CANTalon(10);
 		// may need to set up ports?
 		compressor = new Compressor(0);
+		
 		clawHand = new DoubleSolenoid(0,1);
 		clawHand.set(DoubleSolenoid.Value.kOff);
-		//rightArm = new DoubleSolenoid(1,2);
-		//rightArm.set(DoubleSolenoid.Value.kOff);
-		//leftArm = new DoubleSolenoid(1,2);
-		//leftArm.set(DoubleSolenoid.Value.kOff);
+		rightArm = new DoubleSolenoid(2,3);
+		rightArm.set(DoubleSolenoid.Value.kOff);
+		leftArm = new DoubleSolenoid(4,5);
+		leftArm.set(DoubleSolenoid.Value.kOff);
 		
-		 //lift = new Victor(7);
-		
+		lift = new Victor(7);
+		clawIntake = new Victor(8);
+		ballHopper = new Victor(9);
 		//sensor = new Ultrasonic(pingChannel, echoChannel);
 		sensor = new Ultrasonic(0,1);
 		

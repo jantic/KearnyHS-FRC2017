@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team1572.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -12,14 +13,19 @@ import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 import org.usfirst.frc.team1572.robot.commands.CloseHand;
 import org.usfirst.frc.team1572.robot.commands.DriveDistance;
 import org.usfirst.frc.team1572.robot.commands.ExampleCommand;
+import org.usfirst.frc.team1572.robot.commands.LowerArm;
 import org.usfirst.frc.team1572.robot.commands.OpenHand;
+import org.usfirst.frc.team1572.robot.commands.RaiseArm;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
+import org.usfirst.frc.team1572.robot.subsystems.BallHopper;
 import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
 import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
+import org.usfirst.frc.team1572.robot.subsystems.ClawIntake;
 import org.usfirst.frc.team1572.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.JoyDrive;
 import org.usfirst.frc.team1572.robot.subsystems.Lift;
 import org.usfirst.frc.team1572.robot.subsystems.Sensor;
+import org.usfirst.frc.team1572.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,13 +42,18 @@ public class Robot extends IterativeRobot {
 	public static TeleDrive teledrive;
 	public static DriveDistance drivedistance;
 	public static ClawHand clawhand;
-	//public static ChipotleArm chipotlearm;
+	public static ChipotleArm chipotlearm;
 	//public static Lift lift;
 	public static LogitechF310Map logitechF310Map;
 	public static Sensor sensor;
 	public static OpenHand openhand;
 	public static CloseHand closehand;
-
+	public static LowerArm lowerarm;
+	public static RaiseArm raisearm;
+	public static Shooter shooter;
+	public static Lift lifter;
+	
+	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -55,20 +66,27 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 		 joydrive = new JoyDrive();
 		 drivedistance = new DriveDistance(1.0);
-		 
 		 clawhand = new ClawHand();
-		 //chipotlearm = new ChipotleArm();
-		 //lift = new Lift();
+		 chipotlearm = new ChipotleArm();
+		 
+		 shooter = new Shooter();
+		 lifter = new Lift();
+		 
 		 teledrive = new TeleDrive();
 		 openhand = new OpenHand();
 		 closehand = new CloseHand();
-		 
+		 raisearm = new RaiseArm();
+		 lowerarm = new LowerArm();
 		 //drivedistance = new DriveDistance(dist);
 		 //Does not take varible dist, may need to put 0 to define
 		oi = new OI();
 		oi.init();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		
+	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
+    	ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);
+    	ChipotleArm.leftArm.set(DoubleSolenoid.Value.kOff);
 		
 		sensor = new Sensor();
 	}
@@ -132,6 +150,8 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
+		
+  
 		Scheduler.getInstance().add(teledrive);
 		System.out.println("after add");
 	}
@@ -141,31 +161,18 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		/*
-		 * 
-		logitechF310Map.getButtonA();
-		logitechF310Map.getButtonB();
-		logitechF310Map.getButtonBack();
-		logitechF310Map.getButtonL3();
-		logitechF310Map.getButtonLB();
-		logitechF310Map.getButtonR3();
-		logitechF310Map.getButtonRB();
-		logitechF310Map.getButtonStart();
-		logitechF310Map.getButtonX();
-		logitechF310Map.getButtonY();
-		logitechF310Map.getLeftTrigger();
-		logitechF310Map.getLeftXAxis();
-		logitechF310Map.getLeftYAxis();
-		logitechF310Map.getRightTrigger();
-		logitechF310Map.getRightXAxis();
-		logitechF310Map.getRightYAxis();
-		//logitechF310Map.getPOV();
-		 */
-		//Scheduler.getInstance().add(drivedistance);
-		
-
+	
+		ClawHand.openClaw();
+		ClawHand.closeClaw();
+		ClawIntake.clawIntake();
+		ChipotleArm.lowerArm();
+		ChipotleArm.raiseArm();
+		Lift.Lifter();
+		BallHopper.ballIntake();
+		Shooter.shoot();
 		
 		Scheduler.getInstance().run();
+		
 		System.out.println(RobotMap.leftDrivetrain.getSpeed() + " left rpm");
 		System.out.println(RobotMap.rightDrivetrain.getSpeed() + " right rpm");
 		System.out.println(RobotMap.rightDrivetrain.getEncPosition() + " RightEncPos");
@@ -180,3 +187,24 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 }
+/*
+ * 
+logitechF310Map.getButtonA();
+logitechF310Map.getButtonB();
+logitechF310Map.getButtonBack();
+logitechF310Map.getButtonL3();
+logitechF310Map.getButtonLB();
+logitechF310Map.getButtonR3();
+logitechF310Map.getButtonRB();
+logitechF310Map.getButtonStart();
+logitechF310Map.getButtonX();
+logitechF310Map.getButtonY();
+logitechF310Map.getLeftTrigger();
+logitechF310Map.getLeftXAxis();
+logitechF310Map.getLeftYAxis();
+logitechF310Map.getRightTrigger();
+logitechF310Map.getRightXAxis();
+logitechF310Map.getRightYAxis();
+//logitechF310Map.getPOV();
+ */
+//Scheduler.getInstance().add(drivedistance);

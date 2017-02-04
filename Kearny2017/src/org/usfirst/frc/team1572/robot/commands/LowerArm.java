@@ -1,34 +1,25 @@
 package org.usfirst.frc.team1572.robot.commands;
-import org.usfirst.frc.team1572.robot.subsystems.Lift;
-import org.usfirst.frc.team1572.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1572.robot.Robot;
-
+import org.usfirst.frc.team1572.robot.*;
 /**
  *
  */
-public class lifter extends Command {
-	
-	private double m_speed;
-	
-    public lifter(double speed) {
-    	m_speed = speed;
-    	
+public class LowerArm extends Command {
+
+    public LowerArm() {
         // Use requires() here to declare subsystem dependencies
-    	//requires(Robot.lift);
+        requires(Robot.chipotlearm);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	RobotMap.lift.set(m_speed);
-    	//may change!
+    	Robot.chipotlearm.lowerArm();
     }
 
     // Make this return true when this Command no longer needs to run execute()
