@@ -96,7 +96,7 @@ public class RobotMap {
 		rightDriveSlave2.set(rightDrivetrainPort);
 		
 		shooter = new CANTalon(10);
-		// may need to set up ports?
+		
 		compressor = new Compressor(0);
 		
 		clawHand = new DoubleSolenoid(0,1);

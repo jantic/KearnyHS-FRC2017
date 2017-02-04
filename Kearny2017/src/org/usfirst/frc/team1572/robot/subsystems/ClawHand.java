@@ -10,22 +10,24 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class ClawHand extends Subsystem {
-
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 	public static DoubleSolenoid claw = RobotMap.clawHand;
-	
+    
+	// Put methods for controlling this subsystem
+    // here. Call these from Commands.
+		
     public void initDefaultCommand() {
     	claw.set(DoubleSolenoid.Value.kOff);
-        // Set the default command for a subsystem here.
+        
+    	// Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
     public static void openClaw() {
-    	
     	if (OI.joyPilot.getRawButton(3)) {
         	claw.set(DoubleSolenoid.Value.kForward);
     	}
     }
+    
     public static void closeClaw() {
     	if (OI.joyPilot.getRawButton(4)) {
         	claw.set(DoubleSolenoid.Value.kReverse);

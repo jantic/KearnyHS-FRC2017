@@ -47,7 +47,7 @@ public class AutoReverse extends Command {
         	RobotMap.robotDrive.arcadeDrive(-0.25, 0);
         
         }
-        // Make this return true when this Command no longer needs to run execute()
+        // Make this return true when this Command no longer needs to run execb n        ute()
         protected boolean isFinished() {
         	return m_finalDistance <= m_currentDistance;
         }

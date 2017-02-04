@@ -36,7 +36,6 @@ public class Robot extends IterativeRobot {
 	public static DriveDistance drivedistance;
 	public static ClawHand clawhand;
 	public static ChipotleArm chipotlearm;
-	//public static Lift lift;
 	public static LogitechF310Map logitechF310Map;
 	public static Sensor sensor;
 	public static Lift lifter;
@@ -54,13 +53,10 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		RobotMap.init();
 		 joydrive = new JoyDrive();
-		 drivedistance = new DriveDistance(1.0);
 		 clawhand = new ClawHand();
 		 chipotlearm = new ChipotleArm();
-		 
 		 shooter = new Shooter();
 		 lifter = new Lift();
-		 
 		 teledrive = new TeleDrive();
 
 		 //drivedistance = new DriveDistance(dist);
