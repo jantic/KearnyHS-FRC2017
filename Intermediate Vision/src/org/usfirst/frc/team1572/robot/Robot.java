@@ -6,7 +6,9 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import vision.GearTargetVision;
 import vision.PegTargetVision;
+import vision.VisionCenteringCommand;
 
 import java.awt.List;
 import java.util.ArrayList;
@@ -62,8 +64,9 @@ public class Robot extends IterativeRobot {
 			CvSource outputStream = CameraServer.getInstance().putVideo("Rectangle", 640, 480);
 
 			// Mats are very memory expensive. Lets reuse this Mat.
-			Mat imageMatrix = new Mat();
+			final Mat imageMatrix = new Mat();
 			final PegTargetVision pegTargetVision = new PegTargetVision();
+			final GearTargetVision gearTargetVision = new GearTargetVision();
 
 			// This cannot be 'true'. The program will never exit if it is. This
 			// lets the robot stop this thread when restarting robot code or
@@ -77,23 +80,71 @@ public class Robot extends IterativeRobot {
 					// skip the rest of the current iteration
 					continue;
 				}
-				// Put a rectangle on the image
-				// Imgproc.rectangle(mat, new Point(100, 100), new Point(400,
-				// 400),
-				// new Scalar(255, 255, 255), 5);
-				// Give the output stream a new image to display
-				// outputStream.putFrame(mat);
-				pegTargetVision.process(imageMatrix);
-				final ArrayList<MatOfPoint> pegTargetContours = pegTargetVision.filterContoursOutput();
-				final Point pegTargetCenter = getPegTargetCenterPoint(pegTargetContours);
-				
-				if(pegTargetCenter!=null){
-					SmartDashboard.putString("Peg Target Center", String.valueOf(pegTargetCenter));
-				}
+				//Image size:  640 wide, 480 tall raw imag=>  resized to 160 wide, 120 wide => Center Coordinate = 80 x 60
+				final VisionCenteringCommand pegCenteringCommand = generatePegCenteringCommand(imageMatrix, pegTargetVision);
+				SmartDashboard.putString("Peg Centering Command", pegCenteringCommand.name());
+						
+				final VisionCenteringCommand gearCenteringCommand = generateGearCenteringCommand(imageMatrix, gearTargetVision);
+				SmartDashboard.putString("Gear Centering Command", gearCenteringCommand.name());
 			}
 		});
 		visionThread.setDaemon(true);
 		visionThread.start();
+	}
+	
+	private VisionCenteringCommand generatePegCenteringCommand(final Mat imageMatrix, final PegTargetVision pegTargetVision){
+		pegTargetVision.process(imageMatrix);
+		final ArrayList<MatOfPoint> pegContours = pegTargetVision.filterContoursOutput();
+		final Point pegTargetCenter = getPegTargetCenterPoint(pegContours);
+
+		if (pegTargetCenter != null) {
+			SmartDashboard.putString("Peg Target Center", String.valueOf(pegTargetCenter));
+			final Point centerOfView = calculateCenterOfView(pegTargetVision);
+			return generateGearCenteringCommand(centerOfView, pegTargetCenter);
+		}
+		
+		return VisionCenteringCommand.NULL;
+	}
+	
+	private VisionCenteringCommand generateGearCenteringCommand(final Mat imageMatrix, final GearTargetVision gearTargetVision){
+		gearTargetVision.process(imageMatrix);
+		final ArrayList<MatOfPoint> gearContours = gearTargetVision.filterContoursOutput();
+		final Point gearTargetCenter = getGearTargetCenterPoint(gearContours);
+
+		if (gearTargetCenter != null) {
+			SmartDashboard.putString("Gear Target Center", String.valueOf(gearTargetCenter));
+			final Point centerOfView = calculateCenterOfView(gearTargetVision);
+			return generateGearCenteringCommand(centerOfView, gearTargetCenter);
+		}
+		
+		return VisionCenteringCommand.NULL;
+	}
+	
+	private VisionCenteringCommand generateGearCenteringCommand(final Point centerOfView, final Point objectLocation){
+		final double diffX = centerOfView.x - objectLocation.x;
+		final double centerTolerance = 8.0;
+		
+		if(diffX > -centerTolerance && diffX < centerTolerance){
+			return VisionCenteringCommand.CENTER;
+		}
+		
+		if(diffX > 0){
+			return VisionCenteringCommand.LEFT;
+		}
+		
+		return VisionCenteringCommand.RIGHT;
+	}
+	
+	private Point calculateCenterOfView(PegTargetVision pegTargetVision){
+		final int width = pegTargetVision.cvResizeOutput().width();
+		final int height = pegTargetVision.cvResizeOutput().height();
+		return new Point(width/2, height/2);
+	}
+	
+	private Point calculateCenterOfView(GearTargetVision gearTargetVision){
+		final int width = gearTargetVision.cvResizeOutput().width();
+		final int height = gearTargetVision.cvResizeOutput().height();
+		return new Point(width/2, height/2);
 	}
 
 	private Point getPegTargetCenterPoint(final ArrayList<MatOfPoint> contours){
@@ -109,6 +160,17 @@ public class Robot extends IterativeRobot {
 		
 		return null;
 	}
+	
+	private Point getGearTargetCenterPoint(final ArrayList<MatOfPoint> contours) {
+		sortByArea(contours);
+
+		if (contours.size() >= 1) {
+			return getRectangleCenterPoint(contours.get(0));
+		}
+
+		return null;
+	}
+
 	
 	private static Point getRectangleCenterPoint(final MatOfPoint contour){
 		final Rect rectangle = Imgproc.boundingRect(contour);
