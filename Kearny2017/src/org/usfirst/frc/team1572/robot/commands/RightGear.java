@@ -10,12 +10,21 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightGear extends CommandGroup {
 
     public RightGear() {
-       
+
        requires(Robot.joydrive);
         
-        DriveDistance drive = new DriveDistance(93.3);
-        
-    	
+    }
+        public void RightGearAuto() {
+        	
+        	DriveDistance drive = new DriveDistance(93.3);
+        	//Add turn here(58 degrees)
+        	AutoTurn turn = new AutoTurn(58);
+        	DriveDistance drive2 = new DriveDistance(62.4039);
+            	
+        	drive.execute();
+        	turn.execute();
+        	drive2.execute();
+        }
     	
     	// Add Commands here:
         // e.g. addSequential(new Command1());
@@ -33,5 +42,5 @@ public class RightGear extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    }
+
 }

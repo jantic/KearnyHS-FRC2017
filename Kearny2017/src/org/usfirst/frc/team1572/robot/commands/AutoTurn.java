@@ -47,11 +47,11 @@ public class AutoTurn extends Command {
         	
         	if (m_finalDistance > 0) {
         		m_currentDistance = distanceTraveledR + m_currentDistance;
-        		RobotMap.rightDrivetrain.set(.5);
+        		RobotMap.leftDrivetrain.set(.5);
         	}
         	else {
         		m_currentDistance = distanceTraveledL + m_currentDistance;
-        		RobotMap.leftDrivetrain.set(.5);
+        		RobotMap.rightDrivetrain.set(.5);
         	}
         	//RobotMap.robotDrive.arcadeDrive(0.25, 0);
         

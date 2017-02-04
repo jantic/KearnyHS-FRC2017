@@ -35,7 +35,6 @@ public class DriveDistance extends Command {
     	return speed;
     			
     }
-
     // Called just before this Command runs the first time
     protected void initialize() {
     	m_currentDistance = 0;

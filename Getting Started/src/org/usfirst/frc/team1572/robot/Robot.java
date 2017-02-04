@@ -18,17 +18,17 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	RobotDrive myRobot = new RobotDrive(0, 1);
+	RobotDrive myRobot = new RobotDrive(1, 2);
 	Joystick stick = new Joystick(0);
 	Timer timer = new Timer();
-	Compressor c = new Compressor(0);
-	static DoubleSolenoid exampleDouble = new DoubleSolenoid(0, 1);
+	//Compressor c = new Compressor(0);
+	//static DoubleSolenoid exampleDouble = new DoubleSolenoid(0, 1);
 	private final static Joystick joyPilot = new Joystick(0);
 	
 	public static void OpenHandCommand() {
 		
 		if (joyPilot.getRawButton(2)) {
-		exampleDouble.set(DoubleSolenoid.Value.kForward);
+		//exampleDouble.set(DoubleSolenoid.Value.kForward);
 		System.out.println("button 2 pressed");
 		}
 	
@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 		
 		if (joyPilot.getRawButton(3)) {
 
-			exampleDouble.set(DoubleSolenoid.Value.kReverse);
+			//exampleDouble.set(DoubleSolenoid.Value.kReverse);
 			System.out.println("button 3 pressed");
 		}
 	}
@@ -50,9 +50,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		c.setClosedLoopControl(true);
+	//	c.setClosedLoopControl(true);
 
-		exampleDouble.set(DoubleSolenoid.Value.kOff);
+		//exampleDouble.set(DoubleSolenoid.Value.kOff);
 		//exampleDouble.set(DoubleSolenoid.Value.kForward);
 		//exampleDouble.set(DoubleSolenoid.Value.kReverse);
 	}
@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 		timer.reset();
 		timer.start();
 	}
-
+ 
 	/**
 	 * This function is called periodically during autonomous
 	 */
@@ -92,22 +92,21 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		boolean enabled = c.enabled();
-		boolean pressureSwitch = c.getPressureSwitchValue();
-		double current = c.getCompressorCurrent();
+		//boolean enabled = c.enabled();
+		//boolean pressureSwitch = c.getPressureSwitchValue();
+		//double current = c.getCompressorCurrent();
 		//exampleDouble.set(DoubleSolenoid.Value.kOff);
 
 		
-		System.out.println(enabled + " enabled");
-		System.out.println(current + " current");
-		System.out.println(pressureSwitch + " pressure Switch");
+		//System.out.println(enabled + " enabled");
+		//System.out.println(current + " current");
+		//System.out.println(pressureSwitch + " pressure Switch");
 				//CompressorCurrent();
-		//myRobot.arcadeDrive(stick);
+		myRobot.arcadeDrive(stick);
 		
-		OpenHandCommand();
-		CloseHandCommand();
-		
-		System.out.println(joyPilot.getRawAxis(3));
+		//OpenHandCommand();
+		//CloseHandCommand();
+
 
 	}
 
