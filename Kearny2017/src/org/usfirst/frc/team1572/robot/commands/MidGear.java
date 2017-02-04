@@ -13,10 +13,6 @@ public class MidGear extends CommandGroup {
 
     public MidGear() {
        requires(Robot.joydrive);
-      
-    }
-    public static void MidGearAuto() {
-    DriveDistance drive = new DriveDistance(93.3); 
-    drive.execute();
+       addSequential(new DriveDistance(93.3));
     }
 }

@@ -15,14 +15,10 @@ public class LeftGear extends CommandGroup {
     }
   public void LeftGearAuto() {
         	
-        	DriveDistance drive = new DriveDistance(93.3);
+        	addSequential(new DriveDistance(93.3));
         	//Add turn here(58 degrees)
-        	AutoTurn turn = new AutoTurn(-58);
-        	DriveDistance drive2 = new DriveDistance(62.4039);
-            	
-        	drive.execute();
-        	turn.execute();
-        	drive2.execute();
+        	addSequential(new AutoTurn(-58));
+        	addSequential(new DriveDistance(62.4039));
         }
     	
     	// Add Commands here:

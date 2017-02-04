@@ -17,7 +17,7 @@ public class OI {
 	// number it is.
 
 	public final static Joystick joyPilot = new Joystick(0);
-	private final Joystick joyCoPilot = new Joystick(1);
+	public final static Joystick joyCoPilot = new Joystick(1);
 	private final static Button button = new JoystickButton(joyPilot, 2);
 	private final static Button button2 = new JoystickButton(joyPilot, 3);
 	

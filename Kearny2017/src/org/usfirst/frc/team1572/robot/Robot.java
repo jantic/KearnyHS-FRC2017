@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 import org.usfirst.frc.team1572.robot.commands.DriveDistance;
+import org.usfirst.frc.team1572.robot.commands.LeftGear;
+import org.usfirst.frc.team1572.robot.commands.MidGear;
+import org.usfirst.frc.team1572.robot.commands.RightGear;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
 import org.usfirst.frc.team1572.robot.subsystems.BallHopper;
 import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
@@ -40,6 +43,9 @@ public class Robot extends IterativeRobot {
 	public static Sensor sensor;
 	public static Lift lifter;
 	public static Shooter shooter;
+	public static LeftGear leftgear;
+	public static MidGear midgear;
+	public static RightGear rightgear;
 	
 	
 	Command autonomousCommand;
@@ -58,6 +64,9 @@ public class Robot extends IterativeRobot {
 		 shooter = new Shooter();
 		 lifter = new Lift();
 		 teledrive = new TeleDrive();
+		 leftgear = new LeftGear();
+		 rightgear = new RightGear();
+		 midgear = new MidGear();
 
 		 //drivedistance = new DriveDistance(dist);
 		 //Does not take varible dist, may need to put 0 to define
@@ -119,7 +128,23 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		if(OI.joyCoPilot.getRawButton(1)) {
+			
+		Scheduler.getInstance().add(midgear);
+		
+		}
+		if(OI.joyCoPilot.getRawButton(2)) {
+			
+		Scheduler.getInstance().add(leftgear);
+		
+		}
+		if(OI.joyCoPilot.getRawButton(3)) {
+			
+		Scheduler.getInstance().add(rightgear);
+		
+		}
 		Scheduler.getInstance().run();
+		//we need to add smartDashboard buttons or something like that for auto
 	}
 
 	@Override
@@ -151,7 +176,7 @@ public class Robot extends IterativeRobot {
 		Lift.Lifter();
 		BallHopper.ballIntake();
 		Shooter.shoot();
-		
+
 		Scheduler.getInstance().run();
 		
 		System.out.println(RobotMap.leftDrivetrain.getSpeed() + " left rpm");

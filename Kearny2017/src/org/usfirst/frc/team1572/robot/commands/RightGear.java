@@ -12,19 +12,10 @@ public class RightGear extends CommandGroup {
     public RightGear() {
 
        requires(Robot.joydrive);
-        
-    }
-        public void RightGearAuto() {
-        	
-        	DriveDistance drive = new DriveDistance(93.3);
-        	//Add turn here(58 degrees)
-        	AutoTurn turn = new AutoTurn(58);
-        	DriveDistance drive2 = new DriveDistance(62.4039);
-            	
-        	drive.execute();
-        	turn.execute();
-        	drive2.execute();
-        }
+        addSequential(new DriveDistance(93.3));
+        addSequential(new AutoTurn(58));
+        addSequential(new DriveDistance(62.4039));
+    }      	
     	
     	// Add Commands here:
         // e.g. addSequential(new Command1());
