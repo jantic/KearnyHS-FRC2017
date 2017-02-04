@@ -47,6 +47,11 @@ public class Robot extends IterativeRobot {
 	public static MidGear midgear;
 	public static RightGear rightgear;
 	
+	boolean buttonValue = SmartDashboard.getBoolean("MidGear", true);
+	boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
+	boolean buttonValue3 = SmartDashboard.getBoolean("MidGear", true);
+	
+	 double dashData = SmartDashboard.getNumber("DB/Slider 0", 0.0);
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -67,6 +72,9 @@ public class Robot extends IterativeRobot {
 		 leftgear = new LeftGear();
 		 rightgear = new RightGear();
 		 midgear = new MidGear();
+		SmartDashboard.putBoolean("MidGear", false);
+		SmartDashboard.putBoolean("LeftGear", false);
+		SmartDashboard.putBoolean("RightGear", false);
 
 		 //drivedistance = new DriveDistance(dist);
 		 //Does not take varible dist, may need to put 0 to define
@@ -77,8 +85,10 @@ public class Robot extends IterativeRobot {
 	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
     	ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);
     	ChipotleArm.leftArm.set(DoubleSolenoid.Value.kOff);
+    	sensor = new Sensor();
 		
-		sensor = new Sensor();
+		 
+		 
 	}
 
 	/**
@@ -128,17 +138,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		if(OI.joyCoPilot.getRawButton(1)) {
+		if(buttonValue == true) {
 			
 		Scheduler.getInstance().add(midgear);
 		
 		}
-		if(OI.joyCoPilot.getRawButton(2)) {
+		if(buttonValue2 == true) {
 			
 		Scheduler.getInstance().add(leftgear);
 		
 		}
-		if(OI.joyCoPilot.getRawButton(3)) {
+		if(buttonValue3 == true) {
 			
 		Scheduler.getInstance().add(rightgear);
 		

@@ -5,10 +5,13 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,16 +24,16 @@ public class Robot extends IterativeRobot {
 	RobotDrive myRobot = new RobotDrive(1, 2);
 	Joystick stick = new Joystick(0);
 	Timer timer = new Timer();
+	ButtonPresser button = new ButtonPresser(); 
 	//Compressor c = new Compressor(0);
 	//static DoubleSolenoid exampleDouble = new DoubleSolenoid(0, 1);
 	private final static Joystick joyPilot = new Joystick(0);
 	
 	public static void OpenHandCommand() {
 		
-		if (joyPilot.getRawButton(2)) {
+		//if (joyPilot.getRawButton(2)) {
 		//exampleDouble.set(DoubleSolenoid.Value.kForward);
-		System.out.println("button 2 pressed");
-		}
+		System.out.println("button pressed");
 	
 	}
 	
@@ -51,7 +54,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 	//	c.setClosedLoopControl(true);
+		
 
+		
 		//exampleDouble.set(DoubleSolenoid.Value.kOff);
 		//exampleDouble.set(DoubleSolenoid.Value.kForward);
 		//exampleDouble.set(DoubleSolenoid.Value.kReverse);
@@ -96,18 +101,16 @@ public class Robot extends IterativeRobot {
 		//boolean pressureSwitch = c.getPressureSwitchValue();
 		//double current = c.getCompressorCurrent();
 		//exampleDouble.set(DoubleSolenoid.Value.kOff);
+		SmartDashboard.putData(Scheduler.getInstance());
 
-		
+		SmartDashboard.putData(Scheduler.getInstance());
+		SmartDashboard.putData("Button", button);
 		//System.out.println(enabled + " enabled");
 		//System.out.println(current + " current");
 		//System.out.println(pressureSwitch + " pressure Switch");
 				//CompressorCurrent();
 		myRobot.arcadeDrive(stick);
-		
-		//OpenHandCommand();
-		//CloseHandCommand();
-
-
+	
 	}
 
 	/**
