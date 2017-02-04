@@ -10,18 +10,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
-import org.usfirst.frc.team1572.robot.commands.CloseHand;
 import org.usfirst.frc.team1572.robot.commands.DriveDistance;
-import org.usfirst.frc.team1572.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1572.robot.commands.LowerArm;
-import org.usfirst.frc.team1572.robot.commands.OpenHand;
-import org.usfirst.frc.team1572.robot.commands.RaiseArm;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
 import org.usfirst.frc.team1572.robot.subsystems.BallHopper;
 import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
 import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
 import org.usfirst.frc.team1572.robot.subsystems.ClawIntake;
-import org.usfirst.frc.team1572.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.JoyDrive;
 import org.usfirst.frc.team1572.robot.subsystems.Lift;
 import org.usfirst.frc.team1572.robot.subsystems.Sensor;
@@ -36,7 +30,6 @@ import org.usfirst.frc.team1572.robot.subsystems.Shooter;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static JoyDrive joydrive;
 	public static TeleDrive teledrive;
@@ -46,12 +39,8 @@ public class Robot extends IterativeRobot {
 	//public static Lift lift;
 	public static LogitechF310Map logitechF310Map;
 	public static Sensor sensor;
-	public static OpenHand openhand;
-	public static CloseHand closehand;
-	public static LowerArm lowerarm;
-	public static RaiseArm raisearm;
-	public static Shooter shooter;
 	public static Lift lifter;
+	public static Shooter shooter;
 	
 	
 	Command autonomousCommand;
@@ -73,15 +62,11 @@ public class Robot extends IterativeRobot {
 		 lifter = new Lift();
 		 
 		 teledrive = new TeleDrive();
-		 openhand = new OpenHand();
-		 closehand = new CloseHand();
-		 raisearm = new RaiseArm();
-		 lowerarm = new LowerArm();
+
 		 //drivedistance = new DriveDistance(dist);
 		 //Does not take varible dist, may need to put 0 to define
 		oi = new OI();
 		oi.init();
-		chooser.addDefault("Default Auto", new ExampleCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		
 	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
