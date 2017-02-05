@@ -24,28 +24,12 @@ public class Robot extends IterativeRobot {
 	RobotDrive myRobot = new RobotDrive(1, 2);
 	Joystick stick = new Joystick(0);
 	Timer timer = new Timer();
-	ButtonPresser button = new ButtonPresser(); 
 	//Compressor c = new Compressor(0);
 	//static DoubleSolenoid exampleDouble = new DoubleSolenoid(0, 1);
 	private final static Joystick joyPilot = new Joystick(0);
 	
-	public static void OpenHandCommand() {
-		
-		//if (joyPilot.getRawButton(2)) {
-		//exampleDouble.set(DoubleSolenoid.Value.kForward);
-		System.out.println("button pressed");
-	
-	}
-	
-	private static void CloseHandCommand() {
-		
-		if (joyPilot.getRawButton(3)) {
 
-			//exampleDouble.set(DoubleSolenoid.Value.kReverse);
-			System.out.println("button 3 pressed");
-		}
-	}
-	
+
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -53,6 +37,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		SmartDashboard.putData(Scheduler.getInstance());
+
+		SmartDashboard.putData(Scheduler.getInstance());
+		SmartDashboard.putData("Test Button", new ButtonPresser());
 	//	c.setClosedLoopControl(true);
 		
 
@@ -101,16 +89,13 @@ public class Robot extends IterativeRobot {
 		//boolean pressureSwitch = c.getPressureSwitchValue();
 		//double current = c.getCompressorCurrent();
 		//exampleDouble.set(DoubleSolenoid.Value.kOff);
-		SmartDashboard.putData(Scheduler.getInstance());
 
-		SmartDashboard.putData(Scheduler.getInstance());
-		SmartDashboard.putData("Button", button);
 		//System.out.println(enabled + " enabled");
 		//System.out.println(current + " current");
 		//System.out.println(pressureSwitch + " pressure Switch");
 				//CompressorCurrent();
 		myRobot.arcadeDrive(stick);
-	
+		Scheduler.getInstance().run();
 	}
 
 	/**
