@@ -48,9 +48,9 @@ public class Robot extends IterativeRobot {
 	public static MidGear midgear;
 	public static RightGear rightgear;
 	
-	//boolean buttonValue = SmartDashboard.getBoolean("MidGear", true);
+	//boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
 	//boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
-	//boolean buttonValue3 = SmartDashboard.getBoolean("MidGear", true);
+	//boolean buttonValue3 = SmartDashboard.getBoolean("LeftGear", true);
 	
 	 double dashData = SmartDashboard.getNumber("DB/Slider 0", 0.0);
 	
@@ -73,9 +73,10 @@ public class Robot extends IterativeRobot {
 		 leftgear = new LeftGear();
 		 rightgear = new RightGear();
 		 midgear = new MidGear();
+		//SmartDashboard.putBoolean("RightGear", false);
 		//SmartDashboard.putBoolean("MidGear", false);
 		//SmartDashboard.putBoolean("LeftGear", false);
-		//SmartDashboard.putBoolean("RightGear", false);
+		
 
 		 //drivedistance = new DriveDistance(dist);
 		 //Does not take varible dist, may need to put 0 to define
@@ -89,12 +90,9 @@ public class Robot extends IterativeRobot {
     	sensor = new Sensor();
     	
     	SmartDashboard.putData(Scheduler.getInstance());
-		SmartDashboard.putData("RightGear", rightgear);
-		SmartDashboard.putData("LeftGear", leftgear);
-		SmartDashboard.putData("MidGear", midgear);
-		
-		 
-		 
+		SmartDashboard.putData("RightGear", new RightGear());
+		SmartDashboard.putData("LeftGear", new LeftGear());
+		SmartDashboard.putData("MidGear", new MidGear());
 	}
 
 	/**
@@ -146,25 +144,21 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		/*
 		if(SmartDashboard.getBoolean("MidGear", true)) {
-			
 		Scheduler.getInstance().add(midgear);
-		
 		}
+		
 		if(SmartDashboard.getBoolean("LeftGear", true)){
-			
 		Scheduler.getInstance().add(leftgear);
-		
 		}
+		
 		if(SmartDashboard.getBoolean("RightGear", true)) {
-			
 		Scheduler.getInstance().add(rightgear);
-		
 		}
+		
 		Scheduler.getInstance().run();
-		//we need to add smartDashboard buttons or something like that for auto
 		*/
 	}
-
+		 
 	@Override
 	public void teleopInit() {
 		// This makes sure that the autonomous stops running when
