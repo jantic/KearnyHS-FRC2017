@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team1572.robot;
 
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -47,9 +48,9 @@ public class Robot extends IterativeRobot {
 	public static MidGear midgear;
 	public static RightGear rightgear;
 	
-	boolean buttonValue = SmartDashboard.getBoolean("MidGear", true);
-	boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
-	boolean buttonValue3 = SmartDashboard.getBoolean("MidGear", true);
+	//boolean buttonValue = SmartDashboard.getBoolean("MidGear", true);
+	//boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
+	//boolean buttonValue3 = SmartDashboard.getBoolean("MidGear", true);
 	
 	 double dashData = SmartDashboard.getNumber("DB/Slider 0", 0.0);
 	
@@ -72,9 +73,9 @@ public class Robot extends IterativeRobot {
 		 leftgear = new LeftGear();
 		 rightgear = new RightGear();
 		 midgear = new MidGear();
-		SmartDashboard.putBoolean("MidGear", false);
-		SmartDashboard.putBoolean("LeftGear", false);
-		SmartDashboard.putBoolean("RightGear", false);
+		//SmartDashboard.putBoolean("MidGear", false);
+		//SmartDashboard.putBoolean("LeftGear", false);
+		//SmartDashboard.putBoolean("RightGear", false);
 
 		 //drivedistance = new DriveDistance(dist);
 		 //Does not take varible dist, may need to put 0 to define
@@ -86,6 +87,11 @@ public class Robot extends IterativeRobot {
     	ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);
     	ChipotleArm.leftArm.set(DoubleSolenoid.Value.kOff);
     	sensor = new Sensor();
+    	
+    	SmartDashboard.putData(Scheduler.getInstance());
+		SmartDashboard.putData("RightGear", rightgear);
+		SmartDashboard.putData("LeftGear", leftgear);
+		SmartDashboard.putData("MidGear", midgear);
 		
 		 
 		 
@@ -138,23 +144,25 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		if(buttonValue == true) {
+		/*
+		if(SmartDashboard.getBoolean("MidGear", true)) {
 			
 		Scheduler.getInstance().add(midgear);
 		
 		}
-		if(buttonValue2 == true) {
+		if(SmartDashboard.getBoolean("LeftGear", true)){
 			
 		Scheduler.getInstance().add(leftgear);
 		
 		}
-		if(buttonValue3 == true) {
+		if(SmartDashboard.getBoolean("RightGear", true)) {
 			
 		Scheduler.getInstance().add(rightgear);
 		
 		}
 		Scheduler.getInstance().run();
 		//we need to add smartDashboard buttons or something like that for auto
+		*/
 	}
 
 	@Override
