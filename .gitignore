@@ -1,11 +1,5 @@
-.metadata/.lock
-.metadata/.plugins/org.eclipse.ant.ui/dialog_settings.xml
-.metadata/.plugins/org.eclipse.core.resources/.projects/2017Robot/.markers
-.metadata/.plugins/org.eclipse.core.resources/.projects/2017Robot/org.eclipse.jdt.core/state.dat
-.metadata/.plugins/org.eclipse.core.resources/.projects/Getting Started/org.eclipse.jdt.core/state.dat
-.metadata/.plugins/org.eclipse.core.resources/.projects/Intermediate Vision/org.eclipse.egit.core/GitProjectData.properties
-.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index
-.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources
-.metadata/.plugins/org.eclipse.core.runtime/.settings/edu.wpi.first.wpilib.plugins.core.prefs
-.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.egit.core.prefs
-.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs
+.metadata/*
+.recommenders/*
+2017Robot/build/*
+2017Robot/bin/*
+2017Robot/dist/*
