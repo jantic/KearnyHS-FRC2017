@@ -19,14 +19,29 @@ import edu.wpi.first.wpilibj.Ultrasonic;
  * floating around.
  */
 public class RobotMap {
+	public static int compressorPort = 0;
+	
 	public static int leftDrivetrainPort = 1;
 	public static int rightDrivetrainPort = 2;
 	public static int leftDriveSlave1Port = 3;
 	public static int leftDriveSlave2Port = 4;
 	public static int rightDriveSlave1Port = 5;
 	public static int rightDriveSlave2Port = 6;
-	public static int liftPort = 7;
+	public static int shooterPort = 7;
+	public static int eCPRPort = 1440;
+	public static int liftPort = 1;
+	public static int ballHopperPort = 2;
+	public static int clawIntakePort = 3;
+	public static int clawHandPort1 = 0;
+	public static int clawHandPort = 1;
+	public static int rightArmPort1 = 2;
+	public static int rightArmPort = 3;
+	public static int leftArmPort1 = 4;
+	public static int leftArmPort = 5;
+	public static int sensorPort1 = 0;
+	public static int sensorPort = 1;
 	
+	public static boolean VELOCITYDRIVE = true;
 	
 	public static CANTalon leftDrivetrain;
 	public static CANTalon rightDrivetrain;
@@ -49,33 +64,46 @@ public class RobotMap {
 	public static void init() {
 		leftDrivetrain = new CANTalon(leftDrivetrainPort);
 		leftDrivetrain.reverseOutput(true);
-		leftDrivetrain.reverseSensor(true);
-		leftDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		leftDrivetrain.configEncoderCodesPerRev(1440);
-		leftDrivetrain.changeControlMode(TalonControlMode.Speed);
-		leftDrivetrain.configNominalOutputVoltage(0, 0);
-		leftDrivetrain.configPeakOutputVoltage(12.0, -12.0);
-		leftDrivetrain.setProfile(0);
-		leftDrivetrain.setF(0.5);
-		leftDrivetrain.setP(0.01);
-		leftDrivetrain.setI(0);
-		leftDrivetrain.setD(0);
-		leftDrivetrain.set(0);
+		
+		if (VELOCITYDRIVE) {
+			leftDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+			leftDrivetrain.configEncoderCodesPerRev(eCPRPort);
+			leftDrivetrain.changeControlMode(TalonControlMode.Speed);
+			leftDrivetrain.configNominalOutputVoltage(0, 0);
+			leftDrivetrain.reverseSensor(true);
+			leftDrivetrain.configPeakOutputVoltage(12.0, -12.0);
+			leftDrivetrain.setProfile(0);
+			leftDrivetrain.setF(0.5);
+			leftDrivetrain.setP(0.01);
+			leftDrivetrain.setI(0);
+			leftDrivetrain.setD(0);
+			leftDrivetrain.set(0);
+		}
+		else {
+			leftDrivetrain.changeControlMode(TalonControlMode.Voltage);
+		}
 		
 		rightDrivetrain = new CANTalon(rightDrivetrainPort);
 		rightDrivetrain.reverseOutput(false);
-		rightDrivetrain.reverseSensor(false);
-		rightDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rightDrivetrain.configEncoderCodesPerRev(1440);
-		rightDrivetrain.changeControlMode(TalonControlMode.Speed);
-		rightDrivetrain.configNominalOutputVoltage(0, 0);
-		rightDrivetrain.configPeakOutputVoltage(12.0, -12.0);
-		rightDrivetrain.setProfile(0);
-		rightDrivetrain.setF(0.5);
-		rightDrivetrain.setP(0.01);
-		rightDrivetrain.setI(0);
-		rightDrivetrain.setD(0);
-		rightDrivetrain.set(0);
+		
+		if (VELOCITYDRIVE) {
+			rightDrivetrain.reverseSensor(false);
+			rightDrivetrain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+			rightDrivetrain.configEncoderCodesPerRev(eCPRPort);
+			rightDrivetrain.changeControlMode(TalonControlMode.Speed);
+			rightDrivetrain.configNominalOutputVoltage(0, 0);
+			rightDrivetrain.configPeakOutputVoltage(12.0, -12.0);
+			rightDrivetrain.setProfile(0);
+			rightDrivetrain.setF(0.5);
+			rightDrivetrain.setP(0.01);
+			rightDrivetrain.setI(0);
+			rightDrivetrain.setD(0);
+			rightDrivetrain.set(0);
+		}
+		
+		else {
+			rightDrivetrain.changeControlMode(TalonControlMode.Voltage);
+		}
 		
 		robotDrive = new RobotDrive(leftDrivetrain, rightDrivetrain);
 		
@@ -95,27 +123,29 @@ public class RobotMap {
 		rightDriveSlave2.changeControlMode(TalonControlMode.Follower);
 		rightDriveSlave2.set(rightDrivetrainPort);
 		
-		shooter = new CANTalon(10);
+		shooter = new CANTalon(shooterPort);
 		
-		compressor = new Compressor(0);
+		compressor = new Compressor(compressorPort);
 		
-		clawHand = new DoubleSolenoid(0,1);
+		clawHand = new DoubleSolenoid(clawHandPort1,clawHandPort);
 		clawHand.set(DoubleSolenoid.Value.kOff);
-		rightArm = new DoubleSolenoid(2,3);
+		rightArm = new DoubleSolenoid(rightArmPort1,rightArmPort);
 		rightArm.set(DoubleSolenoid.Value.kOff);
-		leftArm = new DoubleSolenoid(4,5);
+		leftArm = new DoubleSolenoid(leftArmPort1,rightArmPort);
 		leftArm.set(DoubleSolenoid.Value.kOff);
 		
-		lift = new Victor(7);
-		clawIntake = new Victor(8);
-		ballHopper = new Victor(9);
+		lift = new Victor(liftPort);
+		ballHopper = new Victor(ballHopperPort);
+		clawIntake = new Victor(clawIntakePort);
+		
 		//sensor = new Ultrasonic(pingChannel, echoChannel);
-		sensor = new Ultrasonic(0,1);
+		sensor = new Ultrasonic(sensorPort1,sensorPort);
 		
 		// FIX THIS SO AGUREMNTS MAKES SENSE
 	}
 	 
 	// [IMPORTANT!]: Use ChipotleArm as variable
+	
 	
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.

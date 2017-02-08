@@ -93,6 +93,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("RightGear", new RightGear());
 		SmartDashboard.putData("LeftGear", new LeftGear());
 		SmartDashboard.putData("MidGear", new MidGear());
+		
+		
 	}
 
 	/**
