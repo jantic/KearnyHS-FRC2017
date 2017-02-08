@@ -41,7 +41,7 @@ public class RobotMap {
 	public static int sensorPort1 = 0;
 	public static int sensorPort = 1;
 	
-	public static boolean VELOCITYDRIVE = true;
+	public static boolean VELOCITYDRIVE = false;
 	
 	public static CANTalon leftDrivetrain;
 	public static CANTalon rightDrivetrain;
@@ -139,9 +139,8 @@ public class RobotMap {
 		clawIntake = new Victor(clawIntakePort);
 		
 		//sensor = new Ultrasonic(pingChannel, echoChannel);
-		sensor = new Ultrasonic(sensorPort1,sensorPort);
-		
 		// FIX THIS SO AGUREMNTS MAKES SENSE
+		sensor = new Ultrasonic(sensorPort1,sensorPort);
 	}
 	 
 	// [IMPORTANT!]: Use ChipotleArm as variable

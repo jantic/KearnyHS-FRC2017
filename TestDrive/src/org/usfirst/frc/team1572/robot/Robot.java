@@ -28,7 +28,7 @@ public class Robot extends IterativeRobot {
 	CANTalon _rightDrive = new CANTalon(2);
 	
 	RobotDrive _drive = new RobotDrive(_leftDrive, _rightDrive);
-	
+
 	Joystick _joy = new Joystick(0);
     /**
      * This function is run when the robot is first started up and should be
@@ -46,11 +46,13 @@ public class Robot extends IterativeRobot {
     	_rearLeftSlave.set(1);
     	_rearRightSlave.set(2);
     	
+    	_rightDrive.setInverted(true);
+    	
     	
     	/* the Talons on the left-side of my robot needs to drive reverse(red) to move robot forward.
     	 * Since _leftSlave just follows frontLeftMotor, no need to invert it anywhere. */
-    	_drive.setInvertedMotor(MotorType.kFrontLeft, true);
-    	_drive.setInvertedMotor(MotorType.kRearLeft, true);
+    	//_drive.setInvertedMotor(MotorType.kFrontLeft, true);
+    	//_drive.setInvertedMotor(MotorType.kRearLeft, true);
     }
 
     /**
