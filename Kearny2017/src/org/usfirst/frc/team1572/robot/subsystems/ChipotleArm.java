@@ -6,16 +6,14 @@ import org.usfirst.frc.team1572.robot.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
 public class ChipotleArm extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	public static DoubleSolenoid rightArm = RobotMap.rightArm;
-	public static DoubleSolenoid leftArm = RobotMap.leftArm;
+	public final static DoubleSolenoid rightArm = RobotMap.rightArm;
+	public final static DoubleSolenoid leftArm = RobotMap.leftArm;
 	
-    public void initDefaultCommand() {
+    @Override
+	public void initDefaultCommand() {
     	rightArm.set(DoubleSolenoid.Value.kOff);
     	leftArm.set(DoubleSolenoid.Value.kOff);
         // Set the default command for a subsystem here.

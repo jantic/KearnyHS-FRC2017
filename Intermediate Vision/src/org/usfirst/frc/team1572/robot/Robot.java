@@ -1,12 +1,12 @@
 package org.usfirst.frc.team1572.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team1572.robot.vision.GearTargetAutoAim;
+import org.usfirst.frc.team1572.robot.vision.IAutoAim;
+import org.usfirst.frc.team1572.robot.vision.PegTargetAutoAim;
+import org.usfirst.frc.team1572.robot.vision.VisionCenteringCommand;
 
-import org.usfirst.frc.team1572.vision.GearTargetAutoAim;
-import org.usfirst.frc.team1572.vision.IAutoAim;
-import org.usfirst.frc.team1572.vision.PegTargetAutoAim;
-import org.usfirst.frc.team1572.vision.VisionCenteringCommand;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
 
 /**
  * This is a demo program showing the use of OpenCV to do vision processing. The

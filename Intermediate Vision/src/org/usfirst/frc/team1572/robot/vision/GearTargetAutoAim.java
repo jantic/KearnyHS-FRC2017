@@ -1,14 +1,14 @@
-package org.usfirst.frc.team1572.vision;
+package org.usfirst.frc.team1572.robot.vision;
 
 import java.util.ArrayList;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
-import org.usfirst.frc.team1572.vision.camera.CameraType;
-import org.usfirst.frc.team1572.vision.camera.EasyCamera;
-import org.usfirst.frc.team1572.vision.camera.ImageGrabFailedException;
-import org.usfirst.frc.team1572.vision.grip.GearTargetVision;
+import org.usfirst.frc.team1572.robot.vision.camera.CameraType;
+import org.usfirst.frc.team1572.robot.vision.camera.EasyCamera;
+import org.usfirst.frc.team1572.robot.vision.camera.ImageGrabFailedException;
+import org.usfirst.frc.team1572.robot.vision.grip.GearTargetVision;
 
 public class GearTargetAutoAim implements IAutoAim {
 	private final EasyCamera easyCamera = EasyCamera.getInstance(CameraType.GEAR_CAMERA);

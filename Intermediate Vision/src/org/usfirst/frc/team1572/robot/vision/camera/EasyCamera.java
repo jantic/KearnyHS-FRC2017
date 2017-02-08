@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1572.vision.camera;
+package org.usfirst.frc.team1572.robot.vision.camera;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

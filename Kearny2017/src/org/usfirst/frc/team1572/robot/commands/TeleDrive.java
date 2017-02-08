@@ -15,25 +15,33 @@ public class TeleDrive extends Command {
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
+    @Override
+	protected void initialize() {
+    	//nothing to do here
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    @Override
+	protected void execute() {
     	Robot.joydrive.arcadeDrive(Robot.oi.getJoyPilot()); 
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    @Override
+	protected boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
-    protected void end() {
+    @Override
+	protected void end() {
+    	//nothing to do here
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
+    @Override
+	protected void interrupted() {
+    	//nothing to do here
     }
 }

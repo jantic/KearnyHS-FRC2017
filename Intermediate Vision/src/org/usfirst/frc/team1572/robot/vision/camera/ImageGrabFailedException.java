@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1572.vision.camera;
+package org.usfirst.frc.team1572.robot.vision.camera;
 
 public class ImageGrabFailedException extends Exception {
 	private static final long serialVersionUID = 1L;

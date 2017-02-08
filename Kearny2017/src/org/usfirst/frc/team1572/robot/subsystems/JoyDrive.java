@@ -6,22 +6,20 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1572.robot.RobotMap;
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 
-import java.util.Scanner;
 import com.ctre.CANTalon;
-/**
- *
- */
+
 public class JoyDrive extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	double maxRPM = 100.00;
-  	RobotDrive robotDrive = RobotMap.robotDrive;
-	CANTalon leftDrive = RobotMap.leftDrivetrain;
-	CANTalon rightDrive = RobotMap.rightDrivetrain;
-	public LogitechF310Map joyMap = new LogitechF310Map();
+	private final double maxRPM = 100.00;
+	private final RobotDrive robotDrive = RobotMap.robotDrive;
+	private final CANTalon leftDrive = RobotMap.leftDrivetrain;
+	private final CANTalon rightDrive = RobotMap.rightDrivetrain;
+	private final LogitechF310Map joyMap = new LogitechF310Map();
 
-    public void initDefaultCommand() {
+    @Override
+	public void initDefaultCommand() {
   
     	// Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -35,20 +33,20 @@ public class JoyDrive extends Subsystem {
 		double rightMotor = 0.0; 
 		//robotDrive.arcadeDrive(targetRPM, joyMap.getLeftXAxis(stick))
 		
-		leftMotor  = joyMap.getLeftYAxis(stick) - joyMap.getLeftXAxis(stick);
-		rightMotor = joyMap.getLeftYAxis(stick) + joyMap.getLeftXAxis(stick);
-		leftDrive.set(leftMotor*maxRPM);
-		rightDrive.set(rightMotor*maxRPM);
-		System.out.println(leftDrive.getControlMode().name());
-		System.out.println(rightDrive.getControlMode().name());
+		leftMotor  = this.joyMap.getLeftYAxis(stick) - this.joyMap.getLeftXAxis(stick);
+		rightMotor = this.joyMap.getLeftYAxis(stick) + this.joyMap.getLeftXAxis(stick);
+		this.leftDrive.set(leftMotor*this.maxRPM);
+		this.rightDrive.set(rightMotor*this.maxRPM);
+		System.out.println(this.leftDrive.getControlMode().name());
+		System.out.println(this.rightDrive.getControlMode().name());
 		
-		System.out.println(leftMotor*maxRPM);
-		System.out.println(rightMotor*maxRPM);
+		System.out.println(leftMotor*this.maxRPM);
+		System.out.println(rightMotor*this.maxRPM);
 		System.out.println();
 	}
 	
 	public void stop() {
-		robotDrive.drive(0, 0);
+		this.robotDrive.drive(0, 0);
 	}
 	
 	  

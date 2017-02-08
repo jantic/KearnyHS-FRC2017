@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1572.vision;
+package org.usfirst.frc.team1572.robot.vision;
 
 import java.util.Comparator;
 

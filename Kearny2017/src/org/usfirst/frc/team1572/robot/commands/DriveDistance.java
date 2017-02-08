@@ -3,45 +3,33 @@ package org.usfirst.frc.team1572.robot.commands;
 import org.usfirst.frc.team1572.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.RobotMap;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc.team1572.robot.RobotMap;
-import java.util.Scanner;
-import com.ctre.CANTalon;
-import org.usfirst.frc.team1572.robot.subsystems.JoyDrive;
 
-/**
- *
- */
 public class DriveDistance extends Command {
 	
-	private double m_finalDistance;
+	private final double m_finalDistance;
 	private double m_currentDistance;
 	
     public DriveDistance(double dist) {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.joydrive);
-    	m_finalDistance = dist;
-    	
-    	
+    	this.m_finalDistance = dist;  	
     }
     
-    private double getSpeed(double rpm, double size) {
-    	
+    private static double getSpeed(double rpm, double size) {   	
     	double speed = (rpm*size*Math.PI)/60.0;
     	return speed;
     			
     }
     // Called just before this Command runs the first time
-    protected void initialize() {
-    	m_currentDistance = 0;
+    @Override
+	protected void initialize() {
+    	this.m_currentDistance = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    @Override
+	protected void execute() {
     	double leftRPM = RobotMap.leftDrivetrain.getSpeed();
     	double rightRPM = RobotMap.rightDrivetrain.getSpeed();
     	double time = 20.0/1000.0;
@@ -49,22 +37,27 @@ public class DriveDistance extends Command {
     	double RPM = totalRPM/2;
     	double speed = getSpeed(RPM, 8.0);
     	double distanceTraveled = time * speed;
-    	m_currentDistance = distanceTraveled + m_currentDistance;
+    	this.m_currentDistance = distanceTraveled + this.m_currentDistance;
     	
     	RobotMap.robotDrive.arcadeDrive(0.25, 0);
     
     }
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	return m_finalDistance <= m_currentDistance;
+    @Override
+	protected boolean isFinished() {
+    	return this.m_finalDistance <= this.m_currentDistance;
     }
 
     // Called once after isFinished returns true
-    protected void end() {
+    @Override
+	protected void end() {
+    	//nothing to do here
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
+    @Override
+	protected void interrupted() {
+    	//nothing to do here
     }
 }

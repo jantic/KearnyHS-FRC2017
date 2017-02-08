@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1572.vision.camera;
+package org.usfirst.frc.team1572.robot.vision.camera;
 
 public enum CameraType {
 	PEG_CAMERA,
