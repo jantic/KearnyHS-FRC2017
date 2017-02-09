@@ -19,23 +19,11 @@ public class CameraSubsystem extends Subsystem{
 	private UsbCamera currentCamera = null;
 	private CvSink currentCameraVideoFeed = null;
 
-	public void activateCamera(final CameraType cameraType){
-		if(this.currentCameraType.equals(cameraType)){
-			//nothing to do in this case.
-			return;
-		}
-		
-		if(this.currentCamera!=null){
-			this.cameraServer.removeCamera(this.currentCamera.getName());
-		}
-		
-		this.currentCameraType = cameraType;
-		this.currentCamera = this.cameraServer.startAutomaticCapture(cameraType.getDeviceNum());
-		this.currentCamera.setResolution(640, 480);
-		this.currentCameraVideoFeed = this.cameraServer.getVideo();
-	}
+
 	
-	public Mat getLatestImage() throws ImageGrabFailedException{
+	public Mat getLatestImage(final CameraType cameraType) throws ImageGrabFailedException{
+		activateCamera(cameraType);
+		
 		final String prefix = "Failed to grab image: ";
 		
 		if(this.currentCameraType.equals(CameraType.NULL)){
@@ -51,6 +39,27 @@ public class CameraSubsystem extends Subsystem{
 		}
 		
 		return this.imageMatrix;
+	}
+	
+	public void streamToDashboard(final CameraType cameraType){
+		//Implicitly triggers streaming
+		activateCamera(cameraType);
+	}
+	
+	private void activateCamera(final CameraType cameraType){
+		if(this.currentCameraType.equals(cameraType)){
+			//nothing to do in this case.
+			return;
+		}
+		
+		if(this.currentCamera!=null){
+			this.cameraServer.removeCamera(this.currentCamera.getName());
+		}
+		
+		this.currentCameraType = cameraType;
+		this.currentCamera = this.cameraServer.startAutomaticCapture(cameraType.getDeviceNum());
+		this.currentCamera.setResolution(640, 480);
+		this.currentCameraVideoFeed = this.cameraServer.getVideo();
 	}
 
 	@Override

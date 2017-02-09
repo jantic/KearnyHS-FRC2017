@@ -20,8 +20,7 @@ public class StreamPegCamera extends Command {
 	@Override
 	protected void execute() {
 		try {
-			//This implicitly activates streaming to the dashboard (I think...)
-			Robot.cameraSubsystem.activateCamera(CameraType.PEG_CAMERA);
+			Robot.cameraSubsystem.streamToDashboard(CameraType.PEG_CAMERA);
 		} catch (Exception e){
 			System.out.println("Error while attempting to stream peg camera to dashboard:" + e.getMessage());
 		}

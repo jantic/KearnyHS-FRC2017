@@ -29,8 +29,7 @@ public class AimForGear extends Command {
 	@Override
 	protected void execute() {
 		try {
-			Robot.cameraSubsystem.activateCamera(CameraType.GEAR_CAMERA);
-			final Mat latestImage = Robot.cameraSubsystem.getLatestImage();
+			final Mat latestImage = Robot.cameraSubsystem.getLatestImage(CameraType.GEAR_CAMERA);
 			final VisionCenteringCommand centeringCommand = this.autoAim.generateCenteringCommand(latestImage);
 			// TODO: Put turning code here- this is where we ask Rich (the
 			// adult).
