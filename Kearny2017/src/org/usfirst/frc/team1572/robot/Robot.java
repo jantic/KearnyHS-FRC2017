@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team1572.robot;
 
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,6 +16,7 @@ import org.usfirst.frc.team1572.robot.commands.MidGear;
 import org.usfirst.frc.team1572.robot.commands.RightGear;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
 import org.usfirst.frc.team1572.robot.subsystems.BallHopper;
+import org.usfirst.frc.team1572.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
 import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
 import org.usfirst.frc.team1572.robot.subsystems.ClawIntake;
@@ -47,13 +47,14 @@ public class Robot extends IterativeRobot {
 	public static LeftGear leftgear;
 	public static MidGear midgear;
 	public static RightGear rightgear;
-	
-	//boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
-	//boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
-	//boolean buttonValue3 = SmartDashboard.getBoolean("LeftGear", true);
-	
-	 double dashData = SmartDashboard.getNumber("DB/Slider 0", 0.0);
-	
+	public static CameraSubsystem cameraSubsystem;
+
+	// boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
+	// boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
+	// boolean buttonValue3 = SmartDashboard.getBoolean("LeftGear", true);
+
+	double dashData = SmartDashboard.getNumber("DB/Slider 0", 0.0);
+
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -64,37 +65,36 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		RobotMap.init();
-		 joydrive = new JoyDrive();
-		 clawhand = new ClawHand();
-		 chipotlearm = new ChipotleArm();
-		 shooter = new Shooter();
-		 lifter = new Lift();
-		 teledrive = new TeleDrive();
-		 leftgear = new LeftGear();
-		 rightgear = new RightGear();
-		 midgear = new MidGear();
-		//SmartDashboard.putBoolean("RightGear", false);
-		//SmartDashboard.putBoolean("MidGear", false);
-		//SmartDashboard.putBoolean("LeftGear", false);
-		
+		joydrive = new JoyDrive();
+		clawhand = new ClawHand();
+		chipotlearm = new ChipotleArm();
+		shooter = new Shooter();
+		lifter = new Lift();
+		teledrive = new TeleDrive();
+		leftgear = new LeftGear();
+		rightgear = new RightGear();
+		midgear = new MidGear();
+		cameraSubsystem = new CameraSubsystem();
+		// SmartDashboard.putBoolean("RightGear", false);
+		// SmartDashboard.putBoolean("MidGear", false);
+		// SmartDashboard.putBoolean("LeftGear", false);
 
-		 //drivedistance = new DriveDistance(dist);
-		 //Does not take varible dist, may need to put 0 to define
+		// drivedistance = new DriveDistance(dist);
+		// Does not take varible dist, may need to put 0 to define
 		oi = new OI();
 		oi.init();
 		SmartDashboard.putData("Auto mode", chooser);
-		
-	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
-    	ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);
-    	ChipotleArm.leftArm.set(DoubleSolenoid.Value.kOff);
-    	sensor = new Sensor();
-    	
-    	SmartDashboard.putData(Scheduler.getInstance());
+
+		ClawHand.claw.set(DoubleSolenoid.Value.kOff);
+		ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);
+		ChipotleArm.leftArm.set(DoubleSolenoid.Value.kOff);
+		sensor = new Sensor();
+
+		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("RightGear", new RightGear());
 		SmartDashboard.putData("LeftGear", new LeftGear());
 		SmartDashboard.putData("MidGear", new MidGear());
-		
-		
+
 	}
 
 	/**
@@ -145,22 +145,19 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		/*
-		if(SmartDashboard.getBoolean("MidGear", true)) {
-		Scheduler.getInstance().add(midgear);
-		}
-		
-		if(SmartDashboard.getBoolean("LeftGear", true)){
-		Scheduler.getInstance().add(leftgear);
-		}
-		
-		if(SmartDashboard.getBoolean("RightGear", true)) {
-		Scheduler.getInstance().add(rightgear);
-		}
-		
-		Scheduler.getInstance().run();
-		*/
+		 * if(SmartDashboard.getBoolean("MidGear", true)) {
+		 * Scheduler.getInstance().add(midgear); }
+		 * 
+		 * if(SmartDashboard.getBoolean("LeftGear", true)){
+		 * Scheduler.getInstance().add(leftgear); }
+		 * 
+		 * if(SmartDashboard.getBoolean("RightGear", true)) {
+		 * Scheduler.getInstance().add(rightgear); }
+		 * 
+		 * Scheduler.getInstance().run();
+		 */
 	}
-		 
+
 	@Override
 	public void teleopInit() {
 		// This makes sure that the autonomous stops running when
@@ -169,9 +166,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		
-		
-  
+
 		Scheduler.getInstance().add(teledrive);
 		System.out.println("after add");
 	}
@@ -181,7 +176,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-	
+
 		ClawHand.openClaw();
 		ClawHand.closeClaw();
 		ClawIntake.clawIntake();
@@ -192,7 +187,7 @@ public class Robot extends IterativeRobot {
 		Shooter.shoot();
 
 		Scheduler.getInstance().run();
-		
+
 		System.out.println(RobotMap.leftDrivetrain.getSpeed() + " left rpm");
 		System.out.println(RobotMap.rightDrivetrain.getSpeed() + " right rpm");
 		System.out.println(RobotMap.rightDrivetrain.getEncPosition() + " RightEncPos");
@@ -209,22 +204,14 @@ public class Robot extends IterativeRobot {
 }
 /*
  * 
-logitechF310Map.getButtonA();
-logitechF310Map.getButtonB();
-logitechF310Map.getButtonBack();
-logitechF310Map.getButtonL3();
-logitechF310Map.getButtonLB();
-logitechF310Map.getButtonR3();
-logitechF310Map.getButtonRB();
-logitechF310Map.getButtonStart();
-logitechF310Map.getButtonX();
-logitechF310Map.getButtonY();
-logitechF310Map.getLeftTrigger();
-logitechF310Map.getLeftXAxis();
-logitechF310Map.getLeftYAxis();
-logitechF310Map.getRightTrigger();
-logitechF310Map.getRightXAxis();
-logitechF310Map.getRightYAxis();
-//logitechF310Map.getPOV();
+ * logitechF310Map.getButtonA(); logitechF310Map.getButtonB();
+ * logitechF310Map.getButtonBack(); logitechF310Map.getButtonL3();
+ * logitechF310Map.getButtonLB(); logitechF310Map.getButtonR3();
+ * logitechF310Map.getButtonRB(); logitechF310Map.getButtonStart();
+ * logitechF310Map.getButtonX(); logitechF310Map.getButtonY();
+ * logitechF310Map.getLeftTrigger(); logitechF310Map.getLeftXAxis();
+ * logitechF310Map.getLeftYAxis(); logitechF310Map.getRightTrigger();
+ * logitechF310Map.getRightXAxis(); logitechF310Map.getRightYAxis();
+ * //logitechF310Map.getPOV();
  */
-//Scheduler.getInstance().add(drivedistance);
+// Scheduler.getInstance().add(drivedistance);

@@ -5,33 +5,20 @@ import java.util.ArrayList;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
-import org.usfirst.frc.team1572.robot.vision.camera.CameraType;
-import org.usfirst.frc.team1572.robot.vision.camera.EasyCamera;
-import org.usfirst.frc.team1572.robot.vision.camera.ImageGrabFailedException;
 import org.usfirst.frc.team1572.robot.vision.grip.PegTargetVision;
 
 public class PegTargetAutoAim implements IAutoAim {
-	private final EasyCamera easyCamera = EasyCamera.getInstance(CameraType.PEG_CAMERA);
 	private final PegTargetVision pegTargetVision = new PegTargetVision();
 	
 	@Override
-	public VisionCenteringCommand generateCenteringCommand(){
-		try{
-			final Mat imageMatrix = this.easyCamera.getLatestImage();
-			this.pegTargetVision.process(imageMatrix);
-			final ArrayList<MatOfPoint> pegContours = this.pegTargetVision.filterContoursOutput();
-			final Point pegTargetCenter = getPegTargetCenterPoint(pegContours);
-	
-			if (pegTargetCenter != null) {
-				final Point centerOfView = calculateCenterOfView(this.pegTargetVision);
-				return AutoAimUtils.generateCenteringCommand(centerOfView, pegTargetCenter);
-			}
-		}
-		catch(ImageGrabFailedException e){
-			System.out.println("Error while grabbing peg camera image:" + e.getMessage());
-		}
-		catch(Exception e){
-			System.out.println("Error while calculating latest peg centering command:" + e.getMessage());
+	public VisionCenteringCommand generateCenteringCommand(final Mat imageMatrix){
+		this.pegTargetVision.process(imageMatrix);
+		final ArrayList<MatOfPoint> pegContours = this.pegTargetVision.filterContoursOutput();
+		final Point pegTargetCenter = getPegTargetCenterPoint(pegContours);
+
+		if (pegTargetCenter != null) {
+			final Point centerOfView = calculateCenterOfView(this.pegTargetVision);
+			return AutoAimUtils.generateCenteringCommand(centerOfView, pegTargetCenter);
 		}
 		
 		return VisionCenteringCommand.NULL;
