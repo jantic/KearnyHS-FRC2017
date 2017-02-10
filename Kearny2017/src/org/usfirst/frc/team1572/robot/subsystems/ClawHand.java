@@ -27,9 +27,9 @@ public final static DoubleSolenoid claw = RobotMap.clawHand;
     }
     
     public static void closeClaw() {
-    	if (OI.joyPilot.getRawButton(4)) {
+    	
         	claw.set(DoubleSolenoid.Value.kReverse);
-    	}
+    	
     }
 }
 //82984285

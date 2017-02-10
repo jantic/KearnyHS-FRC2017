@@ -20,8 +20,10 @@ public class Lift extends Subsystem {
     
     public static void Lifter() {
     	
-        lift.set(-OI.joyPilot.getRawAxis(3));
-    
+    	if(OI.joyCoPilot.getRawButton(2)){
+    		lift.set(100);
+    	}
+    	
     }
 
 }

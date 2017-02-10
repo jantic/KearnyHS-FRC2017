@@ -33,7 +33,7 @@ public class ReleaseGear extends Command {
 
         // Called repeatedly when this Command is scheduled to run
         protected void execute() {
-        	buttonPressed = OI.joyCoPilot.getRawButton(2);
+        	buttonPressed = OI.joyPilot.getRawButton(1) || OI.joyCoPilot.getRawButton(1);
         	if(buttonPressed){
         		loopcount = 0;
         		//ClawHand.openClaw();

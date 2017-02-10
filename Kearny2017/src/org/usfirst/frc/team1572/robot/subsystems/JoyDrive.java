@@ -3,6 +3,8 @@ package org.usfirst.frc.team1572.robot.subsystems;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.RobotMap;
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 
@@ -12,7 +14,7 @@ public class JoyDrive extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	private final double maxRPM = 100.00;
+	private double maxRPM;
 	private final RobotDrive robotDrive = RobotMap.robotDrive;
 	private final CANTalon leftDrive = RobotMap.leftDrivetrain;
 	private final CANTalon rightDrive = RobotMap.rightDrivetrain;
@@ -32,7 +34,15 @@ public class JoyDrive extends Subsystem {
 		double leftMotor = 0.0;
 		double rightMotor = 0.0; 
 		//robotDrive.arcadeDrive(targetRPM, joyMap.getLeftXAxis(stick))
-		
+		if(Robot.teledrive.coPilotDrive()){
+			maxRPM = 25;
+		}
+		else if(Robot.teledrive.overdrive()) {
+			maxRPM = 100;
+		}
+		else{
+			maxRPM = 75;
+		}
 
 		leftMotor  = joyMap.getLeftYAxis(stick) - joyMap.getLeftXAxis(stick);
 		rightMotor = joyMap.getLeftYAxis(stick) + joyMap.getLeftXAxis(stick);

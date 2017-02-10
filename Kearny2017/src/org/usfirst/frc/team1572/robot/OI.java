@@ -51,5 +51,8 @@ public class OI {
 	public Joystick getJoyPilot() {
 	    return joyPilot;
 	}
+	public Joystick getJoyCoPilot() {
+		return joyCoPilot;
+	}
 
 }

@@ -36,7 +36,7 @@ public class GearGrab extends Command {
 
         // Called repeatedly when this Command is scheduled to run
         protected void execute() {
-        	buttonPressed = OI.joyCoPilot.getRawButton(1);
+        	buttonPressed = OI.joyCoPilot.getRawButton(1) || OI.joyCoPilot.getRawButton(5);
         	if(Sensor.getDistance() < 1){
         		gearDetected = true;
         	}

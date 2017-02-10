@@ -19,7 +19,7 @@ public class Shooter extends Subsystem {
     }
     
     public static void shoot() {
-    	if (OI.joyPilot.getRawButton(5)) {
+    	if (OI.joyPilot.getRawButton(6) || OI.joyCoPilot.getRawButton(4)) {
     		shooter.set(0.75);
     	}
     }

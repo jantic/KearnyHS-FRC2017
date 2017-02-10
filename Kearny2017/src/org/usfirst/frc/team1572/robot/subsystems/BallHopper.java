@@ -17,8 +17,8 @@ public class BallHopper extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     public static void ballIntake() {
-    	if (OI.joyPilot.getRawButton(7)) {
-    		//change to joyCoPilot, button 2
+    	if (OI.joyPilot.getRawButton(5) || OI.joyCoPilot.getRawButton(3)) {
+    		
     		hopper.set(-0.75);
     	}
     	else{
