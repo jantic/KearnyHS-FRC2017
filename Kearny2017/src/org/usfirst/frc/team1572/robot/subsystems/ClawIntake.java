@@ -18,9 +18,14 @@ public class ClawIntake extends Subsystem {
     }
     
     public static void clawIntake() {
-    	if (OI.joyPilot.getRawButton(6)) {
-        	clawIntake.set(0.75);
-    	}
+
+    	
+        clawIntake.set(0.75);;
+    }
+
+    public static void stopIntake() {
+    	
+    	clawIntake.set(0);
     }
 
 }

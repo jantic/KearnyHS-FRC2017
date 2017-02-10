@@ -39,6 +39,7 @@ public class Robot extends IterativeRobot {
 	public static TeleDrive teledrive;
 	public static DriveDistance drivedistance;
 	public static ClawHand clawhand;
+	public static ClawIntake clawIntake;
 	public static ChipotleArm chipotlearm;
 	public static LogitechF310Map logitechF310Map;
 	public static Sensor sensor;
@@ -65,6 +66,33 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		RobotMap.init();
+		 joydrive = new JoyDrive();
+		 clawhand = new ClawHand();
+		 clawIntake = new ClawIntake();
+		 chipotlearm = new ChipotleArm();
+		 shooter = new Shooter();
+		 lifter = new Lift();
+		 teledrive = new TeleDrive();
+		 leftgear = new LeftGear();
+		 rightgear = new RightGear();
+		 midgear = new MidGear();
+		//SmartDashboard.putBoolean("RightGear", false);
+		//SmartDashboard.putBoolean("MidGear", false);
+		//SmartDashboard.putBoolean("LeftGear", false);
+		
+		 joydrive = new JoyDrive();
+		 clawhand = new ClawHand();
+		 chipotlearm = new ChipotleArm();
+		 shooter = new Shooter();
+		 lifter = new Lift();
+		 teledrive = new TeleDrive();
+		 leftgear = new LeftGear();
+		 rightgear = new RightGear();
+		 midgear = new MidGear();
+		//SmartDashboard.putBoolean("RightGear", false);
+		//SmartDashboard.putBoolean("MidGear", false);
+		//SmartDashboard.putBoolean("LeftGear", false);
+		
 		joydrive = new JoyDrive();
 		clawhand = new ClawHand();
 		chipotlearm = new ChipotleArm();
@@ -84,6 +112,20 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		oi.init();
 		SmartDashboard.putData("Auto mode", chooser);
+		
+	  	//ClawHand.claw.set(DoubleSolenoid.Value.kOff);
+    	//ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);
+    	//ChipotleArm.leftArm.set(DoubleSolenoid.Value.kOff);
+    	sensor = new Sensor();
+    	
+    	SmartDashboard.putData(Scheduler.getInstance());
+		
+	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
+    	ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);
+    	ChipotleArm.leftArm.set(DoubleSolenoid.Value.kOff);
+    	sensor = new Sensor();
+    	
+    	SmartDashboard.putData(Scheduler.getInstance());
 
 		ClawHand.claw.set(DoubleSolenoid.Value.kOff);
 		ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);

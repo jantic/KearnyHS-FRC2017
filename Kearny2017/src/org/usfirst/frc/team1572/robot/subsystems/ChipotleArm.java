@@ -22,19 +22,19 @@ public class ChipotleArm extends Subsystem {
     
     public static void lowerArm() {
 		
-		if (OI.joyPilot.getRawButton(1)) {
-	    	rightArm.set(DoubleSolenoid.Value.kForward);
-	    	leftArm.set(DoubleSolenoid.Value.kForward);
-		}
+		
+	    rightArm.set(DoubleSolenoid.Value.kForward);
+	    leftArm.set(DoubleSolenoid.Value.kForward);
+		
 
     }
     
     public static void raiseArm() {
     	
-		if (OI.joyPilot.getRawButton(2)) {
-	    	rightArm.set(DoubleSolenoid.Value.kReverse);
-	    	leftArm.set(DoubleSolenoid.Value.kReverse);
-		}
+		
+	    rightArm.set(DoubleSolenoid.Value.kReverse);
+	    leftArm.set(DoubleSolenoid.Value.kReverse);
+		
 
     }
 }

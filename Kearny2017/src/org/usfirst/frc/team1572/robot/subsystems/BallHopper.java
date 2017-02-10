@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1572.robot.subsystems;
 
+import org.usfirst.frc.team1572.robot.OI;
 import org.usfirst.frc.team1572.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Victor;
@@ -16,7 +17,10 @@ public class BallHopper extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     public static void ballIntake() {
-        	hopper.set(0.75);
+    	if (OI.joyPilot.getRawButton(7)) {
+    		//change to joyCoPilot, button 2
+    		hopper.set(0.75);
+    	}
     }
 }
 

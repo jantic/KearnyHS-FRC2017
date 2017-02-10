@@ -21,14 +21,14 @@ public class ClawHand extends Subsystem {
     }
     
     public static void openClaw() {
-    	if (OI.joyPilot.getRawButton(3)) {
-        	claw.set(DoubleSolenoid.Value.kForward);
-    	}
+   
+        claw.set(DoubleSolenoid.Value.kForward);
+    	
     }
     
     public static void closeClaw() {
     	if (OI.joyPilot.getRawButton(4)) {
-        	claw.set(DoubleSolenoid.Value.kReverse);
+        	//claw.set(DoubleSolenoid.Value.kReverse);
     	}
     }
 }

@@ -33,12 +33,29 @@ public class JoyDrive extends Subsystem {
 		double rightMotor = 0.0; 
 		//robotDrive.arcadeDrive(targetRPM, joyMap.getLeftXAxis(stick))
 		
+
+		leftMotor  = joyMap.getLeftYAxis(stick) - joyMap.getLeftXAxis(stick);
+		rightMotor = joyMap.getLeftYAxis(stick) + joyMap.getLeftXAxis(stick);
+		//leftDrive.set(leftMotor*maxRPM);
+		//rightDrive.set(rightMotor*maxRPM);
+		robotDrive.arcadeDrive(joyMap.getLeftYAxis(stick),joyMap.getLeftXAxis(stick));
+		System.out.println(leftDrive.getControlMode().name());
+		System.out.println(rightDrive.getControlMode().name());
+
+		leftMotor  = joyMap.getLeftYAxis(stick) - joyMap.getLeftXAxis(stick);
+		rightMotor = joyMap.getLeftYAxis(stick) + joyMap.getLeftXAxis(stick);
+		leftDrive.set(leftMotor*maxRPM);
+		rightDrive.set(rightMotor*maxRPM);
+		System.out.println(leftDrive.getControlMode().name());
+		System.out.println(rightDrive.getControlMode().name());
+
 		leftMotor  = this.joyMap.getLeftYAxis(stick) - this.joyMap.getLeftXAxis(stick);
 		rightMotor = this.joyMap.getLeftYAxis(stick) + this.joyMap.getLeftXAxis(stick);
 		this.leftDrive.set(leftMotor*this.maxRPM);
 		this.rightDrive.set(rightMotor*this.maxRPM);
 		System.out.println(this.leftDrive.getControlMode().name());
 		System.out.println(this.rightDrive.getControlMode().name());
+
 		
 		System.out.println(leftMotor*this.maxRPM);
 		System.out.println(rightMotor*this.maxRPM);
