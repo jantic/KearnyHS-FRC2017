@@ -22,9 +22,9 @@ public class GearGrab extends Command {
     	
         public GearGrab() {
             // Use requires() here to declare subsystem dependencies
-        	requires(Robot.clawhand);
+        	//requires(Robot.clawhand);
         	requires(Robot.clawIntake);
-        	requires(Robot.chipotlearm);
+        	//requires(Robot.chipotlearm);
         	requires(Robot.sensor);
         }
         
@@ -42,16 +42,16 @@ public class GearGrab extends Command {
         	}
         	if(buttonPressed && !gearDetected){
         		loopcount = 0;
-        		ClawHand.openClaw();
-        		ChipotleArm.lowerArm();
+        		//ClawHand.openClaw();
+        		//ChipotleArm.lowerArm();
         		ClawIntake.clawIntake();
         	}
         	else{
         		if(loopcount < 30){
-        			ClawHand.closeClaw();
+        			//ClawHand.closeClaw();
         			ClawIntake.stopIntake();
         			if(loopcount > 20){
-        				ChipotleArm.raiseArm();
+        				//ChipotleArm.raiseArm();
         			}
         		}
         	}

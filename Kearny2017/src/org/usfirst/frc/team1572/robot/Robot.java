@@ -113,23 +113,20 @@ public class Robot extends IterativeRobot {
 		oi.init();
 		SmartDashboard.putData("Auto mode", chooser);
 		
-	  	//ClawHand.claw.set(DoubleSolenoid.Value.kOff);
-    	//ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);
-    	//ChipotleArm.leftArm.set(DoubleSolenoid.Value.kOff);
+	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
+    	ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
     	sensor = new Sensor();
     	
     	SmartDashboard.putData(Scheduler.getInstance());
 		
 	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
-    	ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);
-    	ChipotleArm.leftArm.set(DoubleSolenoid.Value.kOff);
+    	ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
     	sensor = new Sensor();
     	
     	SmartDashboard.putData(Scheduler.getInstance());
 
 		ClawHand.claw.set(DoubleSolenoid.Value.kOff);
-		ChipotleArm.rightArm.set(DoubleSolenoid.Value.kOff);
-		ChipotleArm.leftArm.set(DoubleSolenoid.Value.kOff);
+		ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
 		sensor = new Sensor();
 
 		SmartDashboard.putData(Scheduler.getInstance());

@@ -19,9 +19,9 @@ public class Lift extends Subsystem {
     }
     
     public static void Lifter() {
-    	if (OI.joyPilot.getRawAxis(3) > 0.0) {
-        	lift.set(OI.joyPilot.getRawAxis(3));
-    	}
+    	
+        lift.set(-OI.joyPilot.getRawAxis(3));
+    
     }
 
 }

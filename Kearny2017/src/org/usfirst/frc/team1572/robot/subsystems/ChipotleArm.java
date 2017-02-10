@@ -9,13 +9,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ChipotleArm extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	public final static DoubleSolenoid rightArm = RobotMap.rightArm;
-	public final static DoubleSolenoid leftArm = RobotMap.leftArm;
+	public final static DoubleSolenoid Arm = RobotMap.Arm;
 	
     @Override
 	public void initDefaultCommand() {
-    	rightArm.set(DoubleSolenoid.Value.kOff);
-    	leftArm.set(DoubleSolenoid.Value.kOff);
+    	Arm.set(DoubleSolenoid.Value.kOff);
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
@@ -23,8 +21,7 @@ public class ChipotleArm extends Subsystem {
     public static void lowerArm() {
 		
 		
-	    rightArm.set(DoubleSolenoid.Value.kForward);
-	    leftArm.set(DoubleSolenoid.Value.kForward);
+	    Arm.set(DoubleSolenoid.Value.kForward);
 		
 
     }
@@ -32,8 +29,7 @@ public class ChipotleArm extends Subsystem {
     public static void raiseArm() {
     	
 		
-	    rightArm.set(DoubleSolenoid.Value.kReverse);
-	    leftArm.set(DoubleSolenoid.Value.kReverse);
+	    Arm.set(DoubleSolenoid.Value.kReverse);
 		
 
     }

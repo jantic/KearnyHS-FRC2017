@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClawHand extends Subsystem {
-	public final static DoubleSolenoid claw = RobotMap.clawHand;
+public final static DoubleSolenoid claw = RobotMap.clawHand;
     
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -28,7 +28,7 @@ public class ClawHand extends Subsystem {
     
     public static void closeClaw() {
     	if (OI.joyPilot.getRawButton(4)) {
-        	//claw.set(DoubleSolenoid.Value.kReverse);
+        	claw.set(DoubleSolenoid.Value.kReverse);
     	}
     }
 }
