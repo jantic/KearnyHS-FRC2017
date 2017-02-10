@@ -216,11 +216,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 
-		ClawHand.openClaw();
-		ClawHand.closeClaw();
-		ClawIntake.clawIntake();
-		ChipotleArm.lowerArm();
-		ChipotleArm.raiseArm();
+		//ClawHand.openClaw();
+		//ClawHand.closeClaw();
+		//ClawIntake.clawIntake();
+		//ChipotleArm.lowerArm();
+		//ChipotleArm.raiseArm();
 		Lift.Lifter();
 		BallHopper.ballIntake();
 		Shooter.shoot();

@@ -31,7 +31,7 @@ public class TeleDrive extends Command {
     		coPilotDrive = true;
     		Robot.joydrive.arcadeDrive(Robot.oi.getJoyCoPilot());
     	}
-    	else if(OI.joyPilot.getRawButton(2)){
+    	else if(OI.joyPilot.getRawButton(4)){
     		overdrive = true;
     		Robot.joydrive.arcadeDrive(Robot.oi.getJoyPilot());
     	}

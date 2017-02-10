@@ -21,8 +21,8 @@ public class ReleaseGear extends Command {
     	
         public ReleaseGear() {
             // Use requires() here to declare subsystem dependencies
-        	//requires(Robot.clawhand);
-        	//requires(Robot.chipotlearm);
+        	requires(Robot.clawhand);
+        	requires(Robot.chipotlearm);
         }
         
 
@@ -33,16 +33,16 @@ public class ReleaseGear extends Command {
 
         // Called repeatedly when this Command is scheduled to run
         protected void execute() {
-        	buttonPressed = OI.joyPilot.getRawButton(1) || OI.joyCoPilot.getRawButton(1);
+        	buttonPressed = OI.joyPilot.getRawButton(2) || OI.joyCoPilot.getRawButton(1);
         	if(buttonPressed){
         		loopcount = 0;
-        		//ClawHand.openClaw();
-        		//ChipotleArm.lowerArm();
+        		ClawHand.openClaw();
+        		ChipotleArm.lowerArm();
         	}
         	else{
         		if(loopcount < 10){
-        			//ClawHand.closeClaw();
-        			//ChipotleArm.raiseArm();
+        			ClawHand.closeClaw();
+        			ChipotleArm.raiseArm();
         		}
         	}
         	loopcount = loopcount + 1;
