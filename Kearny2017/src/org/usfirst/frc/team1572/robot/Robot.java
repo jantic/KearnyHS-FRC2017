@@ -10,6 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
+import org.usfirst.frc.team1572.robot.commands.AimForGearAutonomously;
+import org.usfirst.frc.team1572.robot.commands.AimForGearManually;
+import org.usfirst.frc.team1572.robot.commands.AimForPegAutonomously;
+import org.usfirst.frc.team1572.robot.commands.AimForPegManually;
+import org.usfirst.frc.team1572.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team1572.robot.commands.DriveDistance;
 import org.usfirst.frc.team1572.robot.commands.GearGrab;
 import org.usfirst.frc.team1572.robot.commands.LeftGear;
@@ -53,7 +58,7 @@ public class Robot extends IterativeRobot {
 	public static CameraSubsystem cameraSubsystem;
 	public static GearGrab geargrab;
 	public static ReleaseGear releasegear;
-	
+
 	// boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
 	// boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
 	// boolean buttonValue3 = SmartDashboard.getBoolean("LeftGear", true);
@@ -70,40 +75,39 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		RobotMap.init();
-		 joydrive = new JoyDrive();
-		 clawhand = new ClawHand();
-		 clawIntake = new ClawIntake();
-		 chipotlearm = new ChipotleArm();
-		 shooter = new Shooter();
-		 lifter = new Lift();
-		 teledrive = new TeleDrive();
-		 leftgear = new LeftGear();
-		 rightgear = new RightGear();
-		 midgear = new MidGear();
-		 geargrab = new GearGrab();
-		 releasegear = new ReleaseGear();
-		//SmartDashboard.putBoolean("RightGear", false);
-		//SmartDashboard.putBoolean("MidGear", false);
-		//SmartDashboard.putBoolean("LeftGear", false);
-		
-		 
+		joydrive = new JoyDrive();
+		clawhand = new ClawHand();
+		clawIntake = new ClawIntake();
+		chipotlearm = new ChipotleArm();
+		shooter = new Shooter();
+		lifter = new Lift();
+		teledrive = new TeleDrive();
+		leftgear = new LeftGear();
+		rightgear = new RightGear();
+		midgear = new MidGear();
+		geargrab = new GearGrab();
+		releasegear = new ReleaseGear();
+		cameraSubsystem = new CameraSubsystem();
+		// SmartDashboard.putBoolean("RightGear", false);
+		// SmartDashboard.putBoolean("MidGear", false);
+		// SmartDashboard.putBoolean("LeftGear", false);
+
 		// drivedistance = new DriveDistance(dist);
 		// Does not take varible dist, may need to put 0 to define
 		oi = new OI();
-		oi.init();
-		SmartDashboard.putData("Auto mode", chooser);
-		
-	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
-    	ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
-    	sensor = new Sensor();
-    	
-    	SmartDashboard.putData(Scheduler.getInstance());
-		
-	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
-    	ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
-    	sensor = new Sensor();
-    	
-    	SmartDashboard.putData(Scheduler.getInstance());
+		SmartDashboard.putData("Auto mode", this.chooser);
+
+		ClawHand.claw.set(DoubleSolenoid.Value.kOff);
+		ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
+		sensor = new Sensor();
+
+		SmartDashboard.putData(Scheduler.getInstance());
+
+		ClawHand.claw.set(DoubleSolenoid.Value.kOff);
+		ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
+		sensor = new Sensor();
+
+		SmartDashboard.putData(Scheduler.getInstance());
 
 		ClawHand.claw.set(DoubleSolenoid.Value.kOff);
 		ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
@@ -113,7 +117,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("RightGear", new RightGear());
 		SmartDashboard.putData("LeftGear", new LeftGear());
 		SmartDashboard.putData("MidGear", new MidGear());
-
+		SmartDashboard.putData("Peg Auto Aim Manual", new AimForPegManually());
+		SmartDashboard.putData("Gear Auto Aim Manual", new AimForGearManually());
+		SmartDashboard.putData("Peg Auto Aim Autonomously", new AimForPegAutonomously());
+		SmartDashboard.putData("Gear Auto Aim Autonomously", new AimForGearAutonomously());
 	}
 
 	/**
@@ -123,7 +130,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		//do nothing
 	}
 
 	@Override
@@ -144,7 +151,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+		//this.autonomousCommand = this.chooser.getSelected();
+		this.autonomousCommand = new AutonomousCommand();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -154,8 +162,8 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+		if (this.autonomousCommand != null)
+			this.autonomousCommand.start();
 	}
 
 	/**
@@ -163,6 +171,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
 		/*
 		 * if(SmartDashboard.getBoolean("MidGear", true)) {
 		 * Scheduler.getInstance().add(midgear); }
@@ -183,8 +192,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+		if (this.autonomousCommand != null)
+			this.autonomousCommand.cancel();
 
 		Scheduler.getInstance().add(teledrive);
 		System.out.println("after add");
@@ -196,12 +205,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 
-		//ClawHand.openClaw();
-		//ClawHand.closeClaw();
-		//ClawIntake.clawIntake();
-		//ChipotleArm.lowerArm();
-		//ChipotleArm.raiseArm();
-		
+		// ClawHand.openClaw();
+		// ClawHand.closeClaw();
+		// ClawIntake.clawIntake();
+		// ChipotleArm.lowerArm();
+		// ChipotleArm.raiseArm();
+
 		Scheduler.getInstance().add(geargrab);
 		Scheduler.getInstance().add(releasegear);
 		Lift.Lifter();

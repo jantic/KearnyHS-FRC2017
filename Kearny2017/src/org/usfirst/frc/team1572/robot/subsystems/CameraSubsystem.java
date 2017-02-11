@@ -7,6 +7,7 @@ import org.usfirst.frc.team1572.robot.vision.ImageGrabFailedException;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -52,14 +53,27 @@ public class CameraSubsystem extends Subsystem{
 			return;
 		}
 		
-		if(this.currentCamera!=null){
-			this.cameraServer.removeCamera(this.currentCamera.getName());
-		}
-		
+		disposeOfPreviousCamera();
+		initializeAndRunCamera(cameraType);
+	}
+
+	private void initializeAndRunCamera(final CameraType cameraType) {
 		this.currentCameraType = cameraType;
 		this.currentCamera = this.cameraServer.startAutomaticCapture(cameraType.getDeviceNum());
 		this.currentCamera.setResolution(640, 480);
-		this.currentCameraVideoFeed = this.cameraServer.getVideo();
+		this.currentCameraVideoFeed = this.cameraServer.getVideo(this.currentCamera);
+	}
+
+	private void disposeOfPreviousCamera() {
+		if(this.currentCamera!=null){	
+			for(final VideoSink videoSink: this.currentCamera.enumerateSinks()){
+				this.cameraServer.removeServer(videoSink.getName());
+				videoSink.free();
+			}
+			
+			this.cameraServer.removeCamera(this.currentCamera.getName());
+			this.currentCamera.free();
+		}
 	}
 
 	@Override
