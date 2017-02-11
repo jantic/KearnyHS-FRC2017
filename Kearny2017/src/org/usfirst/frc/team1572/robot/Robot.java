@@ -88,9 +88,7 @@ public class Robot extends IterativeRobot {
 		geargrab = new GearGrab();
 		releasegear = new ReleaseGear();
 		cameraSubsystem = new CameraSubsystem();
-		// SmartDashboard.putBoolean("RightGear", false);
-		// SmartDashboard.putBoolean("MidGear", false);
-		// SmartDashboard.putBoolean("LeftGear", false);
+
 
 		// drivedistance = new DriveDistance(dist);
 		// Does not take varible dist, may need to put 0 to define
@@ -107,8 +105,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("LeftGear", new LeftGear());
 		SmartDashboard.putData("MidGear", new MidGear());
 		//may want to put this in auto?
-
-
+		
+		//SmartDashboard.putBoolean("RightGear", false);
+		//SmartDashboard.putBoolean("MidGear", false);
+		//SmartDashboard.putBoolean("LeftGear", false);
+		
 		SmartDashboard.putData("Peg Auto Aim Manual", new AimForPegManually());
 		SmartDashboard.putData("Gear Auto Aim Manual", new AimForGearManually());
 		SmartDashboard.putData("Peg Auto Aim Autonomously", new AimForPegAutonomously());
