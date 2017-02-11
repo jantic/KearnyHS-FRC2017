@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 	// boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
 	// boolean buttonValue3 = SmartDashboard.getBoolean("LeftGear", true);
 
-	double dashData = SmartDashboard.getNumber("DB/Slider 0", 0.0);
+	//double dashData = SmartDashboard.getNumber("DB/Slider 0", 0.0);
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -95,32 +95,25 @@ public class Robot extends IterativeRobot {
 		// drivedistance = new DriveDistance(dist);
 		// Does not take varible dist, may need to put 0 to define
 		oi = new OI();
-		SmartDashboard.putData("Auto mode", this.chooser);
-
-		ClawHand.claw.set(DoubleSolenoid.Value.kOff);
-		ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
-		sensor = new Sensor();
-
-		SmartDashboard.putData(Scheduler.getInstance());
-
-		ClawHand.claw.set(DoubleSolenoid.Value.kOff);
-		ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
-		sensor = new Sensor();
-
-		SmartDashboard.putData(Scheduler.getInstance());
-
-		ClawHand.claw.set(DoubleSolenoid.Value.kOff);
-		ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
-		sensor = new Sensor();
-
+		oi.init();
+		SmartDashboard.putData("Auto mode", chooser);
+		
+	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
+    	ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
+    	sensor = new Sensor();
+    	
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("RightGear", new RightGear());
 		SmartDashboard.putData("LeftGear", new LeftGear());
 		SmartDashboard.putData("MidGear", new MidGear());
+		//may want to put this in auto?
+
+
 		SmartDashboard.putData("Peg Auto Aim Manual", new AimForPegManually());
 		SmartDashboard.putData("Gear Auto Aim Manual", new AimForGearManually());
 		SmartDashboard.putData("Peg Auto Aim Autonomously", new AimForPegAutonomously());
 		SmartDashboard.putData("Gear Auto Aim Autonomously", new AimForGearAutonomously());
+
 	}
 
 	/**
@@ -152,7 +145,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		//this.autonomousCommand = this.chooser.getSelected();
-		this.autonomousCommand = new AutonomousCommand();
+		//this.autonomousCommand = new AutonomousCommand();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
