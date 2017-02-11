@@ -201,6 +201,7 @@ public class Robot extends IterativeRobot {
 		//ClawIntake.clawIntake();
 		//ChipotleArm.lowerArm();
 		//ChipotleArm.raiseArm();
+		
 		Scheduler.getInstance().add(geargrab);
 		Scheduler.getInstance().add(releasegear);
 		Lift.Lifter();
