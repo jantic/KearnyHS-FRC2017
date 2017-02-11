@@ -16,6 +16,7 @@ public class JoyDrive extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	private double maxRPM;
+	private double speedFactor;
 	private final RobotDrive robotDrive = RobotMap.robotDrive;
 	private final CANTalon leftDrive = RobotMap.leftDrivetrain;
 	private final CANTalon rightDrive = RobotMap.rightDrivetrain;
@@ -27,7 +28,20 @@ public class JoyDrive extends Subsystem {
         setDefaultCommand(new StreamJoyDriveOutput());
     }
     
-	public void arcadeDrive(Joystick stick) {
+	public void arcadeDriveVoltage(Joystick stick) {
+		if(Robot.teledrive.coPilotDrive()) {
+			speedFactor = 0.25;
+		}
+		else if(Robot.teledrive.overdrive()) {
+			speedFactor = 1;
+		}
+		else {
+			speedFactor = 0.75;
+		}
+		robotDrive.arcadeDrive(joyMap.getLeftYAxis(stick) * speedFactor,joyMap.getLeftXAxis(stick) * speedFactor);
+	}
+    
+    public void arcadeDriveVelocity(Joystick stick) {
 		double leftMotor = 0.0;
 		double rightMotor = 0.0; 
 		//robotDrive.arcadeDrive(targetRPM, joyMap.getLeftXAxis(stick))
@@ -43,23 +57,18 @@ public class JoyDrive extends Subsystem {
 
 		leftMotor  = joyMap.getLeftYAxis(stick) - joyMap.getLeftXAxis(stick);
 		rightMotor = joyMap.getLeftYAxis(stick) + joyMap.getLeftXAxis(stick);
-		//leftDrive.set(leftMotor*maxRPM);
-		//rightDrive.set(rightMotor*maxRPM);
-		robotDrive.arcadeDrive(joyMap.getLeftYAxis(stick),joyMap.getLeftXAxis(stick));
-		updateDisplay();
 
-		leftMotor  = joyMap.getLeftYAxis(stick) - joyMap.getLeftXAxis(stick);
-		rightMotor = joyMap.getLeftYAxis(stick) + joyMap.getLeftXAxis(stick);
 		leftDrive.set(leftMotor*maxRPM);
 		rightDrive.set(rightMotor*maxRPM);
+		System.out.println(leftDrive.getControlMode().name());
+		System.out.println(rightDrive.getControlMode().name());
+
+		
 		updateDisplay();
 
-		leftMotor  = this.joyMap.getLeftYAxis(stick) - this.joyMap.getLeftXAxis(stick);
-		rightMotor = this.joyMap.getLeftYAxis(stick) + this.joyMap.getLeftXAxis(stick);
-		this.leftDrive.set(leftMotor*this.maxRPM);
-		this.rightDrive.set(rightMotor*this.maxRPM);
-		updateDisplay();
+
 	}
+
 
 	private void updateDisplay() {
 		final StreamJoyDriveOutput streamJoyDriveOutput = new StreamJoyDriveOutput();

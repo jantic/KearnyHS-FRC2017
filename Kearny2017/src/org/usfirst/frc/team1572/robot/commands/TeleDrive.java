@@ -2,6 +2,7 @@ package org.usfirst.frc.team1572.robot.commands;
 
 import org.usfirst.frc.team1572.robot.OI;
 import org.usfirst.frc.team1572.robot.Robot;
+import org.usfirst.frc.team1572.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -27,17 +28,33 @@ public class TeleDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	if(OI.joyCoPilot.getRawAxis(0) < -0.1 || OI.joyCoPilot.getRawAxis(0) > 0.1 || OI.joyCoPilot.getRawAxis(1) < -0.1 || OI.joyCoPilot.getRawAxis(1) > 0.1){
-    		coPilotDrive = true;
-    		Robot.joydrive.arcadeDrive(Robot.oi.getJoyCoPilot());
-    	}
-    	else if(OI.joyPilot.getRawButton(4)){
-    		overdrive = true;
-    		Robot.joydrive.arcadeDrive(Robot.oi.getJoyPilot());
+    	if(RobotMap.VELOCITYDRIVE){
+    		if(OI.joyCoPilot.getRawAxis(0) < -0.1 || OI.joyCoPilot.getRawAxis(0) > 0.1 || OI.joyCoPilot.getRawAxis(1) < -0.1 || OI.joyCoPilot.getRawAxis(1) > 0.1){
+				coPilotDrive = true;
+				Robot.joydrive.arcadeDriveVelocity(Robot.oi.getJoyCoPilot());
+			}
+			else if(OI.joyPilot.getRawButton(4)){
+				overdrive = true;
+				Robot.joydrive.arcadeDriveVelocity(Robot.oi.getJoyPilot());
+			}
+			else {
+				Robot.joydrive.arcadeDriveVelocity(Robot.oi.getJoyPilot()); 
+			}
     	}
     	else {
-    		Robot.joydrive.arcadeDrive(Robot.oi.getJoyPilot()); 
+    		if(OI.joyCoPilot.getRawAxis(0) < -0.1 || OI.joyCoPilot.getRawAxis(0) > 0.1 || OI.joyCoPilot.getRawAxis(1) < -0.1 || OI.joyCoPilot.getRawAxis(1) > 0.1){
+    			coPilotDrive = true;
+    			Robot.joydrive.arcadeDriveVoltage(Robot.oi.getJoyCoPilot());
+    		}
+    		else if(OI.joyPilot.getRawButton(9)){
+    			overdrive = true;
+    			Robot.joydrive.arcadeDriveVoltage(Robot.oi.getJoyPilot());
+    		}
+    		else {
+    			Robot.joydrive.arcadeDriveVoltage(Robot.oi.getJoyPilot()); 
+    		}
     	}
+    	
     }
     
     public boolean coPilotDrive() {

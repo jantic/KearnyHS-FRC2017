@@ -19,11 +19,10 @@ public class Lift extends Subsystem {
     }
     
     public static void Lifter() {
-    	
-    	if(OI.joyCoPilot.getRawButton(2)){
-    		lift.set(100);
-    	}
-    	
+    	lift.set(-1);
+    }
+    public static void stopLifter() {
+    	lift.set(0);
     }
 
 }

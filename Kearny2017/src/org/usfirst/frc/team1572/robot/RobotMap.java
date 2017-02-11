@@ -38,7 +38,7 @@ public class RobotMap {
 	public static int sensorPort1 = 0;
 	public static int sensorPort = 1;
 	
-	public static boolean VELOCITYDRIVE = true;
+	public static boolean VELOCITYDRIVE = false;
 	
 	public static CANTalon leftDrivetrain;
 	public static CANTalon rightDrivetrain;

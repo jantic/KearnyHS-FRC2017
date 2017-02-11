@@ -19,10 +19,14 @@ public class ChipotleArm extends Subsystem {
     }
     
     public static void lowerArm() {
+    	
 	    Arm.set(DoubleSolenoid.Value.kForward);
+    	
     }
     
     public static void raiseArm() {
+    	
 	    Arm.set(DoubleSolenoid.Value.kReverse);
+    	
     }
 }

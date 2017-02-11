@@ -61,6 +61,7 @@ public class Robot extends IterativeRobot {
 	public static ReleaseGear releasegear;
 	public static NavigationSubsystem navigationSubsystem;
 
+
 	// boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
 	// boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
 	// boolean buttonValue3 = SmartDashboard.getBoolean("LeftGear", true);
@@ -98,7 +99,7 @@ public class Robot extends IterativeRobot {
 		navigationSubsystem = new NavigationSubsystem();
 		OI.init();
 		oi = new OI();	
-	  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
+	  	ClawHand.claw.set(DoubleSolenoid.Value.kForward);
     	ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
     	sensor = new Sensor();
 	}
@@ -163,6 +164,13 @@ public class Robot extends IterativeRobot {
 		if (this.autonomousCommand != null){
 			this.autonomousCommand.cancel();
 		}
+		Scheduler.getInstance().add(geargrab);
+		Scheduler.getInstance().add(releasegear);
+
+
+
+		
+
 
 		Scheduler.getInstance().add(teledrive);
 	}
@@ -172,11 +180,49 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().add(geargrab);
-		Scheduler.getInstance().add(releasegear);
-		//Lift.Lifter();
-		//BallHopper.ballIntake();
-		//Shooter.shoot();
+
+		
+		if(OI.joyPilot.getRawButton(3)) {
+			ClawHand.openClaw();
+		}
+		if(OI.joyPilot.getRawButton(4)) {
+			ClawHand.closeClaw();
+		}
+		if(OI.joyCoPilot.getRawButton(1)) {
+			ClawIntake.clawIntake();
+		}
+		else {
+			ClawIntake.stopIntake();
+		}
+		if(OI.joyPilot.getRawButton(7)) {
+			ChipotleArm.lowerArm();
+		}
+		if(OI.joyPilot.getRawButton(8)) {
+			ChipotleArm.raiseArm();
+		}
+		if(OI.joyPilot.getRawButton(6)) {
+			Lift.Lifter();
+		}
+		else {
+			Lift.stopLifter();
+		}
+		if(OI.joyPilot.getRawButton(5)) {
+			BallHopper.ballIntake();
+		}
+		else{
+			BallHopper.stopBallIntake();
+		}
+		if(OI.joyCoPilot.getRawButton(2)) {
+			Shooter.shoot();
+		}
+		else{
+			Shooter.stopshoot();
+		}
+
+
+
+
+
 
 		Scheduler.getInstance().run();
 	}

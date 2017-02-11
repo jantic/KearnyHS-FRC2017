@@ -21,14 +21,14 @@ public final static DoubleSolenoid claw = RobotMap.clawHand;
     }
     
     public static void openClaw() {
-   
+    	
         claw.set(DoubleSolenoid.Value.kForward);
     	
     }
     
     public static void closeClaw() {
     	
-        	claw.set(DoubleSolenoid.Value.kReverse);
+        claw.set(DoubleSolenoid.Value.kReverse);
     	
     }
 }
