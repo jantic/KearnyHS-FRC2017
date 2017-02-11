@@ -10,6 +10,8 @@ import org.usfirst.frc.team1572.robot.subsystems.Sensor;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.command.WaitUntilCommand;
 
 /**
  *
@@ -19,6 +21,7 @@ public class GearGrab extends Command {
 		//private boolean gearDetected;
 		private boolean buttonPressed;
 		private double loopcount;
+		private long timeout;
     	
         public GearGrab() {
             // Use requires() here to declare subsystem dependencies

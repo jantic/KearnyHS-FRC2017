@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class BallHopper extends Subsystem {
+
 	private final static Victor hopper = RobotMap.ballHopper;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

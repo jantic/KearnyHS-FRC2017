@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 import org.usfirst.frc.team1572.robot.commands.DriveDistance;
+import org.usfirst.frc.team1572.robot.commands.GearGrab;
 import org.usfirst.frc.team1572.robot.commands.LeftGear;
 import org.usfirst.frc.team1572.robot.commands.MidGear;
+import org.usfirst.frc.team1572.robot.commands.ReleaseGear;
 import org.usfirst.frc.team1572.robot.commands.RightGear;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
 import org.usfirst.frc.team1572.robot.subsystems.BallHopper;
@@ -49,7 +51,9 @@ public class Robot extends IterativeRobot {
 	public static MidGear midgear;
 	public static RightGear rightgear;
 	public static CameraSubsystem cameraSubsystem;
-
+	public static GearGrab geargrab;
+	public static ReleaseGear releasegear;
+	
 	// boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
 	// boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
 	// boolean buttonValue3 = SmartDashboard.getBoolean("LeftGear", true);
@@ -76,37 +80,13 @@ public class Robot extends IterativeRobot {
 		 leftgear = new LeftGear();
 		 rightgear = new RightGear();
 		 midgear = new MidGear();
+		 geargrab = new GearGrab();
+		 releasegear = new ReleaseGear();
 		//SmartDashboard.putBoolean("RightGear", false);
 		//SmartDashboard.putBoolean("MidGear", false);
 		//SmartDashboard.putBoolean("LeftGear", false);
 		
-		 joydrive = new JoyDrive();
-		 clawhand = new ClawHand();
-		 chipotlearm = new ChipotleArm();
-		 shooter = new Shooter();
-		 lifter = new Lift();
-		 teledrive = new TeleDrive();
-		 leftgear = new LeftGear();
-		 rightgear = new RightGear();
-		 midgear = new MidGear();
-		//SmartDashboard.putBoolean("RightGear", false);
-		//SmartDashboard.putBoolean("MidGear", false);
-		//SmartDashboard.putBoolean("LeftGear", false);
-		
-		joydrive = new JoyDrive();
-		clawhand = new ClawHand();
-		chipotlearm = new ChipotleArm();
-		shooter = new Shooter();
-		lifter = new Lift();
-		teledrive = new TeleDrive();
-		leftgear = new LeftGear();
-		rightgear = new RightGear();
-		midgear = new MidGear();
-		cameraSubsystem = new CameraSubsystem();
-		// SmartDashboard.putBoolean("RightGear", false);
-		// SmartDashboard.putBoolean("MidGear", false);
-		// SmartDashboard.putBoolean("LeftGear", false);
-
+		 
 		// drivedistance = new DriveDistance(dist);
 		// Does not take varible dist, may need to put 0 to define
 		oi = new OI();
@@ -221,6 +201,8 @@ public class Robot extends IterativeRobot {
 		//ClawIntake.clawIntake();
 		//ChipotleArm.lowerArm();
 		//ChipotleArm.raiseArm();
+		Scheduler.getInstance().add(geargrab);
+		Scheduler.getInstance().add(releasegear);
 		Lift.Lifter();
 		BallHopper.ballIntake();
 		Shooter.shoot();
