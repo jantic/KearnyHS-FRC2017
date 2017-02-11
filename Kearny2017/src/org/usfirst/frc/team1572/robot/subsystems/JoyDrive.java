@@ -20,7 +20,7 @@ public class JoyDrive extends Subsystem {
 	private final CANTalon leftDrive = RobotMap.leftDrivetrain;
 	private final CANTalon rightDrive = RobotMap.rightDrivetrain;
 	private final LogitechF310Map joyMap = new LogitechF310Map();
-	private final StreamJoyDriveOutput streamJoyDriveOutput = new StreamJoyDriveOutput();
+
 
     @Override
 	public void initDefaultCommand() {
@@ -62,7 +62,8 @@ public class JoyDrive extends Subsystem {
 	}
 
 	private void updateDisplay() {
-		this.streamJoyDriveOutput.updateDisplay();
+		final StreamJoyDriveOutput streamJoyDriveOutput = new StreamJoyDriveOutput();
+		streamJoyDriveOutput.updateDisplay();
 
 	}
 	
