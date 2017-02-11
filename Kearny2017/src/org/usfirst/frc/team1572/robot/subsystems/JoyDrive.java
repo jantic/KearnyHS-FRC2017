@@ -3,12 +3,13 @@ package org.usfirst.frc.team1572.robot.subsystems;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.RobotMap;
+import org.usfirst.frc.team1572.robot.commands.StreamJoyDriveOutput;
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 public class JoyDrive extends Subsystem {
 
@@ -19,15 +20,11 @@ public class JoyDrive extends Subsystem {
 	private final CANTalon leftDrive = RobotMap.leftDrivetrain;
 	private final CANTalon rightDrive = RobotMap.rightDrivetrain;
 	private final LogitechF310Map joyMap = new LogitechF310Map();
+	private final StreamJoyDriveOutput streamJoyDriveOutput = new StreamJoyDriveOutput();
 
     @Override
 	public void initDefaultCommand() {
-  
-    	// Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	//leftDrive.getPostion;
-    	//leftDrive.getSpeed()
-    	//leftDrive.setPosition(0);
+        setDefaultCommand(new StreamJoyDriveOutput());
     }
     
 	public void arcadeDrive(Joystick stick) {
@@ -49,33 +46,53 @@ public class JoyDrive extends Subsystem {
 		//leftDrive.set(leftMotor*maxRPM);
 		//rightDrive.set(rightMotor*maxRPM);
 		robotDrive.arcadeDrive(joyMap.getLeftYAxis(stick),joyMap.getLeftXAxis(stick));
-		System.out.println(leftDrive.getControlMode().name());
-		System.out.println(rightDrive.getControlMode().name());
+		updateDisplay();
 
 		leftMotor  = joyMap.getLeftYAxis(stick) - joyMap.getLeftXAxis(stick);
 		rightMotor = joyMap.getLeftYAxis(stick) + joyMap.getLeftXAxis(stick);
 		leftDrive.set(leftMotor*maxRPM);
 		rightDrive.set(rightMotor*maxRPM);
-		System.out.println(leftDrive.getControlMode().name());
-		System.out.println(rightDrive.getControlMode().name());
+		updateDisplay();
 
 		leftMotor  = this.joyMap.getLeftYAxis(stick) - this.joyMap.getLeftXAxis(stick);
 		rightMotor = this.joyMap.getLeftYAxis(stick) + this.joyMap.getLeftXAxis(stick);
 		this.leftDrive.set(leftMotor*this.maxRPM);
 		this.rightDrive.set(rightMotor*this.maxRPM);
-		System.out.println(this.leftDrive.getControlMode().name());
-		System.out.println(this.rightDrive.getControlMode().name());
+		updateDisplay();
+	}
 
-		
-		System.out.println(leftMotor*this.maxRPM);
-		System.out.println(rightMotor*this.maxRPM);
-		System.out.println();
+	private void updateDisplay() {
+		this.streamJoyDriveOutput.updateDisplay();
+
+	}
+	
+	public double getLeftDriveTrainSpeed(){
+		return this.leftDrive.getSpeed();
+	}
+	
+	public double getRightDriveTrainSpeed(){
+		return this.rightDrive.getSpeed();
+	}
+	
+	public int getLeftDriveEncoderPosition(){
+		return this.leftDrive.getEncPosition();
+	}
+	
+	public int getRightDriveEncoderPosition(){
+		return this.rightDrive.getEncPosition();
+	}
+	
+	public TalonControlMode getLeftDriveTrainControlMode(){
+		return this.leftDrive.getControlMode();
+	}
+	
+	public TalonControlMode getRightDriveTrainControlMode(){
+		return this.rightDrive.getControlMode();
 	}
 	
 	public void stop() {
 		this.robotDrive.drive(0, 0);
 	}
-	
-	  
+
 }
 

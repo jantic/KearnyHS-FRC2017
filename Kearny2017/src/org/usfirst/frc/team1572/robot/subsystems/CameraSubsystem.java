@@ -23,20 +23,23 @@ public class CameraSubsystem extends Subsystem{
 
 	
 	public Mat getLatestImage(final CameraType cameraType) throws ImageGrabFailedException{
-		activateCamera(cameraType);
-		
-		final String prefix = "Failed to grab image: ";
+		activateCamera(cameraType);	
+		return attemptToGrabLatestImage();
+	}
+
+	private Mat attemptToGrabLatestImage() throws ImageGrabFailedException {
+		final String errorPrefix = "Failed to grab image: ";
 		
 		if(this.currentCameraType.equals(CameraType.NULL)){
-			throw new ImageGrabFailedException(prefix + "Camera needs to be activated before attempting to grab an image");
+			throw new ImageGrabFailedException(errorPrefix + "Camera needs to be activated before attempting to grab an image");
 		}
 		
 		if(this.currentCameraVideoFeed == null){
-			throw new ImageGrabFailedException(prefix + "This shouldn't be happening but somehow you managed to do it.  Congrats!");
+			throw new ImageGrabFailedException(errorPrefix + "This shouldn't be happening but somehow you managed to do it.  Congrats!");
 		}
 		
 		if (this.currentCameraVideoFeed.grabFrame(this.imageMatrix) == 0) {
-			throw new ImageGrabFailedException(prefix + this.currentCameraVideoFeed.getError());
+			throw new ImageGrabFailedException(errorPrefix + this.currentCameraVideoFeed.getError());
 		}
 		
 		return this.imageMatrix;
@@ -58,21 +61,35 @@ public class CameraSubsystem extends Subsystem{
 	}
 
 	private void initializeAndRunCamera(final CameraType cameraType) {
-		this.currentCameraType = cameraType;
-		this.currentCamera = this.cameraServer.startAutomaticCapture(cameraType.getDeviceNum());
-		this.currentCamera.setResolution(640, 480);
-		this.currentCameraVideoFeed = this.cameraServer.getVideo(this.currentCamera);
+		try{
+			this.currentCameraType = cameraType;
+			this.currentCamera = this.cameraServer.startAutomaticCapture(cameraType.getDeviceNum());
+			this.currentCamera.setResolution(640, 480);
+			this.currentCameraVideoFeed = this.cameraServer.getVideo(this.currentCamera);
+		}
+		catch(Exception e){
+			final String message = "Error while attempting to initialize and run " 
+					+ cameraType.name() + " camera: " + e.getMessage();
+			System.out.println(message);
+		}
 	}
 
 	private void disposeOfPreviousCamera() {
-		if(this.currentCamera!=null){	
-			for(final VideoSink videoSink: this.currentCamera.enumerateSinks()){
-				this.cameraServer.removeServer(videoSink.getName());
-				videoSink.free();
+		try{
+			if(this.currentCamera!=null){	
+				for(final VideoSink videoSink: this.currentCamera.enumerateSinks()){
+					this.cameraServer.removeServer(videoSink.getName());
+					videoSink.free();
+				}
+				
+				this.cameraServer.removeCamera(this.currentCamera.getName());
+				this.currentCamera.free();
 			}
-			
-			this.cameraServer.removeCamera(this.currentCamera.getName());
-			this.currentCamera.free();
+		}
+		catch(Exception e){
+			final String message = "Error while attempting to dispose of previous camera (" 
+					+ this.currentCameraType.name() + "): " + e.getMessage();
+			System.out.println(message);
 		}
 	}
 
