@@ -2,6 +2,7 @@ package org.usfirst.frc.team1572.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.RobotMap;
@@ -16,11 +17,12 @@ public class JoyDrive extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	private double maxRPM;
-	private double speedFactor;
 	private final RobotDrive robotDrive = RobotMap.robotDrive;
 	private final CANTalon leftDrive = RobotMap.leftDrivetrain;
 	private final CANTalon rightDrive = RobotMap.rightDrivetrain;
 	private final LogitechF310Map joyMap = new LogitechF310Map();
+	private final Victor leftDrive2 = RobotMap.leftDrive;
+	private final Victor rightDrive2 = RobotMap.rightDrive;
 
 
     @Override
@@ -28,20 +30,7 @@ public class JoyDrive extends Subsystem {
         setDefaultCommand(new StreamJoyDriveOutput());
     }
     
-	public void arcadeDriveVoltage(Joystick stick) {
-		if(Robot.teledrive.coPilotDrive()) {
-			speedFactor = 0.25;
-		}
-		else if(Robot.teledrive.overdrive()) {
-			speedFactor = 1;
-		}
-		else {
-			speedFactor = 0.75;
-		}
-		robotDrive.arcadeDrive(joyMap.getLeftYAxis(stick) * speedFactor,joyMap.getLeftXAxis(stick) * speedFactor);
-	}
-    
-    public void arcadeDriveVelocity(Joystick stick) {
+	public void arcadeDrive(Joystick stick) {
 		double leftMotor = 0.0;
 		double rightMotor = 0.0; 
 		//robotDrive.arcadeDrive(targetRPM, joyMap.getLeftXAxis(stick))
@@ -57,18 +46,25 @@ public class JoyDrive extends Subsystem {
 
 		leftMotor  = joyMap.getLeftYAxis(stick) - joyMap.getLeftXAxis(stick);
 		rightMotor = joyMap.getLeftYAxis(stick) + joyMap.getLeftXAxis(stick);
-
-		leftDrive.set(leftMotor*maxRPM);
-		rightDrive.set(rightMotor*maxRPM);
-		System.out.println(leftDrive.getControlMode().name());
-		System.out.println(rightDrive.getControlMode().name());
-
-		
+		//leftDrive.set(leftMotor*maxRPM);
+		//rightDrive.set(rightMotor*maxRPM);
+		robotDrive.arcadeDrive(joyMap.getLeftYAxis(stick),joyMap.getLeftXAxis(stick));
 		updateDisplay();
 
+		leftMotor  = joyMap.getLeftYAxis(stick) - joyMap.getLeftXAxis(stick);
+		rightMotor = joyMap.getLeftYAxis(stick) + joyMap.getLeftXAxis(stick);
+		if (RobotMap.mainDrive) {
+			leftDrive.set(leftMotor*maxRPM);
+			rightDrive.set(rightMotor*maxRPM);
+		}
+		
+		else {
+			leftDrive2.set(leftMotor);
+			rightDrive2.set(-rightMotor);
+		}
+		updateDisplay();
 
 	}
-
 
 	private void updateDisplay() {
 		final StreamJoyDriveOutput streamJoyDriveOutput = new StreamJoyDriveOutput();
@@ -76,21 +72,22 @@ public class JoyDrive extends Subsystem {
 
 	}
 	
+	
 	public double getLeftDriveTrainSpeed(){
-		return this.leftDrive.getSpeed();
+		return this.leftDrive2.getSpeed();
 	}
 	
 	public double getRightDriveTrainSpeed(){
-		return this.rightDrive.getSpeed();
+		return this.rightDrive2.getSpeed();
 	}
-	
+	/*
 	public int getLeftDriveEncoderPosition(){
 		return this.leftDrive.getEncPosition();
 	}
 	
 	public int getRightDriveEncoderPosition(){
 		return this.rightDrive.getEncPosition();
-	}
+		}
 	
 	public TalonControlMode getLeftDriveTrainControlMode(){
 		return this.leftDrive.getControlMode();
@@ -99,7 +96,7 @@ public class JoyDrive extends Subsystem {
 	public TalonControlMode getRightDriveTrainControlMode(){
 		return this.rightDrive.getControlMode();
 	}
-	
+	*/
 	public void stop() {
 		this.robotDrive.drive(0, 0);
 	}

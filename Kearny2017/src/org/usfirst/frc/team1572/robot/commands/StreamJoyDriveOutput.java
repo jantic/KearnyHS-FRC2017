@@ -25,12 +25,12 @@ public class StreamJoyDriveOutput extends Command {
 	}
 	
 	public void updateDisplay(){
-		SmartDashboard.putString("Left Drive Control Mode", this.joyDrive.getLeftDriveTrainControlMode().name());
-		SmartDashboard.putString("Right Drive Control Mode", this.joyDrive.getRightDriveTrainControlMode().name());
+		//SmartDashboard.putString("Left Drive Control Mode", this.joyDrive.getLeftDriveTrainControlMode().name());
+		//SmartDashboard.putString("Right Drive Control Mode", this.joyDrive.getRightDriveTrainControlMode().name());
 		SmartDashboard.putNumber("Left Drive Train Speed", this.joyDrive.getLeftDriveTrainSpeed());
 		SmartDashboard.putNumber("Right Drive Train Speed", this.joyDrive.getRightDriveTrainSpeed());
-		SmartDashboard.putNumber("Left Drive Encoder Position", this.joyDrive.getLeftDriveEncoderPosition());
-		SmartDashboard.putNumber("Right Drive Encoder Position", this.joyDrive.getRightDriveEncoderPosition());
+		//SmartDashboard.putNumber("Left Drive Encoder Position", this.joyDrive.getLeftDriveEncoderPosition());
+		//SmartDashboard.putNumber("Right Drive Encoder Position", this.joyDrive.getRightDriveEncoderPosition());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
