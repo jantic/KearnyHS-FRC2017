@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.Ultrasonic;
  */
 public class RobotMap {
 	public static int compressorPort = 0;
-	
 	public static int leftDrivetrainPort = 1;
 	public static int rightDrivetrainPort = 2;
 	public static int leftDriveSlave1Port = 3;
@@ -54,7 +53,6 @@ public class RobotMap {
 	public static Victor clawIntake;
 	public static Victor ballHopper;
 	public static CANTalon shooter;
-	
 	public static Ultrasonic sensor;
 	public static Compressor compressor; 
 	
@@ -76,6 +74,7 @@ public class RobotMap {
 			leftDrivetrain.setD(0);
 			leftDrivetrain.set(0);
 		}
+		
 		else {
 			leftDrivetrain.changeControlMode(TalonControlMode.Voltage);
 		}
@@ -104,8 +103,6 @@ public class RobotMap {
 		
 		robotDrive = new RobotDrive(leftDrivetrain, rightDrivetrain);
 		
-		
-
 		leftDriveSlave1 = new CANTalon(leftDriveSlave1Port);
 		leftDriveSlave2 = new CANTalon(leftDriveSlave2Port);
 		rightDriveSlave1 = new CANTalon(rightDriveSlave1Port);
@@ -139,7 +136,7 @@ public class RobotMap {
 	}
 	 
 	// [IMPORTANT!]: Use ChipotleArm as variable
-	
+	// [IMPORTANT!]: I like pie
 	
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.

@@ -61,7 +61,7 @@ public class GearGrab extends Command {
         	loopcount = loopcount + 1;
         
         }
-        // Make this return true when this Command no longer needs to run execb n        ute()
+        // Make this return true when this Command no longer needs to run execute()
         protected boolean isFinished() {
 			return false;
         	

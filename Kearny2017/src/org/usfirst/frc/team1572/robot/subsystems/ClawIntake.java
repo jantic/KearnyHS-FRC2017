@@ -20,7 +20,7 @@ public class ClawIntake extends Subsystem {
     public static void clawIntake() {
 
     	
-        clawIntake.set(0.75);;
+        clawIntake.set(0.75);
     }
 
     public static void stopIntake() {

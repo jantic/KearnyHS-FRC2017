@@ -18,8 +18,8 @@ public class OI {
 
 	public final static Joystick joyPilot = new Joystick(0);
 	public final static Joystick joyCoPilot = new Joystick(1);
-	private final static Button button = new JoystickButton(joyPilot, 2);
-	private final static Button button2 = new JoystickButton(joyPilot, 3);
+	//private final static Button button = new JoystickButton(joyPilot, 2);
+	//private final static Button button2 = new JoystickButton(joyPilot, 3);
 	
 	public static void init() {
 		
