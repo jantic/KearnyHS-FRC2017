@@ -13,6 +13,7 @@ import org.usfirst.frc.team1572.robot.vision.ImageGrabFailedException;
 import org.usfirst.frc.team1572.robot.vision.VisionCenteringCommand;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public abstract class AimBase extends Command {
@@ -39,7 +40,7 @@ public abstract class AimBase extends Command {
 			// Because of the dynamic nature of the turning I don't think we can
 			// make this a command group.
 			// i.e. we might have to duplicate some turning code.
-		
+			SmartDashboard.putString("Centering Command", centeringCommand.name());
 			this.lastCenteringCommand = centeringCommand;
 		} catch (ImageGrabFailedException e) {
 			System.out.println("Error while grabbing image auto aiming for peg:" + e.getMessage());

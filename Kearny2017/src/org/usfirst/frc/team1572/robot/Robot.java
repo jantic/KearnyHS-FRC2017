@@ -8,8 +8,12 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.SPI;
 
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
+
+import com.kauailabs.navx.frc.AHRS;
+
 import org.usfirst.frc.team1572.robot.commands.AimForGearAutonomously;
 import org.usfirst.frc.team1572.robot.commands.AimForGearManually;
 import org.usfirst.frc.team1572.robot.commands.AimForPegAutonomously;
@@ -29,6 +33,7 @@ import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
 import org.usfirst.frc.team1572.robot.subsystems.ClawIntake;
 import org.usfirst.frc.team1572.robot.subsystems.JoyDrive;
 import org.usfirst.frc.team1572.robot.subsystems.Lift;
+import org.usfirst.frc.team1572.robot.subsystems.NavigationSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.Sensor;
 import org.usfirst.frc.team1572.robot.subsystems.Shooter;
 
@@ -58,6 +63,7 @@ public class Robot extends IterativeRobot {
 	public static CameraSubsystem cameraSubsystem;
 	public static GearGrab geargrab;
 	public static ReleaseGear releasegear;
+	public static NavigationSubsystem navigationSubsystem;
 
 	// boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
 	// boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
@@ -88,6 +94,7 @@ public class Robot extends IterativeRobot {
 		geargrab = new GearGrab();
 		releasegear = new ReleaseGear();
 		cameraSubsystem = new CameraSubsystem();
+		navigationSubsystem = new NavigationSubsystem();
 
 
 		// drivedistance = new DriveDistance(dist);
@@ -146,7 +153,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		//this.autonomousCommand = this.chooser.getSelected();
-		//this.autonomousCommand = new AutonomousCommand();
+		this.autonomousCommand = new AutonomousCommand();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
