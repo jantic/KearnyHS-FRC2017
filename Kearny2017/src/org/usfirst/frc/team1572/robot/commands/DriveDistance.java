@@ -30,8 +30,8 @@ public class DriveDistance extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	double leftRPM = RobotMap.leftDrivetrain.getSpeed();
-    	double rightRPM = RobotMap.rightDrivetrain.getSpeed();
+    	double leftRPM = RobotMap.talonLeftDrivetrain.getSpeed();
+    	double rightRPM = RobotMap.talonRightDrivetrain.getSpeed();
     	double time = 20.0/1000.0;
     	double totalRPM = leftRPM + rightRPM;
     	double RPM = totalRPM/2;

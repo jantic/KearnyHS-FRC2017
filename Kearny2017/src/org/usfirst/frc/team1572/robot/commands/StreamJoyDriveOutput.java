@@ -1,12 +1,13 @@
 package org.usfirst.frc.team1572.robot.commands;
 
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.JoyDrive;
+import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class StreamJoyDriveOutput extends Command {
-	private final JoyDrive joyDrive = Robot.joydrive;
+	private final BaseJoyDrive joyDrive = Robot.joydrive;
 	
 	public StreamJoyDriveOutput() {
 		requires(Robot.joydrive);
@@ -25,12 +26,12 @@ public class StreamJoyDriveOutput extends Command {
 	}
 	
 	public void updateDisplay(){
-		//SmartDashboard.putString("Left Drive Control Mode", this.joyDrive.getLeftDriveTrainControlMode().name());
-		//SmartDashboard.putString("Right Drive Control Mode", this.joyDrive.getRightDriveTrainControlMode().name());
+		SmartDashboard.putString("Left Talon Drive Control Mode", this.joyDrive.getLeftDriveTrainControlMode().name());
+		SmartDashboard.putString("Right Talon Drive Control Mode", this.joyDrive.getRightDriveTrainControlMode().name());
 		SmartDashboard.putNumber("Left Drive Train Speed", this.joyDrive.getLeftDriveTrainSpeed());
 		SmartDashboard.putNumber("Right Drive Train Speed", this.joyDrive.getRightDriveTrainSpeed());
-		//SmartDashboard.putNumber("Left Drive Encoder Position", this.joyDrive.getLeftDriveEncoderPosition());
-		//SmartDashboard.putNumber("Right Drive Encoder Position", this.joyDrive.getRightDriveEncoderPosition());
+		SmartDashboard.putNumber("Left Drive Encoder Position", this.joyDrive.getLeftDriveEncoderPosition());
+		SmartDashboard.putNumber("Right Drive Encoder Position", this.joyDrive.getRightDriveEncoderPosition());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

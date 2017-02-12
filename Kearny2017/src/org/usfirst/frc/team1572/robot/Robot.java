@@ -23,15 +23,18 @@ import org.usfirst.frc.team1572.robot.commands.ReleaseGear;
 import org.usfirst.frc.team1572.robot.commands.RightGear;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
 import org.usfirst.frc.team1572.robot.subsystems.BallHopper;
+import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
 import org.usfirst.frc.team1572.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
 import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
 import org.usfirst.frc.team1572.robot.subsystems.ClawIntake;
-import org.usfirst.frc.team1572.robot.subsystems.JoyDrive;
+import org.usfirst.frc.team1572.robot.subsystems.VictorJoyDrive;
+import org.usfirst.frc.team1572.robot.subsystems.VoltageTalonDrive;
 import org.usfirst.frc.team1572.robot.subsystems.Lift;
 import org.usfirst.frc.team1572.robot.subsystems.NavigationSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.Sensor;
 import org.usfirst.frc.team1572.robot.subsystems.Shooter;
+import org.usfirst.frc.team1572.robot.subsystems.VelocityTalonDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,9 +44,9 @@ import org.usfirst.frc.team1572.robot.subsystems.Shooter;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
+	public static final DriveType driveType = DriveType.VICTOR;
 	public static OI oi;
-	public static JoyDrive joydrive;
+	public static BaseJoyDrive joydrive;
 	public static TeleDrive teledrive;
 	public static DriveDistance drivedistance;
 	public static ClawHand clawhand;
@@ -60,6 +63,7 @@ public class Robot extends IterativeRobot {
 	public static GearGrab geargrab;
 	public static ReleaseGear releasegear;
 	public static NavigationSubsystem navigationSubsystem;
+
 
 	// boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
 	// boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
@@ -82,28 +86,35 @@ public class Robot extends IterativeRobot {
 	}
 
 	private void initSubsystems() {
-		
-		joydrive = new JoyDrive();
+		joydrive = generateJoyDrive();
+		clawhand = new ClawHand();
+		clawIntake = new ClawIntake();
+		chipotlearm = new ChipotleArm();
+		shooter = new Shooter();
+		lifter = new Lift();
 		teledrive = new TeleDrive();
-		oi = new OI();
+		leftgear = new LeftGear();
+		rightgear = new RightGear();
+		midgear = new MidGear();
+		geargrab = new GearGrab();
+		releasegear = new ReleaseGear();
 		cameraSubsystem = new CameraSubsystem();
 		navigationSubsystem = new NavigationSubsystem();
-		OI.init();	
-		
-		if(RobotMap.mainDrive) {
-			clawhand = new ClawHand();
-			clawIntake = new ClawIntake();
-			chipotlearm = new ChipotleArm();
-			shooter = new Shooter();
-			lifter = new Lift();
-			leftgear = new LeftGear();
-			rightgear = new RightGear();
-			midgear = new MidGear();
-			geargrab = new GearGrab();
-			releasegear = new ReleaseGear();
-		  	ClawHand.claw.set(DoubleSolenoid.Value.kOff);
-	    	ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
-	    	sensor = new Sensor();
+		OI.init();
+		oi = new OI();	
+	  	ClawHand.claw.set(DoubleSolenoid.Value.kForward);
+    	ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
+    	sensor = new Sensor();
+	}
+
+	private BaseJoyDrive generateJoyDrive() {
+		switch(driveType){
+			case TALON_VELOCITY:
+				return new VelocityTalonDrive();
+			case TALON_VOLTAGE:
+				return new VoltageTalonDrive();
+			default:
+				return new VictorJoyDrive();
 		}
 	}
 
@@ -167,7 +178,8 @@ public class Robot extends IterativeRobot {
 		if (this.autonomousCommand != null){
 			this.autonomousCommand.cancel();
 		}
-
+		Scheduler.getInstance().add(geargrab);
+		Scheduler.getInstance().add(releasegear);
 		Scheduler.getInstance().add(teledrive);
 	}
 
@@ -176,11 +188,49 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().add(geargrab);
-		Scheduler.getInstance().add(releasegear);
-		//Lift.Lifter();
-		//BallHopper.ballIntake();
-		//Shooter.shoot();
+
+		
+		if(OI.joyPilot.getRawButton(3)) {
+			ClawHand.openClaw();
+		}
+		if(OI.joyPilot.getRawButton(4)) {
+			ClawHand.closeClaw();
+		}
+		if(OI.joyCoPilot.getRawButton(1)) {
+			ClawIntake.clawIntake();
+		}
+		else {
+			ClawIntake.stopIntake();
+		}
+		if(OI.joyPilot.getRawButton(7)) {
+			ChipotleArm.lowerArm();
+		}
+		if(OI.joyPilot.getRawButton(8)) {
+			ChipotleArm.raiseArm();
+		}
+		if(OI.joyPilot.getRawButton(6)) {
+			Lift.Lifter();
+		}
+		else {
+			Lift.stopLifter();
+		}
+		if(OI.joyPilot.getRawButton(5)) {
+			BallHopper.ballIntake();
+		}
+		else{
+			BallHopper.stopBallIntake();
+		}
+		if(OI.joyCoPilot.getRawButton(2)) {
+			Shooter.shoot();
+		}
+		else{
+			Shooter.stopshoot();
+		}
+
+
+
+
+
 
 		Scheduler.getInstance().run();
 	}

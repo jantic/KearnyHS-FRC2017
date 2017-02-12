@@ -7,6 +7,7 @@ import java.time.temporal.ChronoUnit;
 
 import org.opencv.core.Mat;
 import org.usfirst.frc.team1572.robot.Robot;
+import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
 import org.usfirst.frc.team1572.robot.vision.CameraType;
 import org.usfirst.frc.team1572.robot.vision.IAutoAim;
 import org.usfirst.frc.team1572.robot.vision.ImageGrabFailedException;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public abstract class AimBase extends Command {
+	private final BaseJoyDrive joyDrive = Robot.joydrive;
 	private VisionCenteringCommand lastCenteringCommand = VisionCenteringCommand.NULL;
 	private LocalDateTime startTime;
 	private static long TIMEOUT = 5;
@@ -35,17 +37,31 @@ public abstract class AimBase extends Command {
 	protected final void alignRobotToTarget(final IAutoAim autoAim, final CameraType cameraType) {
 		try{
 			final Mat latestImage = Robot.cameraSubsystem.getLatestImage(cameraType);
-			final VisionCenteringCommand centeringCommand = autoAim.generateCenteringCommand(latestImage);
-			// TODO: Put turning code here- this is where we ask Rich (the adult).
-			// Because of the dynamic nature of the turning I don't think we can
-			// make this a command group.
-			// i.e. we might have to duplicate some turning code.
+			final VisionCenteringCommand centeringCommand = autoAim.generateCenteringCommand(latestImage);	
+			executeTurn(centeringCommand);	
 			SmartDashboard.putString("Centering Command", centeringCommand.name());
 			this.lastCenteringCommand = centeringCommand;
 		} catch (ImageGrabFailedException e) {
 			System.out.println("Error while grabbing image auto aiming for peg:" + e.getMessage());
 		} catch (Exception e){
 			System.out.println("Error while auto aiming for peg:" + e.getMessage());
+		}
+	}
+	
+	private void executeTurn(final VisionCenteringCommand centeringCommand){
+		final double joystickX = generateJoystickX(centeringCommand);
+		final double joystickY = 0.3;
+		this.joyDrive.arcadeDrive(joystickX, joystickY);
+	}
+	
+	private double generateJoystickX(final VisionCenteringCommand centeringCommand){
+		switch(centeringCommand){
+			case RIGHT:
+				return 0.5;
+			case LEFT:
+				return -0.5;
+			default:
+				return 0;
 		}
 	}
 
