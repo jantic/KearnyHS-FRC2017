@@ -8,7 +8,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonomousCommand extends CommandGroup {
 
     public AutonomousCommand() {
+    	//1 meter
+    	addSequential(new DriveDistance(-0.5));
+    	addSequential(new TurnUntilAngle(90));
+    	//1 meter
+    	addSequential(new DriveDistance(-0.5));
     	addSequential(new AimForPegAutonomously());
+    	
+    	
+    	
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

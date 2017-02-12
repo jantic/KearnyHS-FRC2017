@@ -50,7 +50,7 @@ public abstract class AimBase extends Command {
 	
 	private void executeTurn(final VisionCenteringCommand centeringCommand){
 		final double joystickX = generateJoystickX(centeringCommand);
-		final double joystickY = 0.3;
+		final double joystickY = 0.0;
 		this.joyDrive.arcadeDrive(joystickX, joystickY);
 	}
 	

@@ -1,51 +1,69 @@
 package org.usfirst.frc.team1572.robot.commands;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 import org.usfirst.frc.team1572.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1572.robot.RobotMap;
+import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
+import org.usfirst.frc.team1572.robot.subsystems.NavigationSubsystem;
 
 public class DriveDistance extends Command {
+	private NavigationSubsystem navSubsystem;
+	private BaseJoyDrive joyDrive;
+	private final double targetDisplacement;
 	
-	private final double m_finalDistance;
-	private double m_currentDistance;
+	private LocalDateTime startTime;
+	private static long TIMEOUT = 5;
 	
-    public DriveDistance(double dist) {
+    public DriveDistance(final double targetDisplacement) {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.joydrive);
-    	this.m_finalDistance = dist;  	
+    	requires(Robot.navigationSubsystem);
+    	this.targetDisplacement = targetDisplacement;
     }
     
-    private static double getSpeed(double rpm, double size) {   	
-    	double speed = (rpm*size*Math.PI)/60.0;
-    	return speed;
-    			
-    }
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
-    	this.m_currentDistance = 0;
+    	this.navSubsystem = Robot.navigationSubsystem;
+    	this.joyDrive = Robot.joydrive;
+		navSubsystem.reset();
+		this.startTime = LocalDateTime.now();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	double leftRPM = RobotMap.talonLeftDrivetrain.getSpeed();
-    	double rightRPM = RobotMap.talonRightDrivetrain.getSpeed();
-    	double time = 20.0/1000.0;
-    	double totalRPM = leftRPM + rightRPM;
-    	double RPM = totalRPM/2;
-    	double speed = getSpeed(RPM, 8.0);
-    	double distanceTraveled = time * speed;
-    	this.m_currentDistance = distanceTraveled + this.m_currentDistance;
-    	
-    	RobotMap.robotDrive.arcadeDrive(0.25, 0);
+		final double joystickX = 0;
+		final double joystickY = targetDisplacement > 0 ? 0.5 : -0.5;
+		this.joyDrive.arcadeDrive(joystickX, joystickY);
+		updateDisplay();
+    }
     
+    private void updateDisplay(){
+    	final StreamNavigationOutput outputStream = new StreamNavigationOutput();
+    	outputStream.execute();
     }
     // Make this return true when this Command no longer needs to run execute()
     @Override
 	protected boolean isFinished() {
-    	return this.m_finalDistance <= this.m_currentDistance;
+		final LocalDateTime currentTime = LocalDateTime.now();
+		final long elapsedSeconds = ChronoUnit.SECONDS.between(this.startTime, currentTime);
+		
+		if(elapsedSeconds > TIMEOUT){
+			return true;
+		}
+		
+		final double displacement = this.navSubsystem.getDisplacementY();
+    	
+		if(targetDisplacement > 0){
+			return displacement > targetDisplacement;
+		}
+		else{
+			return displacement < targetDisplacement; 
+		}
     }
 
     // Called once after isFinished returns true

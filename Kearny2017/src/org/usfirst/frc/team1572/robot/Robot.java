@@ -17,10 +17,7 @@ import org.usfirst.frc.team1572.robot.commands.AimForPegManually;
 import org.usfirst.frc.team1572.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team1572.robot.commands.DriveDistance;
 import org.usfirst.frc.team1572.robot.commands.GearGrab;
-import org.usfirst.frc.team1572.robot.commands.LeftGear;
-import org.usfirst.frc.team1572.robot.commands.MidGear;
 import org.usfirst.frc.team1572.robot.commands.ReleaseGear;
-import org.usfirst.frc.team1572.robot.commands.RightGear;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
 import org.usfirst.frc.team1572.robot.subsystems.BallHopper;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
@@ -56,9 +53,6 @@ public class Robot extends IterativeRobot {
 	public static Sensor sensor;
 	public static Lift lifter;
 	public static Shooter shooter;
-	public static LeftGear leftgear;
-	public static MidGear midgear;
-	public static RightGear rightgear;
 	public static CameraSubsystem cameraSubsystem;
 	public static GearGrab geargrab;
 	public static ReleaseGear releasegear;
@@ -93,9 +87,6 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		lifter = new Lift();
 		teledrive = new TeleDrive();
-		leftgear = new LeftGear();
-		rightgear = new RightGear();
-		midgear = new MidGear();
 		geargrab = new GearGrab();
 		releasegear = new ReleaseGear();
 		cameraSubsystem = new CameraSubsystem();
@@ -121,9 +112,6 @@ public class Robot extends IterativeRobot {
 	private void initSmartDashboard() {
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(Scheduler.getInstance());
-		SmartDashboard.putData("RightGear", new RightGear());
-		SmartDashboard.putData("LeftGear", new LeftGear());
-		SmartDashboard.putData("MidGear", new MidGear());	
 		SmartDashboard.putData("Peg Auto Aim Manual", new AimForPegManually());
 		SmartDashboard.putData("Gear Auto Aim Manual", new AimForGearManually());
 		SmartDashboard.putData("Peg Auto Aim Autonomously", new AimForPegAutonomously());

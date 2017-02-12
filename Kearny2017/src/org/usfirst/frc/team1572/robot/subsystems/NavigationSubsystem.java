@@ -10,20 +10,29 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 //This makes it so that only one camera is running at a time (saves bandwidth), 
 //and controls access to each one.
 public class NavigationSubsystem extends Subsystem{
-	private final AHRS navigationSensor  = new AHRS(SPI.Port.kMXP);
+	private final AHRS navigationSensor;
+	
+	public NavigationSubsystem(){
+		this.navigationSensor  = new AHRS(SPI.Port.kMXP);
+	}
 	
 	public void reset(){
 		this.navigationSensor.reset();
+		this.navigationSensor.resetDisplacement();
 	}
 	
+	//Meters
 	public float getDisplacementX(){
 		return this.navigationSensor.getDisplacementX();
 	}
 	
+	//Meters
 	public float getDisplacementY(){
-		return this.navigationSensor.getDisplacementX();
+		//return this.navigationSensor.getDisplacementY();
+		return this.navigationSensor.getDisplacementY();
 	}
 	
+	//-180 to 180
 	public double getAngle(){
 		return this.navigationSensor.getAngle();
 	}
@@ -32,10 +41,12 @@ public class NavigationSubsystem extends Subsystem{
 		return this.navigationSensor.getCompassHeading();
 	}
 	
+	//Meters/Second
 	public float getVelocityX(){
 		return this.navigationSensor.getVelocityX();
 	}
 	
+	//Meters/Second
 	public float getVelocityY(){
 		return this.navigationSensor.getVelocityY();
 	}
