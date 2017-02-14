@@ -15,7 +15,7 @@ public class DriveDistance extends Command {
 	private final double targetDisplacement;
 	
 	private LocalDateTime startTime;
-	private static long TIMEOUT = 5;
+	private static long TIMEOUT = 1;
 	
     public DriveDistance(final double targetDisplacement) {
         // Use requires() here to declare subsystem dependencies
@@ -29,15 +29,14 @@ public class DriveDistance extends Command {
 	protected void initialize() {
     	this.navSubsystem = Robot.navigationSubsystem;
     	this.joyDrive = Robot.joydrive;
-		navSubsystem.reset();
 		this.startTime = LocalDateTime.now();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-		final double joystickX = 0;
-		final double joystickY = targetDisplacement > 0 ? 0.5 : -0.5;
+		final double joystickY = 0.0;
+		final double joystickX = targetDisplacement > 0 ? 0.5 : -0.5;
 		this.joyDrive.arcadeDrive(joystickX, joystickY);
 		updateDisplay();
     }
@@ -52,7 +51,8 @@ public class DriveDistance extends Command {
 		final LocalDateTime currentTime = LocalDateTime.now();
 		final long elapsedSeconds = ChronoUnit.SECONDS.between(this.startTime, currentTime);
 		
-		if(elapsedSeconds > TIMEOUT){
+    	if(elapsedSeconds > TIMEOUT){
+    		this.joyDrive.arcadeDrive(0 , 0);
 			return true;
 		}
 		

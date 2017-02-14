@@ -18,6 +18,7 @@ import org.usfirst.frc.team1572.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team1572.robot.commands.DriveDistance;
 import org.usfirst.frc.team1572.robot.commands.GearGrab;
 import org.usfirst.frc.team1572.robot.commands.ReleaseGear;
+import org.usfirst.frc.team1572.robot.commands.Stop;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
 import org.usfirst.frc.team1572.robot.subsystems.BallHopper;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
@@ -57,6 +58,7 @@ public class Robot extends IterativeRobot {
 	public static GearGrab geargrab;
 	public static ReleaseGear releasegear;
 	public static NavigationSubsystem navigationSubsystem;
+	public static Stop stop;
 
 
 	// boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
@@ -91,6 +93,7 @@ public class Robot extends IterativeRobot {
 		releasegear = new ReleaseGear();
 		cameraSubsystem = new CameraSubsystem();
 		navigationSubsystem = new NavigationSubsystem();
+		stop = new Stop();
 		OI.init();
 		oi = new OI();	
 	  	ClawHand.claw.set(DoubleSolenoid.Value.kForward);

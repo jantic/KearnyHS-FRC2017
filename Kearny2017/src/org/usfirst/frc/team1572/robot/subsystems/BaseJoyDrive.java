@@ -17,7 +17,7 @@ public abstract class BaseJoyDrive extends Subsystem {
 	
 	public abstract void arcadeDrive(Joystick stick);
 	
-	public abstract void arcadeDrive(final double joystickX, final double joystickY);
+	public abstract void arcadeDrive(final double joystickY, final double joystickX);
 	
     @Override
 	public final void initDefaultCommand() {
