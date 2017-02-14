@@ -12,14 +12,14 @@ public class AutonomousCommand extends CommandGroup {
     public AutonomousCommand() {
     	//1 meter
     	Robot.navigationSubsystem.reset();
-    	addSequential(new DriveDistance(-0.5));
+    	addSequential(new DriveDistance(-0.5, 1));
     	//Robot.navigationSubsystem.reset();
     	addSequential(new TurnUntilAngle(-90, false));
     	//1 meter
     	//addSequential(Robot.stop);
     	
     	Robot.navigationSubsystem.reset();
-    	addSequential(new DriveDistance(-0.5));
+    	addSequential(new DriveDistance(-0.5, 2));
     	Robot.navigationSubsystem.reset();
     	//addSequential(new AimForPegAutonomously());
     	//need to work with aim for peg

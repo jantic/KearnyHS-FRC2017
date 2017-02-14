@@ -15,13 +15,14 @@ public class DriveDistance extends Command {
 	private final double targetDisplacement;
 	
 	private LocalDateTime startTime;
-	private static long TIMEOUT = 1;
+	private static double TIMEOUT;
 	
-    public DriveDistance(final double targetDisplacement) {
+    public DriveDistance(final double targetDisplacement, final double timeOut) {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.joydrive);
     	requires(Robot.navigationSubsystem);
     	this.targetDisplacement = targetDisplacement;
+    	this.TIMEOUT = timeOut;
     }
     
     // Called just before this Command runs the first time
