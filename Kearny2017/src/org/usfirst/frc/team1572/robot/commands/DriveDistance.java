@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import org.usfirst.frc.team1572.robot.Robot;
+import org.usfirst.frc.team1572.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
@@ -15,19 +16,22 @@ public class DriveDistance extends Command {
 	private final double targetDisplacement;
 	
 	private LocalDateTime startTime;
-	private static double TIMEOUT;
+	private double DRIVEOUT;
+	private static double DRIVEDONE;
 	
-    public DriveDistance(final double targetDisplacement, final double timeOut) {
+    public DriveDistance(final double targetDisplacement, final double driveDone) {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.joydrive);
     	requires(Robot.navigationSubsystem);
     	this.targetDisplacement = targetDisplacement;
-    	this.TIMEOUT = timeOut;
+    	this.DRIVEDONE = driveDone;
+    	
     }
     
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
+    	RobotMap.enc.reset();
     	this.navSubsystem = Robot.navigationSubsystem;
     	this.joyDrive = Robot.joydrive;
 		this.startTime = LocalDateTime.now();
@@ -48,15 +52,16 @@ public class DriveDistance extends Command {
     }
     // Make this return true when this Command no longer needs to run execute()
     @Override
-	protected boolean isFinished() {
-		final LocalDateTime currentTime = LocalDateTime.now();
-		final long elapsedSeconds = ChronoUnit.SECONDS.between(this.startTime, currentTime);
+	protected boolean isFinished() { 
+		double distance = RobotMap.enc.getRaw();
+		double distance2 = RobotMap.enc.getDistance();
+		this.DRIVEOUT = distance2;
 		
-    	if(elapsedSeconds > TIMEOUT){
+    	if(DRIVEDONE <= DRIVEOUT){
     		this.joyDrive.arcadeDrive(0 , 0);
 			return true;
 		}
-		
+
 		final double displacement = this.navSubsystem.getDisplacementY();
     	
 		if(targetDisplacement > 0){
@@ -80,3 +85,4 @@ public class DriveDistance extends Command {
     	//nothing to do here
     }
 }
+// Called just before this Command runs the first time

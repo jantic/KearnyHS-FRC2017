@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Sensor extends Subsystem {
 	
-	static Ultrasonic ultra = RobotMap.sensor;
+	//static Ultrasonic ultra = RobotMap.sensor;
     	
 
     @Override
@@ -15,9 +15,9 @@ public class Sensor extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    public static double getDistance(){
-		double distance = ultra.pidGet();
-    	return distance;
+    public static void getDistance(){
+		//double distance = ultra.pidGet();
+    	//return distance;
     }
 }
 

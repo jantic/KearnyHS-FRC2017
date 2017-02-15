@@ -25,6 +25,7 @@ import org.usfirst.frc.team1572.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
 import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
 import org.usfirst.frc.team1572.robot.subsystems.ClawIntake;
+import org.usfirst.frc.team1572.robot.subsystems.ENC;
 import org.usfirst.frc.team1572.robot.subsystems.VictorJoyDrive;
 import org.usfirst.frc.team1572.robot.subsystems.VoltageTalonDrive;
 import org.usfirst.frc.team1572.robot.subsystems.Lift;
@@ -57,6 +58,7 @@ public class Robot extends IterativeRobot {
 	public static GearGrab geargrab;
 	public static ReleaseGear releasegear;
 	public static NavigationSubsystem navigationSubsystem;
+	public static ENC enc;
 
 
 	// boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
@@ -96,6 +98,7 @@ public class Robot extends IterativeRobot {
 	  	ClawHand.claw.set(DoubleSolenoid.Value.kForward);
     	ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
     	sensor = new Sensor();
+    	enc = new ENC();
 	}
 
 	private BaseJoyDrive generateJoyDrive() {
@@ -159,6 +162,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("enc value " + RobotMap.enc.getDistance());
+		int count = RobotMap.enc.get();
+		double distance = RobotMap.enc.getRaw();
+		System.out.println("enc cont " + count);
+		System.out.println("enc raw " + distance);
+		System.out.println("enc caulation " + RobotMap.distPerPulse);
+		System.out.println("enc get" + RobotMap.enc.getEncodingScale());
+		
 	}
 
 	@Override
@@ -214,10 +225,12 @@ public class Robot extends IterativeRobot {
 		else{
 			Shooter.stopshoot();
 		}
-
-
-
-
+		double voltsPerInch = 5.0/512.0;
+		double volt =  RobotMap.sonar.getAverageVoltage();
+		double rangeInInches = volt / voltsPerInch;
+		System.out.println("Analog Input = " + volt);
+		System.out.println("Total Distance is = to " + rangeInInches );
+		
 
 
 		Scheduler.getInstance().run();

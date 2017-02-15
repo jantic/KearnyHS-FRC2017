@@ -2,13 +2,14 @@ package org.usfirst.frc.team1572.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Victor;
 
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.AnalogInput;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -34,8 +35,10 @@ public class RobotMap {
 	public static int clawHandPort = 3;
 	public static int rightArmPort1 = 0;
 	public static int rightArmPort = 1;
-	public static int sensorPort1 = 0;
-	public static int sensorPort = 1;
+	public static int sensorPort1 = 3;
+	public static int sensorPort = 4;
+	public static int analogSonarPort = 0;
+	public static double distPerPulse = (8.0*Math.PI)/1440.0;
 	
 	public static Victor victorLeftDriveTrain;
 	public static Victor victorRightDriveTrain;
@@ -53,8 +56,9 @@ public class RobotMap {
 	public static Victor clawIntake;
 	public static Victor ballHopper;
 	public static CANTalon shooter;
-	public static Ultrasonic sensor;
 	public static Compressor compressor; 
+	public static Encoder enc;
+	public static AnalogInput sonar;
 	
 	public static void init() {
 		if(Robot.driveType.isTalonDrive()){
@@ -64,7 +68,8 @@ public class RobotMap {
 			initVictorDrive();
 		}
 		
-	
+		sonar = new AnalogInput(analogSonarPort);
+		enc = new Encoder(1, 2 , true, Encoder.EncodingType.k1X);
 		shooter = new CANTalon(shooterPort);
 		compressor = new Compressor(compressorPort);	
 		clawHand = new DoubleSolenoid(clawHandPort1,clawHandPort);
@@ -77,7 +82,6 @@ public class RobotMap {
 		
 		//sensor = new Ultrasonic(pingChannel, echoChannel);
 		// FIX THIS SO AGUREMNTS MAKES SENSE
-		sensor = new Ultrasonic(sensorPort1,sensorPort);
 	}
 
 	private static void initVictorDrive() {
@@ -136,5 +140,16 @@ public class RobotMap {
 		rightDriveSlave1.set(talonRightDrivetrainPort);
 		rightDriveSlave2.changeControlMode(TalonControlMode.Follower);
 		rightDriveSlave2.set(talonRightDrivetrainPort);
+		
+		
+		enc.setMaxPeriod(.1);
+		enc.setMinRate(10);
+		enc.setDistancePerPulse( distPerPulse);
+		enc.setReverseDirection(false);
+		enc.setSamplesToAverage(7);
 	}
 }
+//1440 plues per rev.
+//8 ins per rev.
+//size * Math.PI
+//double speed = (rpm * size * Math.PI) / 60.0;

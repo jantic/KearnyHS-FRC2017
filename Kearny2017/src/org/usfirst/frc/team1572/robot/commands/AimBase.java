@@ -50,8 +50,8 @@ public abstract class AimBase extends Command {
 	
 	private void executeTurn(final VisionCenteringCommand centeringCommand){
 		final double joystickX = generateJoystickX(centeringCommand);
-		final double joystickY = 0.0;
-		this.joyDrive.arcadeDrive(joystickX, joystickY);
+		final double joystickY = generateJoystickY(centeringCommand);
+		this.joyDrive.arcadeDrive(joystickY, joystickX);
 	}
 	
 	private double generateJoystickX(final VisionCenteringCommand centeringCommand){
@@ -63,6 +63,16 @@ public abstract class AimBase extends Command {
 			default:
 				return 0;
 		}
+	}
+		private double generateJoystickY(final VisionCenteringCommand centeringCommand){
+			switch(centeringCommand){
+				case RIGHT:
+					return 0;
+				case LEFT:
+					return 0;
+				default:
+					return 0.5;
+			}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

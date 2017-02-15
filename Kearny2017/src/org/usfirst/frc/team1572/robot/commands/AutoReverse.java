@@ -18,7 +18,7 @@ public class AutoReverse extends Command {
 
 	private static double getSpeed(double rpm, double size) {
 		double speed = (rpm * size * Math.PI) / 60.0;
-		return speed;
+		return 	speed;
 	}
 
 	// Called just before this Command runs the first time
