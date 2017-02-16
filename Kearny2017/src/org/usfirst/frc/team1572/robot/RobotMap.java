@@ -38,7 +38,7 @@ public class RobotMap {
 	public static int sensorPort1 = 3;
 	public static int sensorPort = 4;
 	public static int analogSonarPort = 0;
-	public static double distPerPulse = (8.0*Math.PI)/1440.0;
+	public static double distPerPulse = (8.0*Math.PI)/360;
 	
 	public static Victor victorLeftDriveTrain;
 	public static Victor victorRightDriveTrain;
@@ -80,6 +80,12 @@ public class RobotMap {
 		ballHopper = new Victor(ballHopperPort);
 		clawIntake = new Victor(clawIntakePort);
 		
+		enc.setMaxPeriod(.1);
+		enc.setMinRate(10);
+		enc.setDistancePerPulse(distPerPulse);
+		enc.setSamplesToAverage(7);
+		
+		
 		//sensor = new Ultrasonic(pingChannel, echoChannel);
 		// FIX THIS SO AGUREMNTS MAKES SENSE
 	}
@@ -88,6 +94,8 @@ public class RobotMap {
 		victorLeftDriveTrain = new Victor(victorLeftDrivetrainPort);
 		victorRightDriveTrain = new Victor(victorRightDrivetrainPort);
 		robotDrive = new RobotDrive(victorLeftDriveTrain, victorRightDriveTrain);
+		
+		
 	}
 
 	private static void initTalonDrive(final DriveType driveType) {
@@ -142,11 +150,6 @@ public class RobotMap {
 		rightDriveSlave2.set(talonRightDrivetrainPort);
 		
 		
-		enc.setMaxPeriod(.1);
-		enc.setMinRate(10);
-		enc.setDistancePerPulse( distPerPulse);
-		enc.setReverseDirection(false);
-		enc.setSamplesToAverage(7);
 	}
 }
 //1440 plues per rev.

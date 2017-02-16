@@ -53,7 +53,7 @@ public class DriveDistance extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
 	protected boolean isFinished() { 
-		double distance = RobotMap.enc.getRaw();
+		double distance = RobotMap.enc.getRate();
 		double distance2 = RobotMap.enc.getDistance();
 		this.DRIVEOUT = distance2;
 		

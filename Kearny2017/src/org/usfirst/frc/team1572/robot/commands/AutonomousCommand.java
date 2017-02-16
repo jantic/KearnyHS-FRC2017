@@ -12,7 +12,7 @@ public class AutonomousCommand extends CommandGroup {
     public AutonomousCommand() {
     	//1 meter
     	Robot.navigationSubsystem.reset();
-    	addSequential(new DriveDistance(-0.5, 600));
+    	addSequential(new DriveDistance(-0.5, 12));
     	//Robot.navigationSubsystem.reset();
     	//addSequential(new TurnUntilAngle(-90, false));
     	//1 meter

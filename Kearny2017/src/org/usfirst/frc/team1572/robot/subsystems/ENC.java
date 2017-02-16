@@ -16,8 +16,12 @@ public class ENC extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
+    	
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    }
+    public double getDistance() {
+    	return encoder.getRate()*10 ;
     }
 }
 

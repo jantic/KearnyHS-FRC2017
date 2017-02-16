@@ -165,10 +165,14 @@ public class Robot extends IterativeRobot {
 		System.out.println("enc value " + RobotMap.enc.getDistance());
 		int count = RobotMap.enc.get();
 		double distance = RobotMap.enc.getRaw();
-		System.out.println("enc cont " + count);
-		System.out.println("enc raw " + distance);
+		
+		int count1 = RobotMap.enc.get();
+		double distance1 = RobotMap.enc.getRaw();
+		System.out.println("enc cont " + count1);
+		System.out.println("enc raw " + distance1);
 		System.out.println("enc caulation " + RobotMap.distPerPulse);
 		System.out.println("enc get" + RobotMap.enc.getEncodingScale());
+		
 		
 	}
 
@@ -231,7 +235,12 @@ public class Robot extends IterativeRobot {
 		System.out.println("Analog Input = " + volt);
 		System.out.println("Total Distance is = to " + rangeInInches );
 		
-
+		int count = RobotMap.enc.get();
+		double distance = RobotMap.enc.getRaw();
+		System.out.println("enc cont " + count);
+		System.out.println("enc raw " + distance);
+		System.out.println("enc caulation " + RobotMap.distPerPulse);
+		System.out.println("enc get" + RobotMap.enc.getEncodingScale());
 
 		Scheduler.getInstance().run();
 	}
