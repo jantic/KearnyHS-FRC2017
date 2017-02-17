@@ -166,13 +166,6 @@ public class Robot extends IterativeRobot {
 		int count = RobotMap.enc.get();
 		double distance = RobotMap.enc.getRaw();
 		
-		int count1 = RobotMap.enc.get();
-		double distance1 = RobotMap.enc.getRaw();
-		System.out.println("enc cont " + count1);
-		System.out.println("enc raw " + distance1);
-		System.out.println("enc caulation " + RobotMap.distPerPulse);
-		System.out.println("enc get" + RobotMap.enc.getEncodingScale());
-		
 		
 	}
 

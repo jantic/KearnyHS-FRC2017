@@ -21,7 +21,8 @@ public abstract class AimBase extends Command {
 	private final BaseJoyDrive joyDrive = Robot.joydrive;
 	private VisionCenteringCommand lastCenteringCommand = VisionCenteringCommand.NULL;
 	private LocalDateTime startTime;
-	private static long TIMEOUT = 5;
+	private static long TIMEOUT = 50000000;
+	private static boolean m_direction;
 
 	public AimBase() {
 		requires(Robot.joydrive);
@@ -46,12 +47,26 @@ public abstract class AimBase extends Command {
 		} catch (Exception e){
 			System.out.println("Error while auto aiming for peg:" + e.getMessage());
 		}
+		
 	}
 	
 	private void executeTurn(final VisionCenteringCommand centeringCommand){
-		final double joystickX = generateJoystickX(centeringCommand);
-		final double joystickY = generateJoystickY(centeringCommand);
-		this.joyDrive.arcadeDrive(joystickY, joystickX);
+		if (centeringCommand == VisionCenteringCommand.RIGHT ) {
+			final double joystickX = generateJoystickX(centeringCommand);
+			final double joystickY = generateJoystickY(centeringCommand);
+			this.joyDrive.arcadeDrive(joystickX, joystickY);
+		}
+		if (centeringCommand == VisionCenteringCommand.LEFT) {
+			final double joystickX = generateJoystickX2(centeringCommand);
+			final double joystickY = generateJoystickY(centeringCommand);
+			this.joyDrive.arcadeDrive(joystickX, joystickY);
+		}
+		else {
+			final double joystickX = 0;
+			final double joystickY = generateJoystickY(centeringCommand);
+			this.joyDrive.arcadeDrive(joystickX, joystickY);
+		}
+		
 	}
 	
 	private double generateJoystickX(final VisionCenteringCommand centeringCommand){
@@ -63,6 +78,16 @@ public abstract class AimBase extends Command {
 			default:
 				return 0;
 		}
+	}
+		private double generateJoystickX2(final VisionCenteringCommand centeringCommand){
+			switch(centeringCommand){
+				case RIGHT:
+					return -0.5;
+				case LEFT:
+					return 0.5;
+				default:
+					return 0;
+			}
 	}
 		private double generateJoystickY(final VisionCenteringCommand centeringCommand){
 			switch(centeringCommand){

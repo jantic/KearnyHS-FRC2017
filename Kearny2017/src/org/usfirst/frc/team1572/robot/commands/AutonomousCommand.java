@@ -1,7 +1,9 @@
 package org.usfirst.frc.team1572.robot.commands;
 
 import org.usfirst.frc.team1572.robot.Robot;
+import org.usfirst.frc.team1572.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -11,20 +13,30 @@ public class AutonomousCommand extends CommandGroup {
 
     public AutonomousCommand() {
     	//1 meter
+    	DriveDistance drive =  new DriveDistance(-0.5, 36);
+    	DriveDistanceB drive2 = new DriveDistanceB(-0.5, 36);
+    	
     	Robot.navigationSubsystem.reset();
-    	addSequential(new DriveDistance(-0.5, 12));
-    	//Robot.navigationSubsystem.reset();
-    	//addSequential(new TurnUntilAngle(-90, false));
+    	addSequential(drive);
+    	Robot.navigationSubsystem.reset();
+    	addSequential(new TurnUntilAngle(-90, false));
     	//1 meter
     	//addSequential(Robot.stop);
     	
     	Robot.navigationSubsystem.reset();
-    	//addSequential(new DriveDistance(-0.5, 1));
-    	//Robot.navigationSubsystem.reset();
-    	//addSequential(new AimForPegAutonomously());
+    	addSequential(drive2);
+    	Robot.navigationSubsystem.reset();
+    	addSequential(new AimForPegAutonomously());
     	//need to work with aim for peg
     	
+    	double distToGear = Robot.sensor.getDistance();
     	
+    	if ( distToGear <= 8) {
+    		Robot.joydrive.arcadeDrive(0, 0);
+    	}
+    	else {
+    		Robot.joydrive.arcadeDrive(0.5, 0);
+    	}
     	
     	
         // Add Commands here:

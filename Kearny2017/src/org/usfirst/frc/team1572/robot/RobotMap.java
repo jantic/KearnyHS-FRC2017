@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Victor;
 
 import com.ctre.CANTalon.FeedbackDevice;
@@ -59,6 +60,7 @@ public class RobotMap {
 	public static Compressor compressor; 
 	public static Encoder enc;
 	public static AnalogInput sonar;
+	public static Ultrasonic sensor;
 	
 	public static void init() {
 		if(Robot.driveType.isTalonDrive()){
@@ -86,7 +88,7 @@ public class RobotMap {
 		enc.setSamplesToAverage(7);
 		
 		
-		//sensor = new Ultrasonic(pingChannel, echoChannel);
+		sensor = new Ultrasonic(0, 1);
 		// FIX THIS SO AGUREMNTS MAKES SENSE
 	}
 

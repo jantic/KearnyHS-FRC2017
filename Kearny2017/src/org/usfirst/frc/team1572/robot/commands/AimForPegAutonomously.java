@@ -9,8 +9,10 @@ import org.usfirst.frc.team1572.robot.vision.PegTargetAutoAim;
 
 public class AimForPegAutonomously extends AimBase {
 	private final IAutoAim autoAim = new PegTargetAutoAim();
+	private boolean m_direction;
 	public AimForPegAutonomously() {
 		super();
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
