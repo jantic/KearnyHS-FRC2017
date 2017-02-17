@@ -23,14 +23,14 @@ public class TurnUntilAngle extends Command {
 		this.direct = direction;
 		this.targetAngle = targetAngle;
 		requires(Robot.joydrive);
-		requires(Robot.navigationSubsystem);
+		//requires(Robot.navigationSubsystem);
 	}
 
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-    	this.navSubsystem = Robot.navigationSubsystem;
+    	//this.navSubsystem = Robot.navigationSubsystem;
     	this.joyDrive = Robot.joydrive;
 		//navSubsystem.reset();
 		this.startTime = LocalDateTime.now();
@@ -55,8 +55,8 @@ public class TurnUntilAngle extends Command {
 	}
 	
     private void updateDisplay(){
-    	final StreamNavigationOutput outputStream = new StreamNavigationOutput();
-    	outputStream.execute();
+    	//final StreamNavigationOutput outputStream = new StreamNavigationOutput();
+    	//outputStream.execute();
     }
 	
 	private double generateJoystickX(){
@@ -77,10 +77,10 @@ public class TurnUntilAngle extends Command {
 		//	return true;
 		//}
 		
-		final double currentAngle = this.navSubsystem.getAngle();
-		final double diff = (this.targetAngle - currentAngle);
+		//final double currentAngle = this.navSubsystem.getAngle();
+		//final double diff = (this.targetAngle - currentAngle);
 		
-		return (Math.abs(diff) < angleTolerance);
+		return true;//(Math.abs(diff) < angleTolerance);
 	}
 
 	// Called once after isFinished returns true

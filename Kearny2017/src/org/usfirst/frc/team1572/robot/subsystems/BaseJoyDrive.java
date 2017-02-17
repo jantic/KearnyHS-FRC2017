@@ -24,7 +24,7 @@ public abstract class BaseJoyDrive extends Subsystem {
         setDefaultCommand(new StreamJoyDriveOutput());
     }
     
-	protected final RobotDrive getRobotDrive(){
+	public final RobotDrive getRobotDrive(){
 		return this.robotDrive;
 	}
 	

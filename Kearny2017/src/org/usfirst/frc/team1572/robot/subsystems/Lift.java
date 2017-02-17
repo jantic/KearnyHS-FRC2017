@@ -24,6 +24,9 @@ public class Lift extends Subsystem {
     public static void stopLifter() {
     	lift.set(0);
     }
+    public static void reverseLifter() {
+    	lift.set(1);
+    }
 
 }
 

@@ -10,6 +10,7 @@ public class ChipotleArm extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public final static DoubleSolenoid Arm = RobotMap.Arm;
+	private static boolean clawDown;
 	
     @Override
 	public void initDefaultCommand() {
@@ -21,12 +22,17 @@ public class ChipotleArm extends Subsystem {
     public static void lowerArm() {
     	
 	    Arm.set(DoubleSolenoid.Value.kForward);
+	    clawDown = true;
     	
     }
     
     public static void raiseArm() {
     	
 	    Arm.set(DoubleSolenoid.Value.kReverse);
+	    clawDown = false;
     	
+    }
+    public static boolean clawDown(){
+    	return clawDown;
     }
 }

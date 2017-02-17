@@ -16,8 +16,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ReleaseGear extends Command {
 
-		private boolean buttonPressed;
+		private boolean buttonPushed;
 		private double loopcount;
+		private static boolean running;
     	
         public ReleaseGear() {
             // Use requires() here to declare subsystem dependencies
@@ -33,21 +34,30 @@ public class ReleaseGear extends Command {
 
         // Called repeatedly when this Command is scheduled to run
         protected void execute() {
-        	buttonPressed = OI.joyPilot.getRawButton(2) || OI.joyCoPilot.getRawButton(4);
-        	if(buttonPressed){
+        	buttonPushed = OI.joyPilot.getRawButton(2) || OI.joyCoPilot.getRawButton(5);
+        	if(buttonPushed && !GearGrab.running() && !ClawToggle.running() && !ArmToggle.running()){
         		loopcount = 0;
         		ClawHand.openClaw();
         		ChipotleArm.lowerArm();
+        		running = true;
         	}
         	else{
-        		if(loopcount < 10){
+        		if(loopcount < 20){
         			ClawHand.closeClaw();
         			ChipotleArm.raiseArm();
+        			running = true;
+        		}
+        		else{
+        			running = false;
         		}
         	}
         	loopcount = loopcount + 1;
         
         }
+        public static boolean running() {
+        	return running;
+        }
+        
         // Make this return true when this Command no longer needs to run execute()
         protected boolean isFinished() {
 			return false;

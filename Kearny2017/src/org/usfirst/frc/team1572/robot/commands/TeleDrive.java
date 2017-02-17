@@ -28,14 +28,18 @@ public class TeleDrive extends Command {
 	protected void execute() {
 		if(OI.joyCoPilot.getRawAxis(0) < -0.1 || OI.joyCoPilot.getRawAxis(0) > 0.1 || OI.joyCoPilot.getRawAxis(1) < -0.1 || OI.joyCoPilot.getRawAxis(1) > 0.1){
 			coPilotDrive = true;
-			Robot.joydrive.arcadeDrive(Robot.oi.getJoyCoPilot());
+			overdrive = false;
+			Robot.joydrive.getRobotDrive().arcadeDrive(-OI.joyCoPilot.getRawAxis(1)*0.65 , -OI.joyCoPilot.getRawAxis(0)*0.5);
 		}
-		else if(OI.joyPilot.getRawButton(4)){
+		else if(OI.joyPilot.getRawAxis(3)>0.1){
 			overdrive = true;
-			Robot.joydrive.arcadeDrive(Robot.oi.getJoyPilot());
+			coPilotDrive = false;
+			Robot.joydrive.getRobotDrive().arcadeDrive(-OI.joyPilot.getRawAxis(1) , -OI.joyPilot.getRawAxis(0));
 		}
 		else {
-			Robot.joydrive.arcadeDrive(Robot.oi.getJoyPilot()); 
+			overdrive = false;
+			coPilotDrive = false;
+			Robot.joydrive.getRobotDrive().arcadeDrive(-OI.joyPilot.getRawAxis(1) , -OI.joyPilot.getRawAxis(0)*0.75); 
 		}	
     }
     

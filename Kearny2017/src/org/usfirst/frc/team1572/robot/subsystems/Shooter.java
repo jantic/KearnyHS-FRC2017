@@ -5,10 +5,12 @@ import org.usfirst.frc.team1572.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Shooter extends Subsystem {
 	private static final CANTalon shooter = RobotMap.shooter;
+	private static final Victor shooterIntake = RobotMap.shooterIntake;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -20,9 +22,11 @@ public class Shooter extends Subsystem {
     
     public static void shoot() {
     	shooter.set(0.75);
+    	shooterIntake.set(1);
     }
     public static void stopshoot() {
     	shooter.set(0);
+    	shooterIntake.set(0);
     }
 }
 

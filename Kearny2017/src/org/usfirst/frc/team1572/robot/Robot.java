@@ -14,7 +14,9 @@ import org.usfirst.frc.team1572.robot.commands.AimForGearAutonomously;
 import org.usfirst.frc.team1572.robot.commands.AimForGearManually;
 import org.usfirst.frc.team1572.robot.commands.AimForPegAutonomously;
 import org.usfirst.frc.team1572.robot.commands.AimForPegManually;
+import org.usfirst.frc.team1572.robot.commands.ArmToggle;
 import org.usfirst.frc.team1572.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team1572.robot.commands.ClawToggle;
 import org.usfirst.frc.team1572.robot.commands.DriveDistance;
 import org.usfirst.frc.team1572.robot.commands.GearGrab;
 import org.usfirst.frc.team1572.robot.commands.ReleaseGear;
@@ -42,7 +44,7 @@ import org.usfirst.frc.team1572.robot.subsystems.VelocityTalonDrive;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static final DriveType driveType = DriveType.VICTOR;
+	public static final DriveType driveType = DriveType.TALON_VOLTAGE;
 	public static OI oi;
 	public static BaseJoyDrive joydrive;
 	public static TeleDrive teledrive;
@@ -57,6 +59,8 @@ public class Robot extends IterativeRobot {
 	public static CameraSubsystem cameraSubsystem;
 	public static GearGrab geargrab;
 	public static ReleaseGear releasegear;
+	public static ClawToggle clawtoggle;
+	public static ArmToggle armtoggle;
 	public static NavigationSubsystem navigationSubsystem;
 	public static ENC enc;
 
@@ -91,6 +95,8 @@ public class Robot extends IterativeRobot {
 		teledrive = new TeleDrive();
 		geargrab = new GearGrab();
 		releasegear = new ReleaseGear();
+		clawtoggle = new ClawToggle();
+		armtoggle = new ArmToggle();
 		cameraSubsystem = new CameraSubsystem();
 		navigationSubsystem = new NavigationSubsystem();
 		OI.init();
@@ -174,9 +180,12 @@ public class Robot extends IterativeRobot {
 		if (this.autonomousCommand != null){
 			this.autonomousCommand.cancel();
 		}
+		
+		Scheduler.getInstance().add(teledrive);
+		Scheduler.getInstance().add(armtoggle);
+		Scheduler.getInstance().add(clawtoggle);
 		Scheduler.getInstance().add(geargrab);
 		Scheduler.getInstance().add(releasegear);
-		Scheduler.getInstance().add(teledrive);
 	}
 
 	/**
@@ -186,41 +195,48 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 
 		
-		if(OI.joyPilot.getRawButton(3)) {
-			ClawHand.openClaw();
-		}
-		if(OI.joyPilot.getRawButton(4)) {
-			ClawHand.closeClaw();
-		}
-		if(OI.joyCoPilot.getRawButton(1)) {
+		/*if(OI.joyPilot.getRawButton(6)) {
+			if(!ClawHand.clawOpen()){
+				ClawHand.openClaw();
+			}
+			else{
+				ClawHand.closeClaw();
+			}
+		}*/
+		if(OI.joyCoPilot.getRawButton(6)) {
 			ClawIntake.clawIntake();
 		}
 		else {
 			ClawIntake.stopIntake();
 		}
-		if(OI.joyPilot.getRawButton(7)) {
-			ChipotleArm.lowerArm();
-		}
-		if(OI.joyPilot.getRawButton(8)) {
-			ChipotleArm.raiseArm();
-		}
-		if(OI.joyPilot.getRawButton(6)) {
+		/*if(OI.joyPilot.getRawButton(5)) {
+			if(!ChipotleArm.clawDown()){
+				ChipotleArm.lowerArm();
+			}
+			else{
+				ChipotleArm.raiseArm();
+			}
+		}*/
+		if(OI.joyPilot.getRawButton(4) || OI.joyCoPilot.getRawButton(2)) {
 			Lift.Lifter();
 		}
 		else {
-			Lift.stopLifter();
+			Lift.stopLifter(); 
 		}
-		if(OI.joyPilot.getRawButton(5)) {
+		if(OI.joyCoPilot.getRawButton(3) || OI.joyPilot.getRawButton(3)) {
 			BallHopper.ballIntake();
 		}
 		else{
 			BallHopper.stopBallIntake();
-		}
-		if(OI.joyCoPilot.getRawButton(2)) {
+		} //B
+		if(OI.joyCoPilot.getRawButton(1)) {
 			Shooter.shoot();
 		}
 		else{
 			Shooter.stopshoot();
+		}
+		if(OI.joyCoPilot.getRawButton(8) && OI.joyCoPilot.getRawButton(9)){
+			Lift.reverseLifter();
 		}
 		double voltsPerInch = 5.0/512.0;
 		double volt =  RobotMap.sonar.getAverageVoltage();

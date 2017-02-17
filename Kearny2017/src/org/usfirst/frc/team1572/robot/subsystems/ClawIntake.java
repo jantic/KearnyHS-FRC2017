@@ -29,6 +29,12 @@ public class ClawIntake extends Subsystem {
     	clawIntake.set(0);
     	
     }
+    
+    public static void reverseIntake() {
+    	
+    	clawIntake.set(-0.75);
+    	
+    }
 
 }
 

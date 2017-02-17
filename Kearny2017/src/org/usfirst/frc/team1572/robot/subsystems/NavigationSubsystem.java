@@ -28,7 +28,6 @@ public class NavigationSubsystem extends Subsystem{
 	
 	//Meters
 	public float getDisplacementY(){
-		//return this.navigationSensor.getDisplacementY();
 		return this.navigationSensor.getDisplacementY();
 	}
 	

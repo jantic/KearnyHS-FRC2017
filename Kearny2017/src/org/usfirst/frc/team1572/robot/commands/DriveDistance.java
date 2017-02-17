@@ -8,10 +8,10 @@ import org.usfirst.frc.team1572.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
-import org.usfirst.frc.team1572.robot.subsystems.NavigationSubsystem;
+//import org.usfirst.frc.team1572.robot.subsystems.NavigationSubsystem;
 
 public class DriveDistance extends Command {
-	private NavigationSubsystem navSubsystem;
+	//private NavigationSubsystem navSubsystem;
 	private BaseJoyDrive joyDrive;
 	private final double targetDisplacement;
 	
@@ -22,7 +22,7 @@ public class DriveDistance extends Command {
     public DriveDistance(final double targetDisplacement, final double driveDone) {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.joydrive);
-    	requires(Robot.navigationSubsystem);
+    	//requires(Robot.navigationSubsystem);
     	this.targetDisplacement = targetDisplacement;
     	this.DRIVEDONE = driveDone;
     	
@@ -32,7 +32,7 @@ public class DriveDistance extends Command {
     @Override
 	protected void initialize() {
     	RobotMap.enc.reset();
-    	this.navSubsystem = Robot.navigationSubsystem;
+    	//this.navSubsystem = Robot.navigationSubsystem;
     	this.joyDrive = Robot.joydrive;
 		this.startTime = LocalDateTime.now();
     }
@@ -47,8 +47,8 @@ public class DriveDistance extends Command {
     }
     
     private void updateDisplay(){
-    	final StreamNavigationOutput outputStream = new StreamNavigationOutput();
-    	outputStream.execute();
+    	//final StreamNavigationOutput outputStream = new StreamNavigationOutput();
+    	//outputStream.execute();
     }
     // Make this return true when this Command no longer needs to run execute()
     @Override
@@ -62,13 +62,13 @@ public class DriveDistance extends Command {
 			return true;
 		}
 
-		final double displacement = this.navSubsystem.getDisplacementY();
+		//final double displacement = this.navSubsystem.getDisplacementY();
     	
 		if(targetDisplacement > 0){
-			return displacement > targetDisplacement;
+			return true; //displacement > targetDisplacement;
 		}
 		else{
-			return displacement < targetDisplacement; 
+			return false; //displacement < targetDisplacement; 
 		}
     }
 

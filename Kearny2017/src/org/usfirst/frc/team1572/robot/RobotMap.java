@@ -56,6 +56,7 @@ public class RobotMap {
 	public static Victor lift;
 	public static Victor clawIntake;
 	public static Victor ballHopper;
+	public static Victor shooterIntake;
 	public static CANTalon shooter;
 	public static Compressor compressor; 
 	public static Encoder enc;
@@ -73,6 +74,9 @@ public class RobotMap {
 		sonar = new AnalogInput(analogSonarPort);
 		enc = new Encoder(1, 2 , true, Encoder.EncodingType.k1X);
 		shooter = new CANTalon(shooterPort);
+		shooter.changeControlMode(TalonControlMode.Speed);
+		shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		
 		compressor = new Compressor(compressorPort);	
 		clawHand = new DoubleSolenoid(clawHandPort1,clawHandPort);
 		clawHand.set(DoubleSolenoid.Value.kOff);
@@ -81,10 +85,11 @@ public class RobotMap {
 		lift = new Victor(liftPort);
 		ballHopper = new Victor(ballHopperPort);
 		clawIntake = new Victor(clawIntakePort);
-		
+		shooterIntake = new Victor(4);
 		enc.setMaxPeriod(.1);
 		enc.setMinRate(10);
-		enc.setDistancePerPulse(distPerPulse);
+		enc.setDistancePerPulse( distPerPulse);
+		enc.setReverseDirection(false);
 		enc.setSamplesToAverage(7);
 		
 		
@@ -96,8 +101,6 @@ public class RobotMap {
 		victorLeftDriveTrain = new Victor(victorLeftDrivetrainPort);
 		victorRightDriveTrain = new Victor(victorRightDrivetrainPort);
 		robotDrive = new RobotDrive(victorLeftDriveTrain, victorRightDriveTrain);
-		
-		
 	}
 
 	private static void initTalonDrive(final DriveType driveType) {
@@ -133,8 +136,8 @@ public class RobotMap {
 			talonRightDrivetrain.set(0);
 		}
 		else {
-			talonLeftDrivetrain.changeControlMode(TalonControlMode.Voltage);
-			talonRightDrivetrain.changeControlMode(TalonControlMode.Voltage);
+			talonLeftDrivetrain.changeControlMode(TalonControlMode.PercentVbus);
+			talonRightDrivetrain.changeControlMode(TalonControlMode.PercentVbus);
 		}
 		
 		robotDrive = new RobotDrive(talonLeftDrivetrain, talonRightDrivetrain);
@@ -150,9 +153,8 @@ public class RobotMap {
 		rightDriveSlave1.set(talonRightDrivetrainPort);
 		rightDriveSlave2.changeControlMode(TalonControlMode.Follower);
 		rightDriveSlave2.set(talonRightDrivetrainPort);
-		
-		
 	}
+		
 }
 //1440 plues per rev.
 //8 ins per rev.

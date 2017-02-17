@@ -21,12 +21,13 @@ public class GearGrab extends Command {
 		//private boolean gearDetected;
 		private boolean buttonPressed;
 		private double loopcount;
-		private long timeout;
+		private static boolean running;
+		//private long timeout;
     	
         public GearGrab() {
             // Use requires() here to declare subsystem dependencies
         	requires(Robot.clawhand);
-        	requires(Robot.clawIntake);
+        	//requires(Robot.clawIntake);
         	requires(Robot.chipotlearm);
         	//requires(Robot.sensor);
         }
@@ -39,28 +40,35 @@ public class GearGrab extends Command {
 
         // Called repeatedly when this Command is scheduled to run
         protected void execute() {
-        	buttonPressed = OI.joyPilot.getRawButton(3) || OI.joyCoPilot.getRawButton(5);
+        	buttonPressed = OI.joyPilot.getRawButton(1) || OI.joyCoPilot.getRawButton(4);
         	/*if(Sensor.getDistance() < 1){
         		gearDetected = true;
         	}*/
-        	if(buttonPressed /*&& !gearDetected*/){
+        	if(buttonPressed /*&& !gearDetected*/ && !ReleaseGear.running() && !ClawToggle.running() && !ArmToggle.running()){
         		loopcount = 0;
         		ClawHand.openClaw();
         		ChipotleArm.lowerArm();
-        		ClawIntake.clawIntake();
+        		//ClawIntake.clawIntake();
+        		running = true;
         	}
         	else{
-        		if(loopcount < 30){
+        		if(loopcount < 20){
         			ClawHand.closeClaw();
-        			ClawIntake.stopIntake();
-        			if(loopcount > 20){
-        				ChipotleArm.raiseArm();
-        			}
+        			//ClawIntake.stopIntake();
+        			ChipotleArm.raiseArm();
+        			running = true;
+        		}
+        		else{
+        			running = false;
         		}
         	}
         	loopcount = loopcount + 1;
         
         }
+        public static boolean running() {
+        	return running;
+        }
+        
         // Make this return true when this Command no longer needs to run execute()
         protected boolean isFinished() {
 			return false;
