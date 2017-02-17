@@ -14,37 +14,38 @@ public class AutonomousCommand extends CommandGroup {
 	public boolean midGear =  false;
 	public boolean rightGear = false;
 	public boolean leftGear = false;
+	public boolean testGear = true;
     public AutonomousCommand() {
     	//1 meter
 
     	if (midGear) {
-	    	DriveDistance drive =  new DriveDistance(-0.5, 48);
+	    	DriveDistance drive =  new DriveDistance(-0.5, 93);
 	    	DriveDistance drive2 = new DriveDistance(-0.5, 12);
 	    	AimForPegAutonomously aim = new AimForPegAutonomously();
 	    	
 	    	Robot.navigationSubsystem.reset();
 	    	addSequential(drive);
-	    	Robot.navigationSubsystem.reset();
-	    	addSequential(new TurnUntilAngle(-90, false));
+	    	//Robot.navigationSubsystem.reset();
+	    	//addSequential(new TurnUntilAngle(-90, false));
 	    	//1 meter
 	    	//addSequential(Robot.stop);
 	    	
-	    	Robot.navigationSubsystem.reset();
-	    	addSequential(drive2);
+	    	//Robot.navigationSubsystem.reset();
+	    	//addSequential(drive2);
 	    	Robot.navigationSubsystem.reset();
 	    	addSequential(aim);
 	    	//need to work with aim for peg
     	}
     	
     	else if (leftGear) {
-    		DriveDistance drive =  new DriveDistance(-0.5, 48);
-	    	DriveDistance drive2 = new DriveDistance(-0.5, 12);
+    		DriveDistance drive =  new DriveDistance(-0.5, 93.3);
+	    	DriveDistance drive2 = new DriveDistance(-0.5, 62.4039);
 	    	AimForPegAutonomously aim = new AimForPegAutonomously();
 	    	
 	    	Robot.navigationSubsystem.reset();
 	    	addSequential(drive);
 	    	Robot.navigationSubsystem.reset();
-	    	addSequential(new TurnUntilAngle(-90, false));
+	    	addSequential(new TurnUntilAngle(-58, false));
 	    	//1 meter
 	    	//addSequential(Robot.stop);
 	    	
@@ -57,6 +58,24 @@ public class AutonomousCommand extends CommandGroup {
     	}
     	
     	else if (rightGear) {
+    		DriveDistance drive =  new DriveDistance(-0.5, 93.3);
+	    	DriveDistance drive2 = new DriveDistance(-0.5, 62.4039);
+	    	AimForPegAutonomously aim = new AimForPegAutonomously();
+	    	
+	    	Robot.navigationSubsystem.reset();
+	    	addSequential(drive);
+	    	Robot.navigationSubsystem.reset();
+	    	addSequential(new TurnUntilAngle(-58, true));
+	    	//1 meter
+	    	//addSequential(Robot.stop);
+	    	
+	    	Robot.navigationSubsystem.reset();
+	    	addSequential(drive2);
+	    	Robot.navigationSubsystem.reset();
+	    	addSequential(aim);
+    		
+    	}
+    	else if (testGear) {
     		DriveDistance drive =  new DriveDistance(-0.5, 48);
 	    	DriveDistance drive2 = new DriveDistance(-0.5, 12);
 	    	AimForPegAutonomously aim = new AimForPegAutonomously();
@@ -72,7 +91,6 @@ public class AutonomousCommand extends CommandGroup {
 	    	addSequential(drive2);
 	    	Robot.navigationSubsystem.reset();
 	    	addSequential(aim);
-    		
     	}
     	else {
     		Robot.joydrive.arcadeDrive(0, 0);
