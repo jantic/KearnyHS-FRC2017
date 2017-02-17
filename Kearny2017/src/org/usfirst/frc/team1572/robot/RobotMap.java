@@ -88,7 +88,7 @@ public class RobotMap {
 		enc.setSamplesToAverage(7);
 		
 		
-		sensor = new Ultrasonic(0, 1);
+		//sensor = new Ultrasonic(pingChannel, echoChannel);
 		// FIX THIS SO AGUREMNTS MAKES SENSE
 	}
 

@@ -17,7 +17,7 @@ public class DriveDistance extends Command {
 	
 	private LocalDateTime startTime;
 	private double DRIVEOUT;
-	private static double DRIVEDONE;
+	private double DRIVEDONE;
 	
     public DriveDistance(final double targetDisplacement, final double driveDone) {
         // Use requires() here to declare subsystem dependencies

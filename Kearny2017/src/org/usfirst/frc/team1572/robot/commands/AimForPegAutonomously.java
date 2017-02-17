@@ -2,6 +2,7 @@ package org.usfirst.frc.team1572.robot.commands;
 
 
 
+import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.vision.CameraType;
 import org.usfirst.frc.team1572.robot.vision.IAutoAim;
 import org.usfirst.frc.team1572.robot.vision.PegTargetAutoAim;
@@ -21,4 +22,9 @@ public class AimForPegAutonomously extends AimBase {
 		alignRobotToTarget(this.autoAim, CameraType.PEG_CAMERA);
 	}
 	
+
+
+	protected boolean isFinished() {
+		return true;
+	}
 }

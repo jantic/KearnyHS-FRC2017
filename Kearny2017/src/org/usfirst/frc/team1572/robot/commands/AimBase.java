@@ -54,17 +54,17 @@ public abstract class AimBase extends Command {
 		if (centeringCommand == VisionCenteringCommand.RIGHT ) {
 			final double joystickX = generateJoystickX(centeringCommand);
 			final double joystickY = generateJoystickY(centeringCommand);
-			this.joyDrive.arcadeDrive(joystickX, joystickY);
+			this.joyDrive.arcadeDrive(joystickY, joystickX);
 		}
 		if (centeringCommand == VisionCenteringCommand.LEFT) {
 			final double joystickX = generateJoystickX2(centeringCommand);
 			final double joystickY = generateJoystickY(centeringCommand);
-			this.joyDrive.arcadeDrive(joystickX, joystickY);
+			this.joyDrive.arcadeDrive(joystickY, joystickX);
 		}
 		else {
-			final double joystickX = 0;
+			final double joystickX = -0.25;
 			final double joystickY = generateJoystickY(centeringCommand);
-			this.joyDrive.arcadeDrive(joystickX, joystickY);
+			this.joyDrive.arcadeDrive(joystickY, joystickX);
 		}
 		
 	}
@@ -72,9 +72,9 @@ public abstract class AimBase extends Command {
 	private double generateJoystickX(final VisionCenteringCommand centeringCommand){
 		switch(centeringCommand){
 			case RIGHT:
-				return 0.5;
+				return 0.75;
 			case LEFT:
-				return -0.5;
+				return -0.75;
 			default:
 				return 0;
 		}
@@ -82,9 +82,9 @@ public abstract class AimBase extends Command {
 		private double generateJoystickX2(final VisionCenteringCommand centeringCommand){
 			switch(centeringCommand){
 				case RIGHT:
-					return -0.5;
+					return -0.75;
 				case LEFT:
-					return 0.5;
+					return 0.75;
 				default:
 					return 0;
 			}
@@ -96,7 +96,7 @@ public abstract class AimBase extends Command {
 				case LEFT:
 					return 0;
 				default:
-					return 0.5;
+					return -0.5;
 			}
 	}
 

@@ -13,34 +13,32 @@ public class AutonomousCommand extends CommandGroup {
 
     public AutonomousCommand() {
     	//1 meter
-    	DriveDistance drive =  new DriveDistance(-0.5, 36);
-    	DriveDistanceB drive2 = new DriveDistanceB(-0.5, 36);
-    	
-    	Robot.navigationSubsystem.reset();
-    	addSequential(drive);
-    	Robot.navigationSubsystem.reset();
-    	addSequential(new TurnUntilAngle(-90, false));
-    	//1 meter
-    	//addSequential(Robot.stop);
-    	
-    	Robot.navigationSubsystem.reset();
-    	addSequential(drive2);
-    	Robot.navigationSubsystem.reset();
-    	addSequential(new AimForPegAutonomously());
-    	//need to work with aim for peg
-    	
-    	double distToGear = Robot.sensor.getDistance();
-    	
-    	if ( distToGear <= 8) {
-    		Robot.joydrive.arcadeDrive(0, 0);
-    	}
-    	else {
-    		Robot.joydrive.arcadeDrive(0.5, 0);
-    	}
+	    	DriveDistance drive =  new DriveDistance(-0.5, 48);
+	    	DriveDistance drive2 = new DriveDistance(-0.5, 12);
+	    	AimForPegAutonomously aim = new AimForPegAutonomously();
+	    	
+	    	Robot.navigationSubsystem.reset();
+	    	addSequential(drive);
+	    	Robot.navigationSubsystem.reset();
+	    	addSequential(new TurnUntilAngle(-90, false));
+	    	//1 meter
+	    	//addSequential(Robot.stop);
+	    	
+	    	Robot.navigationSubsystem.reset();
+	    	addSequential(drive2);
+	    	Robot.navigationSubsystem.reset();
+	    	addSequential(aim);
+	    	//need to work with aim for peg
+    }
+}
+    
+
+
     	
     	
         // Add Commands here:
-        // e.g. addSequential(new Command1());
+        // e.g. addSequential(new Command1());     double distToGear = Robot.sensor.getDistance();
+//													if ( distToGear <= 8) {
         //      addSequential(new Command2());
         // these will run in order.
 
@@ -55,5 +53,4 @@ public class AutonomousCommand extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    }
-}
+
