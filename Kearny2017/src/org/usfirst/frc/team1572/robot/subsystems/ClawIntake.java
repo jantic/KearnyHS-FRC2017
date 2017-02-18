@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1572.robot.subsystems;
 
-import org.usfirst.frc.team1572.robot.OI;
 import org.usfirst.frc.team1572.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Victor;

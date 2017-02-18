@@ -1,10 +1,6 @@
 package org.usfirst.frc.team1572.robot;
 
-import org.usfirst.frc.team1572.robot.RobotMap;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -22,7 +18,7 @@ public class OI {
 	//private final static Button button2 = new JoystickButton(joyPilot, 3);
 	
 	public static void init() {
-		
+		//do nothing
 	}
 	
 	

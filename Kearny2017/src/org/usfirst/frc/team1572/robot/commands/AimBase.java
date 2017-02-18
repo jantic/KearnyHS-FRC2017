@@ -22,8 +22,6 @@ public abstract class AimBase extends Command {
 	private VisionCenteringCommand lastCenteringCommand = VisionCenteringCommand.NULL;
 	private LocalDateTime startTime;
 	private static long TIMEOUT = 50000000;
-	private static boolean m_direction;
-
 	public AimBase() {
 		requires(Robot.joydrive);
 		requires(Robot.cameraSubsystem);
@@ -42,9 +40,11 @@ public abstract class AimBase extends Command {
 			executeTurn(centeringCommand);	
 			SmartDashboard.putString("Centering Command", centeringCommand.name());
 			this.lastCenteringCommand = centeringCommand;
-		} catch (ImageGrabFailedException e) {
+		} 
+		catch (ImageGrabFailedException e) {
 			System.out.println("Error while grabbing image auto aiming for peg:" + e.getMessage());
-		} catch (Exception e){
+		} 
+		catch (Exception e){
 			System.out.println("Error while auto aiming for peg:" + e.getMessage());
 		}
 		

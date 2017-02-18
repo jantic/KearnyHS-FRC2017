@@ -13,54 +13,42 @@ public class TurnUntilAngle extends Command {
 	private BaseJoyDrive joyDrive;
 	private NavigationSubsystem navSubsystem;
 	private final double targetAngle;
-	private final boolean direct;
-	private boolean directionA = true;
 	private final double angleTolerance = 5;
 	private LocalDateTime startTime;
 	private static long TIMEOUT = 5;
 
-	public TurnUntilAngle(final double targetAngle, final boolean direction) {
-		this.direct = direction;
+	public TurnUntilAngle(final double targetAngle) {
 		this.targetAngle = targetAngle;
 		requires(Robot.joydrive);
-		//requires(Robot.navigationSubsystem);
+		requires(Robot.navigationSubsystem);
 	}
 
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-    	//this.navSubsystem = Robot.navigationSubsystem;
+    	this.navSubsystem = Robot.navigationSubsystem;
     	this.joyDrive = Robot.joydrive;
-		//navSubsystem.reset();
+		this.navSubsystem.reset();
 		this.startTime = LocalDateTime.now();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		
-		if (directionA = direct) {
-			final double joystickX = generateJoystickX();
-			final double joystickY = 0.0;
-			this.joyDrive.arcadeDrive(joystickX, joystickY);
-		}
-		else 
-		{
-			final double joystickX = generateJoystickX();
-			final double joystickY = 0.0;
-			this.joyDrive.arcadeDrive(joystickY, joystickX);
-		}
+		final double joystickX = generateJoystickX();
+		final double joystickY = 0.0;
+		this.joyDrive.arcadeDrive(joystickX, joystickY);
 		updateDisplay();
 	}
 	
     private void updateDisplay(){
-    	//final StreamNavigationOutput outputStream = new StreamNavigationOutput();
-    	//outputStream.execute();
+    	final StreamNavigationOutput outputStream = new StreamNavigationOutput();
+    	outputStream.execute();
     }
 	
 	private double generateJoystickX(){
-		if(targetAngle >= 0){
+		if(this.targetAngle >= 0){
 			return 0.5;
 		}
 		
@@ -70,17 +58,17 @@ public class TurnUntilAngle extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		//final LocalDateTime currentTime = LocalDateTime.now();
-		//final long elapsedSeconds = ChronoUnit.SECONDS.between(this.startTime, currentTime);
+		final LocalDateTime currentTime = LocalDateTime.now();
+		final long elapsedSeconds = ChronoUnit.SECONDS.between(this.startTime, currentTime);
 		
-		//if(elapsedSeconds > TIMEOUT){
-		//	return true;
-		//}
+		if(elapsedSeconds > TIMEOUT){
+			return true;
+		}
 		
-		//final double currentAngle = this.navSubsystem.getAngle();
-		//final double diff = (this.targetAngle - currentAngle);
+		final double currentAngle = this.navSubsystem.getAngle();
+		final double diff = (this.targetAngle - currentAngle);
 		
-		return true;//(Math.abs(diff) < angleTolerance);
+		return (Math.abs(diff) < this.angleTolerance);
 	}
 
 	// Called once after isFinished returns true

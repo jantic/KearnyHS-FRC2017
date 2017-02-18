@@ -44,7 +44,8 @@ import org.usfirst.frc.team1572.robot.subsystems.VelocityTalonDrive;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static final DriveType driveType = DriveType.TALON_VOLTAGE;
+	public static final DriveType DRIVE_TYPE = DriveType.TALON_VOLTAGE;
+	public static final AutonomousMode AUTONOMOUS_MODE = AutonomousMode.TEST_GEAR;
 	public static OI oi;
 	public static BaseJoyDrive joydrive;
 	public static TeleDrive teledrive;
@@ -108,7 +109,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	private BaseJoyDrive generateJoyDrive() {
-		switch(driveType){
+		switch(DRIVE_TYPE){
 			case TALON_VELOCITY:
 				return new VelocityTalonDrive();
 			case TALON_VOLTAGE:
@@ -119,7 +120,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	private void initSmartDashboard() {
-		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData("Auto mode", this.chooser);
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("Peg Auto Aim Manual", new AimForPegManually());
 		SmartDashboard.putData("Gear Auto Aim Manual", new AimForGearManually());
@@ -155,7 +156,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		this.autonomousCommand = new AutonomousCommand();
+		this.autonomousCommand = new AutonomousCommand(AUTONOMOUS_MODE);
 
 		if (this.autonomousCommand != null){
 			this.autonomousCommand.start();
@@ -168,11 +169,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		System.out.println("enc value " + RobotMap.enc.getDistance());
-		int count = RobotMap.enc.get();
-		double distance = RobotMap.enc.getRaw();
-		
-		
 	}
 
 	@Override
@@ -194,29 +190,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 
-		
-		/*if(OI.joyPilot.getRawButton(6)) {
-			if(!ClawHand.clawOpen()){
-				ClawHand.openClaw();
-			}
-			else{
-				ClawHand.closeClaw();
-			}
-		}*/
 		if(OI.joyCoPilot.getRawButton(6)) {
 			ClawIntake.clawIntake();
 		}
 		else {
 			ClawIntake.stopIntake();
 		}
-		/*if(OI.joyPilot.getRawButton(5)) {
-			if(!ChipotleArm.clawDown()){
-				ChipotleArm.lowerArm();
-			}
-			else{
-				ChipotleArm.raiseArm();
-			}
-		}*/
 		if(OI.joyPilot.getRawButton(4) || OI.joyCoPilot.getRawButton(2)) {
 			Lift.Lifter();
 		}
@@ -238,19 +217,6 @@ public class Robot extends IterativeRobot {
 		if(OI.joyCoPilot.getRawButton(8) && OI.joyCoPilot.getRawButton(9)){
 			Lift.reverseLifter();
 		}
-		double voltsPerInch = 5.0/512.0;
-		double volt =  RobotMap.sonar.getAverageVoltage();
-		double rangeInInches = volt / voltsPerInch;
-		System.out.println("Analog Input = " + volt);
-		System.out.println("Total Distance is = to " + rangeInInches );
-		
-		int count = RobotMap.enc.get();
-		double distance = RobotMap.enc.getRaw();
-		System.out.println("enc cont " + count);
-		System.out.println("enc raw " + distance);
-		System.out.println("enc caulation " + RobotMap.distPerPulse);
-		System.out.println("enc get" + RobotMap.enc.getEncodingScale());
-
 		Scheduler.getInstance().run();
 	}
 

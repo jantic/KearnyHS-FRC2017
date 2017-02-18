@@ -21,12 +21,12 @@ public class StreamNavigationOutput extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		SmartDashboard.putNumber("Displacement X", navigationSubsystem.getDisplacementX());
-		SmartDashboard.putNumber("Displacement Y", navigationSubsystem.getDisplacementY());
-		SmartDashboard.putNumber("Velocity X", navigationSubsystem.getVelocityX());
-		SmartDashboard.putNumber("Velocity Y", navigationSubsystem.getVelocityY());
-		SmartDashboard.putNumber("Angle", navigationSubsystem.getAngle());
-		SmartDashboard.putNumber("Compass Heading", navigationSubsystem.getCompassHeading());
+		SmartDashboard.putNumber("Displacement X", this.navigationSubsystem.getDisplacementX());
+		SmartDashboard.putNumber("Displacement Y", this.navigationSubsystem.getDisplacementY());
+		SmartDashboard.putNumber("Velocity X", this.navigationSubsystem.getVelocityX());
+		SmartDashboard.putNumber("Velocity Y", this.navigationSubsystem.getVelocityY());
+		SmartDashboard.putNumber("Angle", this.navigationSubsystem.getAngle());
+		SmartDashboard.putNumber("Compass Heading", this.navigationSubsystem.getCompassHeading());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -2,13 +2,7 @@ package org.usfirst.frc.team1572.robot.commands;
 
 import org.usfirst.frc.team1572.robot.OI;
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.RobotMap;
-import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
 import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
-import org.usfirst.frc.team1572.robot.subsystems.ClawIntake;
-import org.usfirst.frc.team1572.robot.subsystems.Sensor;
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -22,20 +16,25 @@ public class ClawToggle extends Command {
     	
         public ClawToggle() {
             // Use requires() here to declare subsystem dependencies
+        	//Do nothing
         	requires(Robot.clawhand);
+        
         }
         
 
 
         // Called just before this Command runs the first time
-        protected void initialize() {
+        @Override
+		protected void initialize() {
+        	//Do nothing
         }
 
         // Called repeatedly when this Command is scheduled to run
-        protected void execute() {
-        	buttonPressed = OI.joyPilot.getRawButton(6);
-        	if(buttonPressed && loopcounter > 20 && !ReleaseGear.running() && !GearGrab.running() && !ArmToggle.running()){
-        		loopcounter = 0;
+        @Override
+		protected void execute() {
+        	this.buttonPressed = OI.joyPilot.getRawButton(6);
+        	if(this.buttonPressed && this.loopcounter > 20 && !ReleaseGear.running() && !GearGrab.running() && !ArmToggle.running()){
+        		this.loopcounter = 0;
         		running = true;
         		if(ClawHand.clawOpen()){
         			ClawHand.closeClaw();
@@ -47,7 +46,7 @@ public class ClawToggle extends Command {
         	else{
         		running = false;
         	}
-        	loopcounter = loopcounter + 1;
+        	this.loopcounter = this.loopcounter + 1;
         
         }
         public static boolean running() {
@@ -55,17 +54,22 @@ public class ClawToggle extends Command {
         }
         
         // Make this return true when this Command no longer needs to run execute()
-        protected boolean isFinished() {
+        @Override
+		protected boolean isFinished() {
 			return false;
         	
         }
 
         // Called once after isFinished returns true
-        protected void end() {
+        @Override
+		protected void end() {
+        	//DO NOTHING
         }
 
         // Called when another command which requires one or more of the same
         // subsystems is scheduled to run
-        protected void interrupted() {
+        @Override
+		protected void interrupted() {
+        	//DO NOTHING
         }
 }

@@ -12,6 +12,6 @@ public enum DriveType {
 	}
 
 	public boolean isTalonDrive() {
-		return isTalonDrive;
+		return this.isTalonDrive;
 	}
 }

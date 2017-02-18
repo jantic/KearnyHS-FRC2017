@@ -27,28 +27,28 @@ public class TeleDrive extends Command {
     @Override
 	protected void execute() {
 		if(OI.joyCoPilot.getRawAxis(0) < -0.1 || OI.joyCoPilot.getRawAxis(0) > 0.1 || OI.joyCoPilot.getRawAxis(1) < -0.1 || OI.joyCoPilot.getRawAxis(1) > 0.1){
-			coPilotDrive = true;
-			overdrive = false;
+			this.coPilotDrive = true;
+			this.overdrive = false;
 			Robot.joydrive.getRobotDrive().arcadeDrive(-OI.joyCoPilot.getRawAxis(1)*0.65 , -OI.joyCoPilot.getRawAxis(0)*0.5);
 		}
 		else if(OI.joyPilot.getRawAxis(3)>0.1){
-			overdrive = true;
-			coPilotDrive = false;
+			this.overdrive = true;
+			this.coPilotDrive = false;
 			Robot.joydrive.getRobotDrive().arcadeDrive(-OI.joyPilot.getRawAxis(1) , -OI.joyPilot.getRawAxis(0));
 		}
 		else {
-			overdrive = false;
-			coPilotDrive = false;
+			this.overdrive = false;
+			this.coPilotDrive = false;
 			Robot.joydrive.getRobotDrive().arcadeDrive(-OI.joyPilot.getRawAxis(1) , -OI.joyPilot.getRawAxis(0)*0.75); 
 		}	
     }
     
     public boolean coPilotDrive() {
-    	return coPilotDrive;
+    	return this.coPilotDrive;
     }
     
     public boolean overdrive() {
-    	return overdrive;
+    	return this.overdrive;
     }
 
     // Make this return true when this Command no longer needs to run execute()

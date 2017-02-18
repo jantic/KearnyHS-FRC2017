@@ -13,26 +13,20 @@ import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
 public class DriveDistance extends Command {
 	//private NavigationSubsystem navSubsystem;
 	private BaseJoyDrive joyDrive;
-	private final double targetDisplacement;
-	
+	private final double targetDisplacement; //positve or negative
+	private static final int TIMEOUT = 10; //seconds
 	private LocalDateTime startTime;
-	private double DRIVEOUT;
-	private double DRIVEDONE;
 	
-    public DriveDistance(final double targetDisplacement, final double driveDone) {
-        // Use requires() here to declare subsystem dependencies
+    public DriveDistance(final double targetDisplacement) {
     	requires(Robot.joydrive);
-    	//requires(Robot.navigationSubsystem);
-    	this.targetDisplacement = targetDisplacement;
-    	this.DRIVEDONE = driveDone;
-    	
+    	requires(Robot.navigationSubsystem);
+    	this.targetDisplacement = targetDisplacement;  	
     }
     
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
     	RobotMap.enc.reset();
-    	//this.navSubsystem = Robot.navigationSubsystem;
     	this.joyDrive = Robot.joydrive;
 		this.startTime = LocalDateTime.now();
     }
@@ -41,41 +35,43 @@ public class DriveDistance extends Command {
     @Override
 	protected void execute() {
 		final double joystickY = 0.0;
-		final double joystickX = targetDisplacement > 0 ? 0.5 : -0.5;
+		final double joystickX = this.targetDisplacement > 0 ? 0.5 : -0.5;
 		this.joyDrive.arcadeDrive(joystickX, joystickY);
 		updateDisplay();
     }
     
     private void updateDisplay(){
-    	//final StreamNavigationOutput outputStream = new StreamNavigationOutput();
-    	//outputStream.execute();
+    	final StreamNavigationOutput outputStream = new StreamNavigationOutput();
+    	outputStream.execute();
     }
     // Make this return true when this Command no longer needs to run execute()
     @Override
 	protected boolean isFinished() { 
-		double distance = RobotMap.enc.getRate();
-		double distance2 = RobotMap.enc.getDistance();
-		this.DRIVEOUT = distance2;
+		final LocalDateTime currentTime = LocalDateTime.now();
 		
-    	if(DRIVEDONE <= DRIVEOUT){
-    		this.joyDrive.arcadeDrive(0 , 0);
+		final long elapsedSeconds = ChronoUnit.SECONDS.between(this.startTime, currentTime);
+		
+		if(elapsedSeconds > TIMEOUT){
 			return true;
 		}
-
-		//final double displacement = this.navSubsystem.getDisplacementY();
+    	 	
+		final double distanceDriven = RobotMap.enc.getDistance();
+		
+    	if(this.targetDisplacement <= distanceDriven && this.targetDisplacement > 0){
+			return true;
+		}
+		
+    	if(this.targetDisplacement >= distanceDriven && this.targetDisplacement <= 0){
+			return true;
+		}
     	
-		if(targetDisplacement > 0){
-			return true; //displacement > targetDisplacement;
-		}
-		else{
-			return false; //displacement < targetDisplacement; 
-		}
+		return false;
     }
 
     // Called once after isFinished returns true
     @Override
 	protected void end() {
-    	//nothing to do here
+		this.joyDrive.arcadeDrive(0 , 0);
     }
 
     // Called when another command which requires one or more of the same

@@ -64,8 +64,8 @@ public class RobotMap {
 	public static Ultrasonic sensor;
 	
 	public static void init() {
-		if(Robot.driveType.isTalonDrive()){
-			initTalonDrive(Robot.driveType);
+		if(Robot.DRIVE_TYPE.isTalonDrive()){
+			initTalonDrive(Robot.DRIVE_TYPE);
 		}
 		else{
 			initVictorDrive();
