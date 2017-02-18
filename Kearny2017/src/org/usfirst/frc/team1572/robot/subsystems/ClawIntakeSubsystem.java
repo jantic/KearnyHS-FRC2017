@@ -2,14 +2,11 @@ package org.usfirst.frc.team1572.robot.subsystems;
 
 import org.usfirst.frc.team1572.robot.RobotMap;
 
-import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Shooter extends Subsystem {
-	private static final CANTalon shooter = RobotMap.shooter;
-	private static final Victor shooterIntake = RobotMap.shooterIntake;
+public class ClawIntakeSubsystem extends Subsystem {
+	private final static Victor clawIntake = RobotMap.clawIntake;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -19,13 +16,21 @@ public class Shooter extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public static void shoot() {
-    	shooter.set(0.75);
-    	shooterIntake.set(1);
+    public void clawIntake() {
+        clawIntake.set(0.75);      
     }
-    public static void stopshoot() {
-    	shooter.set(0);
-    	shooterIntake.set(0);
+
+    public void stopIntake() {
+    	
+    	clawIntake.set(0);
+    	
     }
+    
+    public void reverseIntake() {
+    	
+    	clawIntake.set(-0.75);
+    	
+    }
+
 }
 

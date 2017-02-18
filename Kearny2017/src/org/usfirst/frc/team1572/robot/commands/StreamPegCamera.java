@@ -1,11 +1,14 @@
 package org.usfirst.frc.team1572.robot.commands;
 
 import org.usfirst.frc.team1572.robot.Robot;
+import org.usfirst.frc.team1572.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team1572.robot.vision.CameraType;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class StreamPegCamera extends Command {
+	private CameraSubsystem cameraSubsystem;
+	
 	public StreamPegCamera() {
 		requires(Robot.cameraSubsystem);
 	}
@@ -13,14 +16,14 @@ public class StreamPegCamera extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		// nothing to do here
+		this.cameraSubsystem = Robot.cameraSubsystem;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		try {
-			Robot.cameraSubsystem.streamToDashboard(CameraType.PEG_CAMERA);
+			this.cameraSubsystem.streamToDashboard(CameraType.PEG_CAMERA);
 		} catch (Exception e){
 			System.out.println("Error while attempting to stream peg camera to dashboard:" + e.getMessage());
 		}

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1572.robot.commands;
 
 import org.usfirst.frc.team1572.robot.AutonomousMode;
-import org.usfirst.frc.team1572.robot.Robot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -36,8 +35,7 @@ public class AutonomousCommand extends CommandGroup {
 	    	addSequential(new AimForPegAutonomously());
 	    	break;
     	default:
-    		//TODO: Should be command call
-    		Robot.joydrive.arcadeDrive(0, 0);
+    		addSequential(new DriveDistance(0));
     		break;
     	}
     }

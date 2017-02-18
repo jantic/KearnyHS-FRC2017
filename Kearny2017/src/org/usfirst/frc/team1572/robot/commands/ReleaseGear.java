@@ -1,9 +1,9 @@
 package org.usfirst.frc.team1572.robot.commands;
 
-import org.usfirst.frc.team1572.robot.OI;
+import org.usfirst.frc.team1572.robot.JoystickController;
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
-import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
+import org.usfirst.frc.team1572.robot.subsystems.ChipotleArmSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.ClawHandSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -14,33 +14,36 @@ public class ReleaseGear extends Command {
 		private boolean buttonPushed;
 		private double loopcount;
 		private static boolean running;
+		private ClawHandSubsystem clawHandSubsystem;
+		private ChipotleArmSubsystem chipotleArmSubsystem;
     	
         public ReleaseGear() {
             // Use requires() here to declare subsystem dependencies
-        	requires(Robot.clawhand);
-        	requires(Robot.chipotlearm);
+        	requires(Robot.clawhandSubsystem);
+        	requires(Robot.chipotlearmSubystem);
         }
 
         // Called just before this Command runs the first time
         @Override
 		protected void initialize() {
-        	//do nothing
+        	this.clawHandSubsystem = Robot.clawhandSubsystem;
+        	this.chipotleArmSubsystem = Robot.chipotlearmSubystem;
         }
 
         // Called repeatedly when this Command is scheduled to run
         @Override
 		protected void execute() {
-        	this.buttonPushed = OI.joyPilot.getRawButton(2) || OI.joyCoPilot.getRawButton(5);
+        	this.buttonPushed = JoystickController.joyPilot.getRawButton(2) || JoystickController.joyCoPilot.getRawButton(5);
         	if(this.buttonPushed && !GearGrab.running() && !ClawToggle.running() && !ArmToggle.running()){
         		this.loopcount = 0;
-        		ClawHand.openClaw();
-        		ChipotleArm.lowerArm();
+        		this.clawHandSubsystem.openClaw();
+        		this.chipotleArmSubsystem.lowerArm();
         		running = true;
         	}
         	else{
         		if(this.loopcount < 20){
-        			ClawHand.closeClaw();
-        			ChipotleArm.raiseArm();
+        			this.clawHandSubsystem.closeClaw();
+        			this.chipotleArmSubsystem.raiseArm();
         			running = true;
         		}
         		else{

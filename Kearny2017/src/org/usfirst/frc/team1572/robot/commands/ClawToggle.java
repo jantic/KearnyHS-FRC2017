@@ -1,8 +1,8 @@
 package org.usfirst.frc.team1572.robot.commands;
 
-import org.usfirst.frc.team1572.robot.OI;
+import org.usfirst.frc.team1572.robot.JoystickController;
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
+import org.usfirst.frc.team1572.robot.subsystems.ClawHandSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -12,12 +12,13 @@ public class ClawToggle extends Command {
 
 		private boolean buttonPressed;
 		private double loopcounter = 0;
-		private static boolean running;
+		private ClawHandSubsystem clawHandSubsystem;
+		private static boolean running = false;
     	
         public ClawToggle() {
             // Use requires() here to declare subsystem dependencies
         	//Do nothing
-        	requires(Robot.clawhand);
+        	requires(Robot.clawhandSubsystem);
         
         }
         
@@ -26,21 +27,21 @@ public class ClawToggle extends Command {
         // Called just before this Command runs the first time
         @Override
 		protected void initialize() {
-        	//Do nothing
+        	this.clawHandSubsystem = Robot.clawhandSubsystem;
         }
 
         // Called repeatedly when this Command is scheduled to run
         @Override
 		protected void execute() {
-        	this.buttonPressed = OI.joyPilot.getRawButton(6);
+        	this.buttonPressed = JoystickController.joyPilot.getRawButton(6);
         	if(this.buttonPressed && this.loopcounter > 20 && !ReleaseGear.running() && !GearGrab.running() && !ArmToggle.running()){
         		this.loopcounter = 0;
         		running = true;
-        		if(ClawHand.clawOpen()){
-        			ClawHand.closeClaw();
+        		if(this.clawHandSubsystem.clawOpen()){
+        			this.clawHandSubsystem.closeClaw();
         		}
         		else{
-        			ClawHand.openClaw();
+        			this.clawHandSubsystem.openClaw();
         		}
         	}
         	else{

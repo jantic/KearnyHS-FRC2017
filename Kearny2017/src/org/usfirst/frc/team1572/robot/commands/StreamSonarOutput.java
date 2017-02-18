@@ -1,38 +1,33 @@
 package org.usfirst.frc.team1572.robot.commands;
 
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.CameraSubsystem;
-import org.usfirst.frc.team1572.robot.vision.CameraType;
+import org.usfirst.frc.team1572.robot.subsystems.SonarSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class StreamGearCamera extends Command {
-	private CameraSubsystem cameraSubsystem;
+public class StreamSonarOutput extends Command {
+	private final SonarSubsystem sonarSubsystem = Robot.sonarSubystem;
 	
-	public StreamGearCamera() {
-		requires(Robot.cameraSubsystem);
+	public StreamSonarOutput() {
+		requires(Robot.sonarSubystem);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		this.cameraSubsystem = Robot.cameraSubsystem;
+		// nothing to do here
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		try {
-			this.cameraSubsystem.streamToDashboard(CameraType.GEAR_CAMERA);
-		} catch (Exception e){
-			System.out.println("Error while attempting to stream peg camera to dashboard:" + e.getMessage());
-		}
+		SmartDashboard.putNumber("Sonar Distance", this.sonarSubsystem.getDistance());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		//I think because execute will complete once before this is called, that I can always set this to true.  Maybe.
 		return true;
 	}
 

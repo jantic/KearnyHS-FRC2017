@@ -1,9 +1,8 @@
 package org.usfirst.frc.team1572.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Joystick;
-import org.usfirst.frc.team1572.robot.Robot;
 
-public class VoltageTalonDrive extends BaseTalonDrive {
+public class VoltageTalonDriveSubsystem extends BaseTalonDriveSubsystem {
     @Override
 	public void arcadeDrive(Joystick stick) {
 		arcadeDrive(getJoyMap().getLeftXAxis(stick), getJoyMap().getLeftYAxis(stick));
@@ -17,18 +16,7 @@ public class VoltageTalonDrive extends BaseTalonDrive {
 	}
 
 	private double getSpeedFactor() {
-		double speedFactor;
-		
-		if(Robot.teledrive.coPilotDrive()) {
-			speedFactor = 0.25;
-		}
-		else if(Robot.teledrive.overdrive()) {
-			speedFactor = 1;
-		}
-		else {
-			speedFactor = 0.75;
-		}
-		return speedFactor;
+		return 0.75;
 	}
 }
 

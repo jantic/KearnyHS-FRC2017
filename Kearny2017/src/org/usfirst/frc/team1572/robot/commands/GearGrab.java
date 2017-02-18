@@ -1,9 +1,9 @@
 package org.usfirst.frc.team1572.robot.commands;
 
-import org.usfirst.frc.team1572.robot.OI;
+import org.usfirst.frc.team1572.robot.JoystickController;
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
-import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
+import org.usfirst.frc.team1572.robot.subsystems.ChipotleArmSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.ClawHandSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -15,13 +15,15 @@ public class GearGrab extends Command {
 		private boolean buttonPressed;
 		private double loopcount;
 		private static boolean running;
+		private ClawHandSubsystem clawHandSubsystem;
+		private ChipotleArmSubsystem chipotleArmSubsystem;
 		//private long timeout;
     	
         public GearGrab() {
             // Use requires() here to declare subsystem dependencies
-        	requires(Robot.clawhand);
+        	requires(Robot.clawhandSubsystem);
         	//requires(Robot.clawIntake);
-        	requires(Robot.chipotlearm);
+        	requires(Robot.chipotlearmSubystem);
         	//requires(Robot.sensor);
         }
         
@@ -30,28 +32,29 @@ public class GearGrab extends Command {
         // Called just before this Command runs the first time
         @Override
 		protected void initialize() {
-        	//do nothing
+        	this.clawHandSubsystem = Robot.clawhandSubsystem;
+        	this.chipotleArmSubsystem = Robot.chipotlearmSubystem;
         }
 
         // Called repeatedly when this Command is scheduled to run
         @Override
 		protected void execute() {
-        	this.buttonPressed = OI.joyPilot.getRawButton(1) || OI.joyCoPilot.getRawButton(4);
+        	this.buttonPressed = JoystickController.joyPilot.getRawButton(1) || JoystickController.joyCoPilot.getRawButton(4);
         	/*if(Sensor.getDistance() < 1){
         		gearDetected = true;
         	}*/
         	if(this.buttonPressed /*&& !gearDetected*/ && !ReleaseGear.running() && !ClawToggle.running() && !ArmToggle.running()){
         		this.loopcount = 0;
-        		ClawHand.openClaw();
-        		ChipotleArm.lowerArm();
+        		this.clawHandSubsystem.openClaw();
+        		this.chipotleArmSubsystem.lowerArm();
         		//ClawIntake.clawIntake();
         		running = true;
         	}
         	else{
         		if(this.loopcount < 20){
-        			ClawHand.closeClaw();
+        			this.clawHandSubsystem.closeClaw();
         			//ClawIntake.stopIntake();
-        			ChipotleArm.raiseArm();
+        			this.chipotleArmSubsystem.raiseArm();
         			running = true;
         		}
         		else{

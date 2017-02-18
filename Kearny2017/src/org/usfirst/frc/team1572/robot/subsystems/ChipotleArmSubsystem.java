@@ -5,10 +5,11 @@ import org.usfirst.frc.team1572.robot.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ChipotleArm extends Subsystem {
+public class ChipotleArmSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public final static DoubleSolenoid Arm = RobotMap.Arm;
+	//TODO:  Not threadsafe
 	private static boolean clawDown;
 	
     @Override
@@ -18,20 +19,20 @@ public class ChipotleArm extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public static void lowerArm() {
+    public void lowerArm() {
     	
 	    Arm.set(DoubleSolenoid.Value.kForward);
 	    clawDown = true;
     	
     }
     
-    public static void raiseArm() {
+    public void raiseArm() {
     	
 	    Arm.set(DoubleSolenoid.Value.kReverse);
 	    clawDown = false;
     	
     }
-    public static boolean clawDown(){
+    public boolean clawDown(){
     	return clawDown;
     }
 }

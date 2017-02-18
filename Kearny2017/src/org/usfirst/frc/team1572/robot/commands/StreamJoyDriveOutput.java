@@ -1,22 +1,22 @@
 package org.usfirst.frc.team1572.robot.commands;
 
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
+import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class StreamJoyDriveOutput extends Command {
-	private final BaseJoyDrive joyDrive = Robot.joydrive;
+	private BaseJoyDriveSubsystem joyDrive;
 	
 	public StreamJoyDriveOutput() {
-		requires(Robot.joydrive);
+		requires(Robot.joydriveSubystem);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		// nothing to do here
+		this.joyDrive = Robot.joydriveSubystem;
 	}
 
 	// Called repeatedly when this Command is scheduled to run

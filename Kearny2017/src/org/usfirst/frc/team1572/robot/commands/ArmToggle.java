@@ -1,8 +1,8 @@
 package org.usfirst.frc.team1572.robot.commands;
 
-import org.usfirst.frc.team1572.robot.OI;
+import org.usfirst.frc.team1572.robot.JoystickController;
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
+import org.usfirst.frc.team1572.robot.subsystems.ChipotleArmSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -13,10 +13,11 @@ public class ArmToggle extends Command {
 		private boolean buttonPressed;
 		private double loopcount = 0;
 		private static boolean running;
+		private ChipotleArmSubsystem chipotleArmSubsystem;
     	
         public ArmToggle() {
             // Use requires() here to declare subsystem dependencies
-        	requires(Robot.chipotlearm);
+        	requires(Robot.chipotlearmSubystem);
         }
         
 
@@ -24,21 +25,21 @@ public class ArmToggle extends Command {
         // Called just before this Command runs the first time
         @Override
 		protected void initialize() {
-        	//Do nothing
+        	this.chipotleArmSubsystem = Robot.chipotlearmSubystem;
         }
 
         // Called repeatedly when this Command is scheduled to run
         @Override
 		protected void execute() {
-        	this.buttonPressed = OI.joyPilot.getRawButton(5);
+        	this.buttonPressed = JoystickController.joyPilot.getRawButton(5);
         	if(this.buttonPressed && this.loopcount > 20 && !ReleaseGear.running() && !GearGrab.running() && !ClawToggle.running()){
         		running = true;
         		this.loopcount = 0;
-        		if(ChipotleArm.clawDown()){
-        			ChipotleArm.raiseArm();
+        		if(this.chipotleArmSubsystem.clawDown()){
+        			this.chipotleArmSubsystem.raiseArm();
         		}
         		else{
-        			ChipotleArm.lowerArm();
+        			this.chipotleArmSubsystem.lowerArm();
         		}
         	}
         	else{

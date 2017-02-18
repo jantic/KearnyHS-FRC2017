@@ -17,24 +17,23 @@ import org.usfirst.frc.team1572.robot.commands.AimForPegManually;
 import org.usfirst.frc.team1572.robot.commands.ArmToggle;
 import org.usfirst.frc.team1572.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team1572.robot.commands.ClawToggle;
-import org.usfirst.frc.team1572.robot.commands.DriveDistance;
 import org.usfirst.frc.team1572.robot.commands.GearGrab;
 import org.usfirst.frc.team1572.robot.commands.ReleaseGear;
 import org.usfirst.frc.team1572.robot.commands.TeleDrive;
-import org.usfirst.frc.team1572.robot.subsystems.BallHopper;
-import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
+import org.usfirst.frc.team1572.robot.subsystems.BallHopperSubysystem;
+import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.CameraSubsystem;
-import org.usfirst.frc.team1572.robot.subsystems.ChipotleArm;
-import org.usfirst.frc.team1572.robot.subsystems.ClawHand;
-import org.usfirst.frc.team1572.robot.subsystems.ClawIntake;
-import org.usfirst.frc.team1572.robot.subsystems.ENC;
-import org.usfirst.frc.team1572.robot.subsystems.VictorJoyDrive;
-import org.usfirst.frc.team1572.robot.subsystems.VoltageTalonDrive;
-import org.usfirst.frc.team1572.robot.subsystems.Lift;
-import org.usfirst.frc.team1572.robot.subsystems.NavigationSubsystem;
-import org.usfirst.frc.team1572.robot.subsystems.Sensor;
-import org.usfirst.frc.team1572.robot.subsystems.Shooter;
-import org.usfirst.frc.team1572.robot.subsystems.VelocityTalonDrive;
+import org.usfirst.frc.team1572.robot.subsystems.ChipotleArmSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.ClawHandSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.ClawIntakeSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.EncoderSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.VictorJoyDriveSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.VoltageTalonDriveSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.LiftSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.HeadingSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.SonarSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.ShooterSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.VelocityTalonDriveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -46,31 +45,20 @@ import org.usfirst.frc.team1572.robot.subsystems.VelocityTalonDrive;
 public class Robot extends IterativeRobot {
 	public static final DriveType DRIVE_TYPE = DriveType.TALON_VOLTAGE;
 	public static final AutonomousMode AUTONOMOUS_MODE = AutonomousMode.TEST_GEAR;
-	public static OI oi;
-	public static BaseJoyDrive joydrive;
-	public static TeleDrive teledrive;
-	public static DriveDistance drivedistance;
-	public static ClawHand clawhand;
-	public static ClawIntake clawIntake;
-	public static ChipotleArm chipotlearm;
+	public static JoystickController joystickController;
+	public static BaseJoyDriveSubsystem joydriveSubystem;	
+	public static ClawHandSubsystem clawhandSubsystem;
+	public static ClawIntakeSubsystem clawIntakeSubsystem;
+	public static ChipotleArmSubsystem chipotlearmSubystem;
 	public static LogitechF310Map logitechF310Map;
-	public static Sensor sensor;
-	public static Lift lifter;
-	public static Shooter shooter;
+	public static SonarSubsystem sonarSubystem;
+	public static LiftSubsystem liftSubystem;
+	public static ShooterSubsystem shooterSubsystem;
 	public static CameraSubsystem cameraSubsystem;
-	public static GearGrab geargrab;
-	public static ReleaseGear releasegear;
-	public static ClawToggle clawtoggle;
-	public static ArmToggle armtoggle;
-	public static NavigationSubsystem navigationSubsystem;
-	public static ENC enc;
+	public static BallHopperSubysystem ballHopperSubsystem;
+	public static HeadingSubsystem headingSubsystem;
+	public static EncoderSubsystem encoderSubsystem;
 
-
-	// boolean buttonValue = SmartDashboard.getBoolean("RightGear", true);
-	// boolean buttonValue2 = SmartDashboard.getBoolean("MidGear", true);
-	// boolean buttonValue3 = SmartDashboard.getBoolean("LeftGear", true);
-
-	//double dashData = SmartDashboard.getNumber("DB/Slider 0", 0.0);
 
 	private Command autonomousCommand;
 	private SendableChooser<Command> chooser = new SendableChooser<>();
@@ -87,35 +75,33 @@ public class Robot extends IterativeRobot {
 	}
 
 	private void initSubsystems() {
-		joydrive = generateJoyDrive();
-		clawhand = new ClawHand();
-		clawIntake = new ClawIntake();
-		chipotlearm = new ChipotleArm();
-		shooter = new Shooter();
-		lifter = new Lift();
-		teledrive = new TeleDrive();
-		geargrab = new GearGrab();
-		releasegear = new ReleaseGear();
-		clawtoggle = new ClawToggle();
-		armtoggle = new ArmToggle();
+		joydriveSubystem = generateJoyDrive();
+		clawhandSubsystem = new ClawHandSubsystem();
+		clawIntakeSubsystem = new ClawIntakeSubsystem();
+		chipotlearmSubystem = new ChipotleArmSubsystem();
+		shooterSubsystem = new ShooterSubsystem();
+		liftSubystem = new LiftSubsystem();
+		ballHopperSubsystem = new BallHopperSubysystem();
+		
+
 		cameraSubsystem = new CameraSubsystem();
-		navigationSubsystem = new NavigationSubsystem();
-		OI.init();
-		oi = new OI();	
-	  	ClawHand.claw.set(DoubleSolenoid.Value.kForward);
-    	ChipotleArm.Arm.set(DoubleSolenoid.Value.kOff);
-    	sensor = new Sensor();
-    	enc = new ENC();
+		headingSubsystem = new HeadingSubsystem();
+		JoystickController.init();
+		joystickController = new JoystickController();	
+	  	ClawHandSubsystem.claw.set(DoubleSolenoid.Value.kForward);
+    	ChipotleArmSubsystem.Arm.set(DoubleSolenoid.Value.kOff);
+    	sonarSubystem = new SonarSubsystem();
+    	encoderSubsystem = new EncoderSubsystem();
 	}
 
-	private BaseJoyDrive generateJoyDrive() {
+	private BaseJoyDriveSubsystem generateJoyDrive() {
 		switch(DRIVE_TYPE){
 			case TALON_VELOCITY:
-				return new VelocityTalonDrive();
+				return new VelocityTalonDriveSubsystem();
 			case TALON_VOLTAGE:
-				return new VoltageTalonDrive();
+				return new VoltageTalonDriveSubsystem();
 			default:
-				return new VictorJoyDrive();
+				return new VictorJoyDriveSubsystem();
 		}
 	}
 
@@ -177,45 +163,48 @@ public class Robot extends IterativeRobot {
 			this.autonomousCommand.cancel();
 		}
 		
-		Scheduler.getInstance().add(teledrive);
-		Scheduler.getInstance().add(armtoggle);
-		Scheduler.getInstance().add(clawtoggle);
-		Scheduler.getInstance().add(geargrab);
-		Scheduler.getInstance().add(releasegear);
+		Scheduler.getInstance().add(new TeleDrive());
+		Scheduler.getInstance().add(new ArmToggle());
+		Scheduler.getInstance().add(new ClawToggle());
+		Scheduler.getInstance().add(new GearGrab());
+		Scheduler.getInstance().add(new ReleaseGear());
 	}
 
 	/**
 	 * This function is called periodically during operator control
+	 * 
 	 */
+	
+	//TODO:  This really needs rework- all this stuff should be handled in commands
 	@Override
 	public void teleopPeriodic() {
 
-		if(OI.joyCoPilot.getRawButton(6)) {
-			ClawIntake.clawIntake();
+		if(JoystickController.joyCoPilot.getRawButton(6)) {
+			clawIntakeSubsystem.clawIntake();
 		}
 		else {
-			ClawIntake.stopIntake();
+			clawIntakeSubsystem.stopIntake();
 		}
-		if(OI.joyPilot.getRawButton(4) || OI.joyCoPilot.getRawButton(2)) {
-			Lift.Lifter();
+		if(JoystickController.joyPilot.getRawButton(4) || JoystickController.joyCoPilot.getRawButton(2)) {
+			liftSubystem.Lifter();
 		}
 		else {
-			Lift.stopLifter(); 
+			liftSubystem.stopLifter(); 
 		}
-		if(OI.joyCoPilot.getRawButton(3) || OI.joyPilot.getRawButton(3)) {
-			BallHopper.ballIntake();
+		if(JoystickController.joyCoPilot.getRawButton(3) || JoystickController.joyPilot.getRawButton(3)) {
+			ballHopperSubsystem.ballIntake();
 		}
 		else{
-			BallHopper.stopBallIntake();
+			ballHopperSubsystem.stopBallIntake();
 		} //B
-		if(OI.joyCoPilot.getRawButton(1)) {
-			Shooter.shoot();
+		if(JoystickController.joyCoPilot.getRawButton(1)) {
+			shooterSubsystem.shoot();
 		}
 		else{
-			Shooter.stopshoot();
+			shooterSubsystem.stopshoot();
 		}
-		if(OI.joyCoPilot.getRawButton(8) && OI.joyCoPilot.getRawButton(9)){
-			Lift.reverseLifter();
+		if(JoystickController.joyCoPilot.getRawButton(8) && JoystickController.joyCoPilot.getRawButton(9)){
+			liftSubystem.reverseLifter();
 		}
 		Scheduler.getInstance().run();
 	}

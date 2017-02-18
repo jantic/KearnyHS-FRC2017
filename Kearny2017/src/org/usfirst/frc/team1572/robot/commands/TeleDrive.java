@@ -1,7 +1,9 @@
 package org.usfirst.frc.team1572.robot.commands;
 
-import org.usfirst.frc.team1572.robot.OI;
+import org.usfirst.frc.team1572.robot.JoystickController;
 import org.usfirst.frc.team1572.robot.Robot;
+import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -11,35 +13,37 @@ public class TeleDrive extends Command {
 
 	private boolean coPilotDrive;
 	private boolean overdrive;
+	private BaseJoyDriveSubsystem joyDriveSubsystem;
 	
     public TeleDrive() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.joydrive);
+    	requires(Robot.joydriveSubystem);
     }
 
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
-    	//nothing to do here
+    	this.joyDriveSubsystem = Robot.joydriveSubystem;
     }
 
+    //TODO:  Reevaluate this.  Note that this effectively gives the co-pilot control over the main pilot.  Why have a copilot in the first place?
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-		if(OI.joyCoPilot.getRawAxis(0) < -0.1 || OI.joyCoPilot.getRawAxis(0) > 0.1 || OI.joyCoPilot.getRawAxis(1) < -0.1 || OI.joyCoPilot.getRawAxis(1) > 0.1){
+		if(JoystickController.joyCoPilot.getRawAxis(0) < -0.1 || JoystickController.joyCoPilot.getRawAxis(0) > 0.1 || JoystickController.joyCoPilot.getRawAxis(1) < -0.1 || JoystickController.joyCoPilot.getRawAxis(1) > 0.1){
 			this.coPilotDrive = true;
 			this.overdrive = false;
-			Robot.joydrive.getRobotDrive().arcadeDrive(-OI.joyCoPilot.getRawAxis(1)*0.65 , -OI.joyCoPilot.getRawAxis(0)*0.5);
+			this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-JoystickController.joyCoPilot.getRawAxis(1)*0.65 , -JoystickController.joyCoPilot.getRawAxis(0)*0.5);
 		}
-		else if(OI.joyPilot.getRawAxis(3)>0.1){
+		else if(JoystickController.joyPilot.getRawAxis(3)>0.1){
 			this.overdrive = true;
 			this.coPilotDrive = false;
-			Robot.joydrive.getRobotDrive().arcadeDrive(-OI.joyPilot.getRawAxis(1) , -OI.joyPilot.getRawAxis(0));
+			this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-JoystickController.joyPilot.getRawAxis(1) , -JoystickController.joyPilot.getRawAxis(0));
 		}
 		else {
 			this.overdrive = false;
 			this.coPilotDrive = false;
-			Robot.joydrive.getRobotDrive().arcadeDrive(-OI.joyPilot.getRawAxis(1) , -OI.joyPilot.getRawAxis(0)*0.75); 
+			this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-JoystickController.joyPilot.getRawAxis(1) , -JoystickController.joyPilot.getRawAxis(0)*0.75); 
 		}	
     }
     

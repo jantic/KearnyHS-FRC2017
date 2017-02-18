@@ -11,13 +11,13 @@ import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 
 import com.ctre.CANTalon.TalonControlMode;
 
-public abstract class BaseJoyDrive extends Subsystem {
+public abstract class BaseJoyDriveSubsystem extends Subsystem {
 	private final RobotDrive robotDrive = RobotMap.robotDrive;
 	private final LogitechF310Map joyMap = new LogitechF310Map();
 	
 	public abstract void arcadeDrive(Joystick stick);
 	
-	public abstract void arcadeDrive(final double joystickY, final double joystickX);
+	public abstract void arcadeDrive(final double joystickX, final double joystickY);
 	
     @Override
 	public final void initDefaultCommand() {

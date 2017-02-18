@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Victor;
 import org.usfirst.frc.team1572.robot.RobotMap;
 import com.ctre.CANTalon.TalonControlMode;
 
-public class VictorJoyDrive extends BaseJoyDrive {
+public class VictorJoyDriveSubsystem extends BaseJoyDriveSubsystem {
 	private final Victor leftDrive = RobotMap.victorLeftDriveTrain;
 	private final Victor rightDrive = RobotMap.victorRightDriveTrain;
 	

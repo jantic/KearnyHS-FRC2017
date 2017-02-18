@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Victor;
 
 import com.ctre.CANTalon.FeedbackDevice;
@@ -59,9 +58,8 @@ public class RobotMap {
 	public static Victor shooterIntake;
 	public static CANTalon shooter;
 	public static Compressor compressor; 
-	public static Encoder enc;
-	public static AnalogInput sonar;
-	public static Ultrasonic sensor;
+	public static Encoder encoder;
+	public static AnalogInput sonarSensor;
 	
 	public static void init() {
 		if(Robot.DRIVE_TYPE.isTalonDrive()){
@@ -71,8 +69,8 @@ public class RobotMap {
 			initVictorDrive();
 		}
 		
-		sonar = new AnalogInput(analogSonarPort);
-		enc = new Encoder(1, 2 , true, Encoder.EncodingType.k1X);
+		sonarSensor = new AnalogInput(analogSonarPort);
+		encoder = new Encoder(1, 2 , true, Encoder.EncodingType.k1X);
 		shooter = new CANTalon(shooterPort);
 		shooter.changeControlMode(TalonControlMode.Speed);
 		shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -86,11 +84,11 @@ public class RobotMap {
 		ballHopper = new Victor(ballHopperPort);
 		clawIntake = new Victor(clawIntakePort);
 		shooterIntake = new Victor(4);
-		enc.setMaxPeriod(.1);
-		enc.setMinRate(10);
-		enc.setDistancePerPulse( distPerPulse);
-		enc.setReverseDirection(false);
-		enc.setSamplesToAverage(7);
+		encoder.setMaxPeriod(.1);
+		encoder.setMinRate(10);
+		encoder.setDistancePerPulse( distPerPulse);
+		encoder.setReverseDirection(false);
+		encoder.setSamplesToAverage(7);
 		
 		
 		//sensor = new Ultrasonic(pingChannel, echoChannel);

@@ -1,32 +1,28 @@
 package org.usfirst.frc.team1572.robot.commands;
 
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.NavigationSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.HeadingSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class StreamNavigationOutput extends Command {
-	private final NavigationSubsystem navigationSubsystem = Robot.navigationSubsystem;
+public class StreamHeadingOutput extends Command {
+	private HeadingSubsystem headingSubystem;
 	
-	public StreamNavigationOutput() {
-		requires(Robot.navigationSubsystem);
+	public StreamHeadingOutput() {
+		requires(Robot.headingSubsystem);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		// nothing to do here
+		this.headingSubystem = Robot.headingSubsystem;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		SmartDashboard.putNumber("Displacement X", this.navigationSubsystem.getDisplacementX());
-		SmartDashboard.putNumber("Displacement Y", this.navigationSubsystem.getDisplacementY());
-		SmartDashboard.putNumber("Velocity X", this.navigationSubsystem.getVelocityX());
-		SmartDashboard.putNumber("Velocity Y", this.navigationSubsystem.getVelocityY());
-		SmartDashboard.putNumber("Angle", this.navigationSubsystem.getAngle());
-		SmartDashboard.putNumber("Compass Heading", this.navigationSubsystem.getCompassHeading());
+		SmartDashboard.putNumber("Angle", this.headingSubystem.getAngle());
+		SmartDashboard.putNumber("Compass Heading", this.headingSubystem.getCompassHeading());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -6,7 +6,7 @@ import org.usfirst.frc.team1572.robot.RobotMap;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
-public abstract class BaseTalonDrive extends BaseJoyDrive {
+public abstract class BaseTalonDriveSubsystem extends BaseJoyDriveSubsystem {
 	private final CANTalon leftDrive = RobotMap.talonLeftDrivetrain;
 	private final CANTalon rightDrive = RobotMap.talonRightDrivetrain;
 	

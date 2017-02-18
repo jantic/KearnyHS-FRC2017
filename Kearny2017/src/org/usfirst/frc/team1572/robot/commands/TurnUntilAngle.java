@@ -4,14 +4,14 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDrive;
-import org.usfirst.frc.team1572.robot.subsystems.NavigationSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.HeadingSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TurnUntilAngle extends Command {
-	private BaseJoyDrive joyDrive;
-	private NavigationSubsystem navSubsystem;
+	private BaseJoyDriveSubsystem joyDrive;
+	private HeadingSubsystem headingSubystem;
 	private final double targetAngle;
 	private final double angleTolerance = 5;
 	private LocalDateTime startTime;
@@ -19,17 +19,17 @@ public class TurnUntilAngle extends Command {
 
 	public TurnUntilAngle(final double targetAngle) {
 		this.targetAngle = targetAngle;
-		requires(Robot.joydrive);
-		requires(Robot.navigationSubsystem);
+		requires(Robot.joydriveSubystem);
+		requires(Robot.headingSubsystem);
 	}
 
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-    	this.navSubsystem = Robot.navigationSubsystem;
-    	this.joyDrive = Robot.joydrive;
-		this.navSubsystem.reset();
+    	this.headingSubystem = Robot.headingSubsystem;
+    	this.joyDrive = Robot.joydriveSubystem;
+		this.headingSubystem.reset();
 		this.startTime = LocalDateTime.now();
 	}
 
@@ -43,7 +43,7 @@ public class TurnUntilAngle extends Command {
 	}
 	
     private void updateDisplay(){
-    	final StreamNavigationOutput outputStream = new StreamNavigationOutput();
+    	final StreamHeadingOutput outputStream = new StreamHeadingOutput();
     	outputStream.execute();
     }
 	
@@ -65,7 +65,7 @@ public class TurnUntilAngle extends Command {
 			return true;
 		}
 		
-		final double currentAngle = this.navSubsystem.getAngle();
+		final double currentAngle = this.headingSubystem.getAngle();
 		final double diff = (this.targetAngle - currentAngle);
 		
 		return (Math.abs(diff) < this.angleTolerance);
