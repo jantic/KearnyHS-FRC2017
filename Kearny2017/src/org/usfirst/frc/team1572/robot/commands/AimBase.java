@@ -61,9 +61,9 @@ public abstract class AimBase extends Command {
 	private double generateJoystickX(final VisionCenteringCommand centeringCommand){
 		switch(centeringCommand){
 			case RIGHT:
-				return -0.5;
+				return -Robot.TURNING_SPEED;
 			case LEFT:
-				return 0.5;
+				return Robot.TURNING_SPEED;
 			default:
 				return 0;
 		}

@@ -44,7 +44,8 @@ import org.usfirst.frc.team1572.robot.subsystems.VelocityTalonDriveSubsystem;
  */
 public class Robot extends IterativeRobot {
 	public static final DriveType DRIVE_TYPE = DriveType.VICTOR; //TODO:  Switch to voltage talon for main robot.
-	public static final AutonomousMode AUTONOMOUS_MODE = AutonomousMode.TEST_GEAR;
+	public static final AutonomousMode AUTONOMOUS_MODE = AutonomousMode.TEST_GEAR_2;
+	public static final double TURNING_SPEED = 0.53;
 	public static JoystickController joystickController;
 	public static BaseJoyDriveSubsystem joydriveSubystem;	
 	public static ClawHandSubsystem clawhandSubsystem;

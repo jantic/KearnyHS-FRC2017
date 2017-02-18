@@ -12,7 +12,7 @@ public class AutonomousCommand extends CommandGroup {
     	
     	switch(autonomousMode){
     	case MID_GEAR:
-	    	addSequential(new DriveDistance(93));
+	    	addSequential(new DriveDistance(93.3));
 	    	addSequential(new AimForPegAutonomously());
 	    	break;
     	case LEFT_GEAR:	
@@ -24,7 +24,7 @@ public class AutonomousCommand extends CommandGroup {
     	
     	case RIGHT_GEAR:
 	    	addSequential(new DriveDistance(93.3));
-	    	addSequential(new TurnUntilAngle(-58));
+	    	addSequential(new TurnUntilAngle(58));
 	    	addSequential(new DriveDistance(62.4039));
 	    	addSequential(new AimForPegAutonomously());  
 	    	break;
@@ -32,13 +32,13 @@ public class AutonomousCommand extends CommandGroup {
 	    	addSequential(new DriveDistance(70));
 	    	addSequential(new TurnUntilAngle(-90));
 	    	addParallel(new AimForPegAutonomously());
-	    	addParallel(new DriveDistance(12));
+	    	addParallel(new DriveDistance(48));
 	    	break;
     	case TEST_GEAR_2:
-    		addSequential(new DriveDistance(70));
+	    	addSequential(new DriveDistance(70));
 	    	addSequential(new TurnUntilAngle(90));
 	    	addParallel(new AimForPegAutonomously());
-	    	addParallel(new DriveDistance(12));
+	    	addParallel(new DriveDistance(48));
 	    	break;
     	default:
     		addSequential(new DriveDistance(0));

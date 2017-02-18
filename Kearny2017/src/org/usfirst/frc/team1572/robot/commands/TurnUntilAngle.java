@@ -47,10 +47,10 @@ public class TurnUntilAngle extends Command {
 	
 	private double generateJoystickX(){
 		if(this.targetAngle >= 0){
-			return -0.5;
+			return -Robot.TURNING_SPEED;
 		}
 		
-		return 0.5;
+		return Robot.TURNING_SPEED;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

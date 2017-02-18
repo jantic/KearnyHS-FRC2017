@@ -7,6 +7,7 @@ import org.usfirst.frc.team1572.robot.vision.ImageGrabFailedException;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -64,7 +65,8 @@ public class CameraSubsystem extends Subsystem{
 		try{
 			this.currentCameraType = cameraType;
 			this.currentCamera = this.cameraServer.startAutomaticCapture(cameraType.getDeviceNum());
-			this.currentCamera.setResolution(640, 480);
+			this.currentCamera.setBrightness(5);
+			this.currentCamera.setVideoMode(PixelFormat.kMJPEG, 640, 480, 15);
 			this.currentCameraVideoFeed = this.cameraServer.getVideo(this.currentCamera);
 		}
 		catch(Exception e){
