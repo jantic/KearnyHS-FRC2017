@@ -71,12 +71,12 @@ public class DriveDistance extends Command {
 			return true;
 		}
     	
-    	final double sonarDistance = this.sonarSubystem.getDistance();
+    	/*final double sonarDistance = this.sonarSubystem.getDistance();
     	
     	//Stop if too close to the wall
     	if(sonarDistance < 12){
     		return true;
-    	}
+    	}*/
     	
 		return false;
     }

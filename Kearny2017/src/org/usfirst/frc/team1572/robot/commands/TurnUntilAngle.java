@@ -13,7 +13,7 @@ public class TurnUntilAngle extends Command {
 	private final BaseJoyDriveSubsystem joyDrive = Robot.joydriveSubystem;
 	private final HeadingSubsystem headingSubystem = Robot.headingSubsystem;
 	private final double targetAngle;
-	private final double angleTolerance = 5;
+	private final double angleTolerance = 1;
 	private LocalDateTime startTime;
 	private static long TIMEOUT = 5;
 
@@ -47,10 +47,10 @@ public class TurnUntilAngle extends Command {
 	
 	private double generateJoystickX(){
 		if(this.targetAngle >= 0){
-			return -0.55;
+			return -0.5;
 		}
 		
-		return 0.55;
+		return 0.5;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

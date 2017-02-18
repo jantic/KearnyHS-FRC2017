@@ -9,7 +9,7 @@ import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
 public class AutoAimUtils {
-	private static final double CENTER_TOLERANCE = 8.0; 
+	private static final double CENTER_TOLERANCE = 4.0; 
 	
 	public static Point getRectangleCenterPoint(final MatOfPoint contour){
 		final Rect rectangle = Imgproc.boundingRect(contour);
