@@ -15,8 +15,8 @@ public class GearGrab extends Command {
 		private boolean buttonPressed;
 		private double loopcount;
 		private static boolean running;
-		private ClawHandSubsystem clawHandSubsystem;
-		private ChipotleArmSubsystem chipotleArmSubsystem;
+		private final ClawHandSubsystem clawHandSubsystem = Robot.clawhandSubsystem;
+		private final ChipotleArmSubsystem chipotleArmSubsystem = Robot.chipotlearmSubystem;
 		//private long timeout;
     	
         public GearGrab() {
@@ -32,8 +32,7 @@ public class GearGrab extends Command {
         // Called just before this Command runs the first time
         @Override
 		protected void initialize() {
-        	this.clawHandSubsystem = Robot.clawhandSubsystem;
-        	this.chipotleArmSubsystem = Robot.chipotlearmSubystem;
+        	//Do nothing
         }
 
         // Called repeatedly when this Command is scheduled to run

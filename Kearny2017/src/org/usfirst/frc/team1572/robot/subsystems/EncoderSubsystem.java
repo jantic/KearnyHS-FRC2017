@@ -27,5 +27,11 @@ public class EncoderSubsystem extends Subsystem {
     public double getDistanceDriven() {
     	return this.encoder.getDistance();
     }
+    
+    public int getScale() {
+    	return this.encoder.getEncodingScale();
+    }
+    
+    
 }
 

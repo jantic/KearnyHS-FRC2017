@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class StreamJoyDriveOutput extends Command {
-	private BaseJoyDriveSubsystem joyDrive;
+	private final BaseJoyDriveSubsystem joyDriveSubystem= Robot.joydriveSubystem;
 	
 	public StreamJoyDriveOutput() {
 		requires(Robot.joydriveSubystem);
@@ -16,7 +16,7 @@ public class StreamJoyDriveOutput extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		this.joyDrive = Robot.joydriveSubystem;
+		//do nothing;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -26,12 +26,12 @@ public class StreamJoyDriveOutput extends Command {
 	}
 	
 	public void updateDisplay(){
-		SmartDashboard.putString("Left Talon Drive Control Mode", this.joyDrive.getLeftDriveTrainControlMode().name());
-		SmartDashboard.putString("Right Talon Drive Control Mode", this.joyDrive.getRightDriveTrainControlMode().name());
-		SmartDashboard.putNumber("Left Drive Train Speed", this.joyDrive.getLeftDriveTrainSpeed());
-		SmartDashboard.putNumber("Right Drive Train Speed", this.joyDrive.getRightDriveTrainSpeed());
-		SmartDashboard.putNumber("Left Drive Encoder Position", this.joyDrive.getLeftDriveEncoderPosition());
-		SmartDashboard.putNumber("Right Drive Encoder Position", this.joyDrive.getRightDriveEncoderPosition());
+		SmartDashboard.putString("Left Talon Drive Control Mode", this.joyDriveSubystem.getLeftDriveTrainControlMode().name());
+		SmartDashboard.putString("Right Talon Drive Control Mode", this.joyDriveSubystem.getRightDriveTrainControlMode().name());
+		SmartDashboard.putNumber("Left Drive Train Speed", this.joyDriveSubystem.getLeftDriveTrainSpeed());
+		SmartDashboard.putNumber("Right Drive Train Speed", this.joyDriveSubystem.getRightDriveTrainSpeed());
+		SmartDashboard.putNumber("Left Drive Encoder Position", this.joyDriveSubystem.getLeftDriveEncoderPosition());
+		SmartDashboard.putNumber("Right Drive Encoder Position", this.joyDriveSubystem.getRightDriveEncoderPosition());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

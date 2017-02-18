@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class StreamHeadingOutput extends Command {
-	private HeadingSubsystem headingSubystem;
+	private final HeadingSubsystem headingSubystem = Robot.headingSubsystem;
 	
 	public StreamHeadingOutput() {
 		requires(Robot.headingSubsystem);
@@ -15,7 +15,7 @@ public class StreamHeadingOutput extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		this.headingSubystem = Robot.headingSubsystem;
+		//Do nothing
 	}
 
 	// Called repeatedly when this Command is scheduled to run

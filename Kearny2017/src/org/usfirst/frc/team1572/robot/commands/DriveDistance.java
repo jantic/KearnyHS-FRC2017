@@ -7,12 +7,14 @@ import org.usfirst.frc.team1572.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.EncoderSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.SonarSubsystem;
 //import org.usfirst.frc.team1572.robot.subsystems.NavigationSubsystem;
 
 public class DriveDistance extends Command {
 	//private NavigationSubsystem navSubsystem;
-	private BaseJoyDriveSubsystem joyDrive;
-	private EncoderSubsystem encoderSubsystem;
+	private final BaseJoyDriveSubsystem joyDrive = Robot.joydriveSubystem;
+	private final EncoderSubsystem encoderSubsystem = Robot.encoderSubsystem;
+	private final SonarSubsystem sonarSubystem = Robot.sonarSubystem;
 	private final double targetDisplacement; //positve or negative
 	private static final int TIMEOUT = 10; //seconds
 	private LocalDateTime startTime;
@@ -22,14 +24,13 @@ public class DriveDistance extends Command {
     public DriveDistance(final double targetDisplacement) {
     	requires(Robot.joydriveSubystem);
     	requires(Robot.encoderSubsystem);
+    	requires(Robot.sonarSubystem);
     	this.targetDisplacement = targetDisplacement;  	
     }
     
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
-    	this.encoderSubsystem = Robot.encoderSubsystem;
-    	this.joyDrive = Robot.joydriveSubystem;
     	this.encoderSubsystem.reset();
 		this.startTime = LocalDateTime.now();
     }
@@ -37,15 +38,17 @@ public class DriveDistance extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-		final double joystickY = 0.0;
-		final double joystickX = this.targetDisplacement > 0 ? 0.5 : -0.5;
+		final double joystickX = 0.0;
+		final double joystickY = this.targetDisplacement > 0 ? 0.5 : -0.5;
 		this.joyDrive.arcadeDrive(joystickX, joystickY);
 		updateDisplay();
     }
     
     private void updateDisplay(){
-    	final StreamHeadingOutput outputStream = new StreamHeadingOutput();
-    	outputStream.execute();
+    	final StreamHeadingOutput headingOutputStream = new StreamHeadingOutput();
+    	headingOutputStream.execute();
+    	final StreamEncoderOutput encoderOutputStream = new StreamEncoderOutput();
+    	encoderOutputStream.execute();
     }
     // Make this return true when this Command no longer needs to run execute()
     @Override
@@ -67,6 +70,13 @@ public class DriveDistance extends Command {
     	if(this.targetDisplacement >= distanceDriven && this.targetDisplacement <= 0){
 			return true;
 		}
+    	
+    	final double sonarDistance = this.sonarSubystem.getDistance();
+    	
+    	//Stop if too close to the wall
+    	if(sonarDistance < 12){
+    		return true;
+    	}
     	
 		return false;
     }

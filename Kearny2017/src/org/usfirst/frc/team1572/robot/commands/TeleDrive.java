@@ -13,7 +13,7 @@ public class TeleDrive extends Command {
 
 	private boolean coPilotDrive;
 	private boolean overdrive;
-	private BaseJoyDriveSubsystem joyDriveSubsystem;
+	private BaseJoyDriveSubsystem joyDriveSubsystem = Robot.joydriveSubystem;
 	
     public TeleDrive() {
         // Use requires() here to declare subsystem dependencies
@@ -23,7 +23,7 @@ public class TeleDrive extends Command {
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
-    	this.joyDriveSubsystem = Robot.joydriveSubystem;
+    	//Do nothing
     }
 
     //TODO:  Reevaluate this.  Note that this effectively gives the co-pilot control over the main pilot.  Why have a copilot in the first place?

@@ -7,7 +7,7 @@ import org.usfirst.frc.team1572.robot.vision.CameraType;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class StreamGearCamera extends Command {
-	private CameraSubsystem cameraSubsystem;
+	private CameraSubsystem cameraSubsystem = Robot.cameraSubsystem;
 	
 	public StreamGearCamera() {
 		requires(Robot.cameraSubsystem);
@@ -16,7 +16,7 @@ public class StreamGearCamera extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		this.cameraSubsystem = Robot.cameraSubsystem;
+		//Do nothing
 	}
 
 	// Called repeatedly when this Command is scheduled to run

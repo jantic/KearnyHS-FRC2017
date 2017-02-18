@@ -13,7 +13,7 @@ public class ArmToggle extends Command {
 		private boolean buttonPressed;
 		private double loopcount = 0;
 		private static boolean running;
-		private ChipotleArmSubsystem chipotleArmSubsystem;
+		private final ChipotleArmSubsystem chipotleArmSubsystem = Robot.chipotlearmSubystem;
     	
         public ArmToggle() {
             // Use requires() here to declare subsystem dependencies
@@ -25,7 +25,7 @@ public class ArmToggle extends Command {
         // Called just before this Command runs the first time
         @Override
 		protected void initialize() {
-        	this.chipotleArmSubsystem = Robot.chipotlearmSubystem;
+        	//do nothing
         }
 
         // Called repeatedly when this Command is scheduled to run

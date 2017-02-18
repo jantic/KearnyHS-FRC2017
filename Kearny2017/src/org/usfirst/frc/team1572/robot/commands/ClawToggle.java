@@ -12,7 +12,7 @@ public class ClawToggle extends Command {
 
 		private boolean buttonPressed;
 		private double loopcounter = 0;
-		private ClawHandSubsystem clawHandSubsystem;
+		private final ClawHandSubsystem clawHandSubsystem= Robot.clawhandSubsystem;
 		private static boolean running = false;
     	
         public ClawToggle() {
@@ -27,7 +27,7 @@ public class ClawToggle extends Command {
         // Called just before this Command runs the first time
         @Override
 		protected void initialize() {
-        	this.clawHandSubsystem = Robot.clawhandSubsystem;
+        	//Do nothing
         }
 
         // Called repeatedly when this Command is scheduled to run

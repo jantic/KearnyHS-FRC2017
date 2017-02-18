@@ -22,7 +22,7 @@ public abstract class AimBase extends Command {
 	private final BaseJoyDriveSubsystem joyDriveSubsystem = Robot.joydriveSubystem;
 	private VisionCenteringCommand lastCenteringCommand = VisionCenteringCommand.NULL;
 	private LocalDateTime startTime;
-	private CameraSubsystem cameraSubsystem;
+	private final CameraSubsystem cameraSubsystem = Robot.cameraSubsystem;
 	private static long TIMEOUT = 5;
 
 	public AimBase() {
@@ -34,7 +34,6 @@ public abstract class AimBase extends Command {
 	@Override
 	protected void initialize() {
 		this.startTime = LocalDateTime.now();
-		this.cameraSubsystem = Robot.cameraSubsystem;
 	}
 
 	protected final void alignRobotToTarget(final IAutoAim autoAim, final CameraType cameraType) {
@@ -62,9 +61,9 @@ public abstract class AimBase extends Command {
 	private double generateJoystickX(final VisionCenteringCommand centeringCommand){
 		switch(centeringCommand){
 			case RIGHT:
-				return 0.5;
+				return 0.55;
 			case LEFT:
-				return -0.5;
+				return -0.55;
 			default:
 				return 0;
 		}

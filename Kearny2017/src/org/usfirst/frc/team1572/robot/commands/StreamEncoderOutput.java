@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class StreamEncoderOutput extends Command {
-	private EncoderSubsystem encoderSubystem; 
+	private final EncoderSubsystem encoderSubystem = Robot.encoderSubsystem;
 	
 	public StreamEncoderOutput() {
 		requires(Robot.encoderSubsystem);
@@ -15,13 +15,14 @@ public class StreamEncoderOutput extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		this.encoderSubystem = Robot.encoderSubsystem;
+		//Do nothing
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		SmartDashboard.putNumber("Encoder Distance Driven", this.encoderSubystem.getDistanceDriven());
+		SmartDashboard.putNumber("Encoder Scale", this.encoderSubystem.getScale());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

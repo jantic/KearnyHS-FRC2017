@@ -10,8 +10,8 @@ import org.usfirst.frc.team1572.robot.subsystems.HeadingSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TurnUntilAngle extends Command {
-	private BaseJoyDriveSubsystem joyDrive;
-	private HeadingSubsystem headingSubystem;
+	private final BaseJoyDriveSubsystem joyDrive = Robot.joydriveSubystem;
+	private final HeadingSubsystem headingSubystem = Robot.headingSubsystem;
 	private final double targetAngle;
 	private final double angleTolerance = 5;
 	private LocalDateTime startTime;
@@ -27,8 +27,6 @@ public class TurnUntilAngle extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-    	this.headingSubystem = Robot.headingSubsystem;
-    	this.joyDrive = Robot.joydriveSubystem;
 		this.headingSubystem.reset();
 		this.startTime = LocalDateTime.now();
 	}
@@ -49,10 +47,10 @@ public class TurnUntilAngle extends Command {
 	
 	private double generateJoystickX(){
 		if(this.targetAngle >= 0){
-			return 0.5;
+			return -0.55;
 		}
 		
-		return -0.5;
+		return 0.55;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
