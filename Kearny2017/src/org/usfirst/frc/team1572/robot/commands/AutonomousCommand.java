@@ -34,6 +34,12 @@ public class AutonomousCommand extends CommandGroup {
 	    	addParallel(new AimForPegAutonomously());
 	    	addParallel(new DriveDistance(12));
 	    	break;
+    	case TEST_GEAR_2:
+    		addSequential(new DriveDistance(70));
+	    	addSequential(new TurnUntilAngle(90));
+	    	addParallel(new AimForPegAutonomously());
+	    	addParallel(new DriveDistance(12));
+	    	break;
     	default:
     		addSequential(new DriveDistance(0));
     		break;

@@ -5,5 +5,6 @@ public enum AutonomousMode {
 	RIGHT_GEAR,
 	LEFT_GEAR,
 	TEST_GEAR,
+	TEST_GEAR_2,
 	NULL;
 }
