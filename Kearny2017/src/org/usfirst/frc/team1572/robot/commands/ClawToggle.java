@@ -33,7 +33,7 @@ public class ClawToggle extends Command {
         // Called repeatedly when this Command is scheduled to run
         @Override
 		protected void execute() {
-        	this.buttonPressed = JoystickController.joyPilot.getRawButton(6);
+        	this.buttonPressed = JoystickController.MAIN_JOYSTICK.getButton6();
         	if(this.buttonPressed && this.loopcounter > 20 && !ReleaseGear.running() && !GearGrab.running() && !ArmToggle.running()){
         		this.loopcounter = 0;
         		running = true;

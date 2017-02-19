@@ -7,14 +7,10 @@ import org.usfirst.frc.team1572.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.EncoderSubsystem;
-import org.usfirst.frc.team1572.robot.subsystems.SonarSubsystem;
-//import org.usfirst.frc.team1572.robot.subsystems.NavigationSubsystem;
 
 public class DriveDistance extends Command {
-	//private NavigationSubsystem navSubsystem;
 	private final BaseJoyDriveSubsystem joyDrive = Robot.joydriveSubystem;
 	private final EncoderSubsystem encoderSubsystem = Robot.encoderSubsystem;
-	private final SonarSubsystem sonarSubystem = Robot.sonarSubystem;
 	private final double targetDisplacement; //positve or negative
 	private static final int TIMEOUT = 10; //seconds
 	private LocalDateTime startTime;
@@ -70,13 +66,6 @@ public class DriveDistance extends Command {
     	if(this.targetDisplacement >= distanceDriven && this.targetDisplacement <= 0){
 			return true;
 		}
-    	
-    	/*final double sonarDistance = this.sonarSubystem.getDistance();
-    	
-    	//Stop if too close to the wall
-    	if(sonarDistance < 12){
-    		return true;
-    	}*/
     	
 		return false;
     }

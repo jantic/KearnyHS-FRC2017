@@ -31,7 +31,7 @@ public class ArmToggle extends Command {
         // Called repeatedly when this Command is scheduled to run
         @Override
 		protected void execute() {
-        	this.buttonPressed = JoystickController.joyPilot.getRawButton(5);
+        	this.buttonPressed = JoystickController.MAIN_JOYSTICK.getButton5();
         	if(this.buttonPressed && this.loopcount > 20 && !ReleaseGear.running() && !GearGrab.running() && !ClawToggle.running()){
         		running = true;
         		this.loopcount = 0;

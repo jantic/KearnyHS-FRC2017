@@ -20,11 +20,8 @@ public class GearGrab extends Command {
 		//private long timeout;
     	
         public GearGrab() {
-            // Use requires() here to declare subsystem dependencies
         	requires(Robot.clawhandSubsystem);
-        	//requires(Robot.clawIntake);
         	requires(Robot.chipotlearmSubystem);
-        	//requires(Robot.sensor);
         }
         
 
@@ -38,21 +35,17 @@ public class GearGrab extends Command {
         // Called repeatedly when this Command is scheduled to run
         @Override
 		protected void execute() {
-        	this.buttonPressed = JoystickController.joyPilot.getRawButton(1) || JoystickController.joyCoPilot.getRawButton(4);
-        	/*if(Sensor.getDistance() < 1){
-        		gearDetected = true;
-        	}*/
+        	this.buttonPressed = JoystickController.MAIN_JOYSTICK.getButton1() || JoystickController.COPILOT_JOYSTICK.getButton4();
+        	
         	if(this.buttonPressed /*&& !gearDetected*/ && !ReleaseGear.running() && !ClawToggle.running() && !ArmToggle.running()){
         		this.loopcount = 0;
         		this.clawHandSubsystem.openClaw();
         		this.chipotleArmSubsystem.lowerArm();
-        		//ClawIntake.clawIntake();
         		running = true;
         	}
         	else{
         		if(this.loopcount < 20){
         			this.clawHandSubsystem.closeClaw();
-        			//ClawIntake.stopIntake();
         			this.chipotleArmSubsystem.raiseArm();
         			running = true;
         		}

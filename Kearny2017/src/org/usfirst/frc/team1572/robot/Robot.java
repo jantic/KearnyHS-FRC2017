@@ -46,7 +46,6 @@ public class Robot extends IterativeRobot {
 	public static final DriveType DRIVE_TYPE = DriveType.VICTOR; //TODO:  Switch to voltage talon for main robot.
 	public static final AutonomousMode AUTONOMOUS_MODE = AutonomousMode.TEST_GEAR_2;
 	public static final double TURNING_SPEED = 0.53;
-	public static JoystickController joystickController;
 	public static BaseJoyDriveSubsystem joydriveSubystem;	
 	public static ClawHandSubsystem clawhandSubsystem;
 	public static ClawIntakeSubsystem clawIntakeSubsystem;
@@ -87,8 +86,6 @@ public class Robot extends IterativeRobot {
 
 		cameraSubsystem = new CameraSubsystem();
 		headingSubsystem = new HeadingSubsystem();
-		JoystickController.init();
-		joystickController = new JoystickController();	
 	  	ClawHandSubsystem.claw.set(DoubleSolenoid.Value.kForward);
     	ChipotleArmSubsystem.Arm.set(DoubleSolenoid.Value.kOff);
     	sonarSubystem = new SonarSubsystem();
@@ -180,31 +177,31 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 
-		if(JoystickController.joyCoPilot.getRawButton(6)) {
+		if(JoystickController.COPILOT_JOYSTICK.getButton6()) {
 			clawIntakeSubsystem.clawIntake();
 		}
 		else {
 			clawIntakeSubsystem.stopIntake();
 		}
-		if(JoystickController.joyPilot.getRawButton(4) || JoystickController.joyCoPilot.getRawButton(2)) {
+		if(JoystickController.MAIN_JOYSTICK.getButton4() || JoystickController.COPILOT_JOYSTICK.getButton2()) {
 			liftSubystem.Lifter();
 		}
 		else {
 			liftSubystem.stopLifter(); 
 		}
-		if(JoystickController.joyCoPilot.getRawButton(3) || JoystickController.joyPilot.getRawButton(3)) {
+		if(JoystickController.COPILOT_JOYSTICK.getButton3() || JoystickController.MAIN_JOYSTICK.getButton3()) {
 			ballHopperSubsystem.ballIntake();
 		}
 		else{
 			ballHopperSubsystem.stopBallIntake();
 		} //B
-		if(JoystickController.joyCoPilot.getRawButton(1)) {
+		if(JoystickController.COPILOT_JOYSTICK.getButton1()) {
 			shooterSubsystem.shoot();
 		}
 		else{
 			shooterSubsystem.stopshoot();
 		}
-		if(JoystickController.joyCoPilot.getRawButton(8) && JoystickController.joyCoPilot.getRawButton(9)){
+		if(JoystickController.COPILOT_JOYSTICK.getButton8() && JoystickController.COPILOT_JOYSTICK.getButton9()){
 			liftSubystem.reverseLifter();
 		}
 		Scheduler.getInstance().run();

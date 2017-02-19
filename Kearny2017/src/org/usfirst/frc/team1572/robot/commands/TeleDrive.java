@@ -26,24 +26,23 @@ public class TeleDrive extends Command {
     	//Do nothing
     }
 
-    //TODO:  Reevaluate this.  Note that this effectively gives the co-pilot control over the main pilot.  Why have a copilot in the first place?
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-		if(JoystickController.joyCoPilot.getRawAxis(0) < -0.1 || JoystickController.joyCoPilot.getRawAxis(0) > 0.1 || JoystickController.joyCoPilot.getRawAxis(1) < -0.1 || JoystickController.joyCoPilot.getRawAxis(1) > 0.1){
+		if(JoystickController.COPILOT_JOYSTICK.getLeftStickX() < -0.1 || JoystickController.COPILOT_JOYSTICK.getLeftStickX() > 0.1 || JoystickController.COPILOT_JOYSTICK.getLeftStickY() < -0.1 || JoystickController.COPILOT_JOYSTICK.getLeftStickY() > 0.1){
 			this.coPilotDrive = true;
 			this.overdrive = false;
-			this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-JoystickController.joyCoPilot.getRawAxis(1)*0.65 , -JoystickController.joyCoPilot.getRawAxis(0)*0.5);
+			this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-JoystickController.COPILOT_JOYSTICK.getLeftStickY()*0.65 , -JoystickController.COPILOT_JOYSTICK.getLeftStickX()*0.5);
 		}
-		else if(JoystickController.joyPilot.getRawAxis(3)>0.1){
+		else if(JoystickController.MAIN_JOYSTICK.getRightTrigger()>0.1){
 			this.overdrive = true;
 			this.coPilotDrive = false;
-			this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-JoystickController.joyPilot.getRawAxis(1) , -JoystickController.joyPilot.getRawAxis(0));
+			this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-JoystickController.MAIN_JOYSTICK.getLeftStickY() , -JoystickController.MAIN_JOYSTICK.getLeftStickX());
 		}
 		else {
 			this.overdrive = false;
 			this.coPilotDrive = false;
-			this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-JoystickController.joyPilot.getRawAxis(1) , -JoystickController.joyPilot.getRawAxis(0)*0.75); 
+			this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-JoystickController.MAIN_JOYSTICK.getLeftStickY() , -JoystickController.MAIN_JOYSTICK.getLeftStickX()*0.75); 
 		}	
     }
     

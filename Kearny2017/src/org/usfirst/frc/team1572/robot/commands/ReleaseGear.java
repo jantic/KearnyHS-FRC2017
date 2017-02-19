@@ -32,7 +32,7 @@ public class ReleaseGear extends Command {
         // Called repeatedly when this Command is scheduled to run
         @Override
 		protected void execute() {
-        	this.buttonPushed = JoystickController.joyPilot.getRawButton(2) || JoystickController.joyCoPilot.getRawButton(5);
+        	this.buttonPushed = JoystickController.MAIN_JOYSTICK.getButton2() || JoystickController.COPILOT_JOYSTICK.getButton5();
         	if(this.buttonPushed && !GearGrab.running() && !ClawToggle.running() && !ArmToggle.running()){
         		this.loopcount = 0;
         		this.clawHandSubsystem.openClaw();
