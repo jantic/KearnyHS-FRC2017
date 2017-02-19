@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team1572.robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -9,17 +8,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
-
-import org.usfirst.frc.team1572.robot.commands.AimForGearAutonomously;
-import org.usfirst.frc.team1572.robot.commands.AimForGearManually;
-import org.usfirst.frc.team1572.robot.commands.AimForPegAutonomously;
-import org.usfirst.frc.team1572.robot.commands.AimForPegManually;
-import org.usfirst.frc.team1572.robot.commands.ArmToggle;
-import org.usfirst.frc.team1572.robot.commands.AutonomousCommand;
-import org.usfirst.frc.team1572.robot.commands.ClawToggle;
-import org.usfirst.frc.team1572.robot.commands.GearGrab;
-import org.usfirst.frc.team1572.robot.commands.ReleaseGear;
-import org.usfirst.frc.team1572.robot.commands.TeleDrive;
+import org.usfirst.frc.team1572.robot.commands.main.AimForGearAutonomously;
+import org.usfirst.frc.team1572.robot.commands.main.AimForGearManually;
+import org.usfirst.frc.team1572.robot.commands.main.AimForPegAutonomously;
+import org.usfirst.frc.team1572.robot.commands.main.AimForPegManually;
+import org.usfirst.frc.team1572.robot.commands.main.AutonomousCommand;
+import org.usfirst.frc.team1572.robot.commands.main.TeleDrive;
 import org.usfirst.frc.team1572.robot.subsystems.BallHopperSubysystem;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.CameraSubsystem;
@@ -82,12 +76,8 @@ public class Robot extends IterativeRobot {
 		shooterSubsystem = new ShooterSubsystem();
 		liftSubystem = new LiftSubsystem();
 		ballHopperSubsystem = new BallHopperSubysystem();
-		
-
 		cameraSubsystem = new CameraSubsystem();
 		headingSubsystem = new HeadingSubsystem();
-	  	ClawHandSubsystem.claw.set(DoubleSolenoid.Value.kForward);
-    	ChipotleArmSubsystem.Arm.set(DoubleSolenoid.Value.kOff);
     	sonarSubystem = new SonarSubsystem();
     	encoderSubsystem = new EncoderSubsystem();
 	}
@@ -141,10 +131,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		this.autonomousCommand = new AutonomousCommand(AUTONOMOUS_MODE);
-
-		if (this.autonomousCommand != null){
-			this.autonomousCommand.start();
-		}
+		this.autonomousCommand.start();
 	}
 
 	/**
@@ -157,15 +144,11 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		if (this.autonomousCommand != null){
+		if(this.autonomousCommand!=null){
 			this.autonomousCommand.cancel();
 		}
 		
 		Scheduler.getInstance().add(new TeleDrive());
-		Scheduler.getInstance().add(new ArmToggle());
-		Scheduler.getInstance().add(new ClawToggle());
-		Scheduler.getInstance().add(new GearGrab());
-		Scheduler.getInstance().add(new ReleaseGear());
 	}
 
 	/**
@@ -173,37 +156,8 @@ public class Robot extends IterativeRobot {
 	 * 
 	 */
 	
-	//TODO:  This really needs rework- all this stuff should be handled in commands
 	@Override
 	public void teleopPeriodic() {
-
-		if(JoystickController.COPILOT_JOYSTICK.getButton6()) {
-			clawIntakeSubsystem.clawIntake();
-		}
-		else {
-			clawIntakeSubsystem.stopIntake();
-		}
-		if(JoystickController.MAIN_JOYSTICK.getButton4() || JoystickController.COPILOT_JOYSTICK.getButton2()) {
-			liftSubystem.Lifter();
-		}
-		else {
-			liftSubystem.stopLifter(); 
-		}
-		if(JoystickController.COPILOT_JOYSTICK.getButton3() || JoystickController.MAIN_JOYSTICK.getButton3()) {
-			ballHopperSubsystem.ballIntake();
-		}
-		else{
-			ballHopperSubsystem.stopBallIntake();
-		} //B
-		if(JoystickController.COPILOT_JOYSTICK.getButton1()) {
-			shooterSubsystem.shoot();
-		}
-		else{
-			shooterSubsystem.stopshoot();
-		}
-		if(JoystickController.COPILOT_JOYSTICK.getButton8() && JoystickController.COPILOT_JOYSTICK.getButton9()){
-			liftSubystem.reverseLifter();
-		}
 		Scheduler.getInstance().run();
 	}
 
