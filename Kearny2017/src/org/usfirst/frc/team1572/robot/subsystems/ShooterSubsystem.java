@@ -61,9 +61,12 @@ public class ShooterSubsystem extends Subsystem {
     	synchronized(this.targetRpm){
     		this.targetRpm = new Double(0);
     	}
+
     	
 		this.shooter.set(0);
     	this.shooterIntake.set(0);
     }
+    
+
 }
 
