@@ -1,6 +1,7 @@
-package org.usfirst.frc.team1572.robot.commands;
+package org.usfirst.frc.team1572.robot.commands.main;
 
 import org.usfirst.frc.team1572.robot.AutonomousMode;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**

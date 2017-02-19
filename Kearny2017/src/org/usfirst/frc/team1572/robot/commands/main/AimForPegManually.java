@@ -1,17 +1,17 @@
-package org.usfirst.frc.team1572.robot.commands;
+package org.usfirst.frc.team1572.robot.commands.main;
 
 
 
+import org.usfirst.frc.team1572.robot.commands.subtasks.AimBase;
 import org.usfirst.frc.team1572.robot.vision.CameraType;
 import org.usfirst.frc.team1572.robot.vision.IAutoAim;
 import org.usfirst.frc.team1572.robot.vision.PegTargetAutoAim;
 
 
-public class AimForPegAutonomously extends AimBase {
+public class AimForPegManually extends AimBase {
 	private final IAutoAim autoAim = new PegTargetAutoAim();
-	public AimForPegAutonomously() {
+	public AimForPegManually() {
 		super();
-
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -20,4 +20,8 @@ public class AimForPegAutonomously extends AimBase {
 		alignRobotToTarget(this.autoAim, CameraType.PEG_CAMERA);
 	}
 	
+	@Override
+	protected boolean isFinished(){
+		return true;
+	}
 }

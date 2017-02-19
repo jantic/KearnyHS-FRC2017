@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1572.robot.commands;
+package org.usfirst.frc.team1572.robot.commands.streaming;
 
 import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
@@ -22,10 +22,6 @@ public class StreamJoyDriveOutput extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		updateDisplay();
-	}
-	
-	public void updateDisplay(){
 		SmartDashboard.putString("Left Talon Drive Control Mode", this.joyDriveSubystem.getLeftDriveTrainControlMode().name());
 		SmartDashboard.putString("Right Talon Drive Control Mode", this.joyDriveSubystem.getRightDriveTrainControlMode().name());
 		SmartDashboard.putNumber("Left Drive Train Speed", this.joyDriveSubystem.getLeftDriveTrainSpeed());
@@ -33,11 +29,15 @@ public class StreamJoyDriveOutput extends Command {
 		SmartDashboard.putNumber("Left Drive Encoder Position", this.joyDriveSubystem.getLeftDriveEncoderPosition());
 		SmartDashboard.putNumber("Right Drive Encoder Position", this.joyDriveSubystem.getRightDriveEncoderPosition());
 	}
-
+	
+	public void streamToDashboard(){
+		this.execute();
+	}
+	
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true

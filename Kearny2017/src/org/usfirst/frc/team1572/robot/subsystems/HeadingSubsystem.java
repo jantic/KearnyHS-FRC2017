@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1572.robot.subsystems;
 
-import org.usfirst.frc.team1572.robot.commands.StreamHeadingOutput;
+import org.usfirst.frc.team1572.robot.commands.streaming.StreamHeadingOutput;
 
 import com.kauailabs.navx.frc.AHRS;
 

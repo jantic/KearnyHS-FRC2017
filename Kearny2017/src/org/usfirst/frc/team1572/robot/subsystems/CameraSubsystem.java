@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1572.robot.subsystems;
 
 import org.opencv.core.Mat;
-import org.usfirst.frc.team1572.robot.commands.StreamPegCamera;
+import org.usfirst.frc.team1572.robot.commands.streaming.StreamPegCamera;
 import org.usfirst.frc.team1572.robot.vision.CameraType;
 import org.usfirst.frc.team1572.robot.vision.ImageGrabFailedException;
 

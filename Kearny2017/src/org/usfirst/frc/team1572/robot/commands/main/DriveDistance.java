@@ -1,26 +1,23 @@
-package org.usfirst.frc.team1572.robot.commands;
-
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+package org.usfirst.frc.team1572.robot.commands.main;
 
 import org.usfirst.frc.team1572.robot.Robot;
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team1572.robot.commands.streaming.StreamEncoderOutput;
+import org.usfirst.frc.team1572.robot.commands.streaming.StreamHeadingOutput;
+
+import edu.wpi.first.wpilibj.command.TimedCommand;
+
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.EncoderSubsystem;
 
-public class DriveDistance extends Command {
+public class DriveDistance extends TimedCommand {
 	private final BaseJoyDriveSubsystem joyDrive = Robot.joydriveSubystem;
 	private final EncoderSubsystem encoderSubsystem = Robot.encoderSubsystem;
 	private final double targetDisplacement; //positve or negative
-	private static final int TIMEOUT = 10; //seconds
-	private LocalDateTime startTime;
 	
-	
-	
-    public DriveDistance(final double targetDisplacement) {
+	public DriveDistance(final double targetDisplacement) {
+    	super(5);
     	requires(Robot.joydriveSubystem);
     	requires(Robot.encoderSubsystem);
-    	requires(Robot.sonarSubystem);
     	this.targetDisplacement = targetDisplacement;  	
     }
     
@@ -28,7 +25,6 @@ public class DriveDistance extends Command {
     @Override
 	protected void initialize() {
     	this.encoderSubsystem.reset();
-		this.startTime = LocalDateTime.now();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,21 +38,13 @@ public class DriveDistance extends Command {
     
     private void updateDisplay(){
     	final StreamHeadingOutput headingOutputStream = new StreamHeadingOutput();
-    	headingOutputStream.execute();
+    	headingOutputStream.streamToDashboard();
     	final StreamEncoderOutput encoderOutputStream = new StreamEncoderOutput();
-    	encoderOutputStream.execute();
+    	encoderOutputStream.streamToDashboard();
     }
     // Make this return true when this Command no longer needs to run execute()
     @Override
-	protected boolean isFinished() { 
-		final LocalDateTime currentTime = LocalDateTime.now();
-		
-		final long elapsedSeconds = ChronoUnit.SECONDS.between(this.startTime, currentTime);
-		
-		if(elapsedSeconds > TIMEOUT){
-			return true;
-		}
-    	 	
+	protected boolean isFinished() { 		
 		final double distanceDriven = this.encoderSubsystem.getDistanceDriven();
 		
     	if(this.targetDisplacement <= distanceDriven && this.targetDisplacement > 0){
@@ -67,7 +55,7 @@ public class DriveDistance extends Command {
 			return true;
 		}
     	
-		return false;
+		return super.isFinished();
     }
 
     // Called once after isFinished returns true
@@ -80,7 +68,7 @@ public class DriveDistance extends Command {
     // subsystems is scheduled to run
     @Override
 	protected void interrupted() {
-    	//nothing to do here
+    	this.joyDrive.arcadeDrive(0 , 0);
     }
 }
 // Called just before this Command runs the first time

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc.team1572.robot.RobotMap;
-import org.usfirst.frc.team1572.robot.commands.StreamJoyDriveOutput;
+import org.usfirst.frc.team1572.robot.commands.streaming.StreamJoyDriveOutput;
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 
 import com.ctre.CANTalon.TalonControlMode;
@@ -34,7 +34,7 @@ public abstract class BaseJoyDriveSubsystem extends Subsystem {
 
 	protected final void updateDisplay() {
 		final StreamJoyDriveOutput streamJoyDriveOutput = new StreamJoyDriveOutput();
-		streamJoyDriveOutput.updateDisplay();
+		streamJoyDriveOutput.streamToDashboard();
 	}
 	
 	public final void stop() {

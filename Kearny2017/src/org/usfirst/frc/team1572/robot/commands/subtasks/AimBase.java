@@ -1,9 +1,5 @@
-package org.usfirst.frc.team1572.robot.commands;
+package org.usfirst.frc.team1572.robot.commands.subtasks;
 
-
-
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 import org.opencv.core.Mat;
 import org.usfirst.frc.team1572.robot.Robot;
@@ -14,18 +10,17 @@ import org.usfirst.frc.team1572.robot.vision.IAutoAim;
 import org.usfirst.frc.team1572.robot.vision.ImageGrabFailedException;
 import org.usfirst.frc.team1572.robot.vision.VisionCenteringCommand;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public abstract class AimBase extends Command {
+public abstract class AimBase extends TimedCommand {
 	private final BaseJoyDriveSubsystem joyDriveSubsystem = Robot.joydriveSubystem;
 	private VisionCenteringCommand lastCenteringCommand = VisionCenteringCommand.NULL;
-	private LocalDateTime startTime;
 	private final CameraSubsystem cameraSubsystem = Robot.cameraSubsystem;
-	private static long TIMEOUT = 5;
 
 	public AimBase() {
+		super(5);
 		requires(Robot.joydriveSubystem);
 		requires(Robot.cameraSubsystem);
 	}
@@ -33,7 +28,7 @@ public abstract class AimBase extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		this.startTime = LocalDateTime.now();
+		//Do nothing
 	}
 
 	protected final void alignRobotToTarget(final IAutoAim autoAim, final CameraType cameraType) {
@@ -72,27 +67,23 @@ public abstract class AimBase extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		final LocalDateTime currentTime = LocalDateTime.now();
-		
-		final long elapsedSeconds = ChronoUnit.SECONDS.between(this.startTime, currentTime);
-		
-		if(elapsedSeconds > TIMEOUT){
+		if(this.lastCenteringCommand.equals(VisionCenteringCommand.CENTER)){
 			return true;
 		}
 		
-		return this.lastCenteringCommand.equals(VisionCenteringCommand.CENTER);
+		return super.isFinished();
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		// nothing to do here
+		this.joyDriveSubsystem.arcadeDrive(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		// nothing to do here
+		this.joyDriveSubsystem.arcadeDrive(0, 0);
 	}
 }

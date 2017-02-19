@@ -1,15 +1,15 @@
-package org.usfirst.frc.team1572.robot.commands;
+package org.usfirst.frc.team1572.robot.commands.streaming;
 
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.HeadingSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.EncoderSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class StreamHeadingOutput extends Command {
-	private final HeadingSubsystem headingSubystem = Robot.headingSubsystem;
+public class StreamEncoderOutput extends Command {
+	private final EncoderSubsystem encoderSubystem = Robot.encoderSubsystem;
 	
-	public StreamHeadingOutput() {
-		requires(Robot.headingSubsystem);
+	public StreamEncoderOutput() {
+		requires(Robot.encoderSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -21,14 +21,18 @@ public class StreamHeadingOutput extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		SmartDashboard.putNumber("Angle", this.headingSubystem.getAngle());
-		SmartDashboard.putNumber("Compass Heading", this.headingSubystem.getCompassHeading());
+		SmartDashboard.putNumber("Encoder Distance Driven", this.encoderSubystem.getDistanceDriven());
+		SmartDashboard.putNumber("Encoder Scale", this.encoderSubystem.getScale());
+	}
+	
+	public void streamToDashboard(){
+		this.execute();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true

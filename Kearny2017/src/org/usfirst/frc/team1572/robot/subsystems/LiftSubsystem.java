@@ -17,13 +17,13 @@ public class LiftSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void Lifter() {
+    public void runLifterForwards() {
     	lift.set(-1);
     }
     public void stopLifter() {
     	lift.set(0);
     }
-    public void reverseLifter() {
+    public void runLifterBackwards() {
     	lift.set(1);
     }
 

@@ -16,10 +16,10 @@ public class BallHopperSubysystem extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    public void ballIntake() {
+    public void run() {
     	hopper.set(-0.75);
     }
-    public void stopBallIntake() {
+    public void stop() {
     	hopper.set(0);
     }
 }

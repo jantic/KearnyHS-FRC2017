@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1572.robot.utls;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class LogitechF310Map {

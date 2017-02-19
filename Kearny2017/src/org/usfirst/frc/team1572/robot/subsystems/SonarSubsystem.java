@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1572.robot.subsystems;
 
 import org.usfirst.frc.team1572.robot.RobotMap;
-import org.usfirst.frc.team1572.robot.commands.StreamSonarOutput;
+import org.usfirst.frc.team1572.robot.commands.streaming.StreamSonarOutput;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;

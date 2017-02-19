@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1572.robot.subsystems;
 
 import org.usfirst.frc.team1572.robot.RobotMap;
-import org.usfirst.frc.team1572.robot.commands.StreamEncoderOutput;
+import org.usfirst.frc.team1572.robot.commands.streaming.StreamEncoderOutput;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
