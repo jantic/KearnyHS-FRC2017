@@ -8,11 +8,14 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
+import org.usfirst.frc.team1572.robot.commands.autonomous.LeftGearAutonomous;
+import org.usfirst.frc.team1572.robot.commands.autonomous.MidGearAutonomous;
+import org.usfirst.frc.team1572.robot.commands.autonomous.RightGearAutonomous;
+import org.usfirst.frc.team1572.robot.commands.autonomous.TestAutonomous;
 import org.usfirst.frc.team1572.robot.commands.main.AimForGearAutonomously;
 import org.usfirst.frc.team1572.robot.commands.main.AimForGearManually;
 import org.usfirst.frc.team1572.robot.commands.main.AimForPegAutonomously;
 import org.usfirst.frc.team1572.robot.commands.main.AimForPegManually;
-import org.usfirst.frc.team1572.robot.commands.main.AutonomousCommand;
 import org.usfirst.frc.team1572.robot.commands.main.TeleDrive;
 import org.usfirst.frc.team1572.robot.subsystems.BallHopperSubysystem;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
@@ -38,7 +41,6 @@ import org.usfirst.frc.team1572.robot.subsystems.VelocityTalonDriveSubsystem;
  */
 public class Robot extends IterativeRobot {
 	public static final DriveType DRIVE_TYPE = DriveType.VICTOR; //TODO:  Switch to voltage talon for main robot.
-	public static final AutonomousMode AUTONOMOUS_MODE = AutonomousMode.TEST_GEAR_2;
 	public static final double TURNING_SPEED = 0.53;
 	public static BaseJoyDriveSubsystem joydriveSubystem;	
 	public static ClawHandSubsystem clawhandSubsystem;
@@ -52,10 +54,10 @@ public class Robot extends IterativeRobot {
 	public static BallHopperSubysystem ballHopperSubsystem;
 	public static HeadingSubsystem headingSubsystem;
 	public static EncoderSubsystem encoderSubsystem;
-
+	private final SendableChooser<Command> autonomousChooser = new SendableChooser<>();
 
 	private Command autonomousCommand;
-	private SendableChooser<Command> chooser = new SendableChooser<>();
+
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -94,12 +96,20 @@ public class Robot extends IterativeRobot {
 	}
 
 	private void initSmartDashboard() {
-		SmartDashboard.putData("Auto mode", this.chooser);
+		initAutonomousChooser();
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("Peg Auto Aim Manual", new AimForPegManually());
 		SmartDashboard.putData("Gear Auto Aim Manual", new AimForGearManually());
 		SmartDashboard.putData("Peg Auto Aim Autonomously", new AimForPegAutonomously());
 		SmartDashboard.putData("Gear Auto Aim Autonomously", new AimForGearAutonomously());
+	}
+	
+	private void initAutonomousChooser(){
+		this.autonomousChooser.addDefault("Left Gear", new LeftGearAutonomous());
+		this.autonomousChooser.addObject("Mid Gear", new MidGearAutonomous());
+		this.autonomousChooser.addObject("Right Gear", new RightGearAutonomous());
+		this.autonomousChooser.addObject("Test", new TestAutonomous());
+		SmartDashboard.putData("Autonomous Mode", this.autonomousChooser);
 	}
 
 	/**
@@ -130,7 +140,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		this.autonomousCommand = new AutonomousCommand(AUTONOMOUS_MODE);
+		this.autonomousCommand = this.autonomousChooser.getSelected();
 		this.autonomousCommand.start();
 	}
 
