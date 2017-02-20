@@ -40,8 +40,8 @@ public class TeleDrive extends Command {
 	}
 
 	private void defaultDrive() {
-		this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-this.mainJoystick.getLeftStickY() * 0.75,
-				-this.mainJoystick.getLeftStickX() );
+		this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-this.mainJoystick.getLeftStickY(),
+				-this.mainJoystick.getLeftStickX() * 0.75);
 	}
 
 	private void driveWithOverridrive() {
@@ -50,7 +50,7 @@ public class TeleDrive extends Command {
 	}
 
 	private void driveWithCoPilot() {
-		this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-this.coPilotJoystick.getLeftStickY() * 0.65,
+		this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-this.coPilotJoystick.getLeftStickY() * 0.75,
 				-this.coPilotJoystick.getLeftStickX() * 0.5);
 	}
 

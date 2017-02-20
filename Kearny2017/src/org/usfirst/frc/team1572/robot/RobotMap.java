@@ -28,8 +28,8 @@ public class RobotMap {
 	public static int victorLeftDrivetrainPort = 8;
 	public static int victorRightDrivetrainPort = 9;
 	public static int eCPRPort = 1440;
-	public static int liftPort = 1;
-	public static int ballHopperPort = 2;
+	public static int liftPort = 2;
+	public static int ballHopperPort = 1;
 	public static int clawIntakePort = 3;
 	public static int clawHandPort1 = 2;
 	public static int clawHandPort = 3;
