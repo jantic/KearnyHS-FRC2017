@@ -6,7 +6,8 @@ public enum JoystickButtonMap {
     X (3),   //calls constructor with value 1
     Y (4),
     LB (5),
-    RB (6);
+    RB (6),
+	Back (7);
     // semicolon needed when fields / methods follow
 
 

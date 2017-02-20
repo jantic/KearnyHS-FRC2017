@@ -41,10 +41,15 @@ public class DriveDistance extends TimedCommand {
     	final long currentTimeMilli = System.currentTimeMillis();
     	if(this.lastTimeMilli > 0) {
     		final long dt = currentTimeMilli - this.lastTimeMilli;
-    		final double avgRpm = (this.leftDrive.getSpeed() + this.rightDrive.getSpeed()) / 2d;
+    		final double avgRpm = (Math.abs(this.leftDrive.getSpeed()) + Math.abs(this.rightDrive.getSpeed())) / 2d;
     		final double avgSpd = 4d * Math.PI * avgRpm / 60000d; // inches per millisecond
     		
-    		this.currentDisplacement += avgSpd * dt;
+    		if(this.targetDisplacement > 0){
+    			this.currentDisplacement += avgSpd * dt;
+    		}
+    		else{
+    			this.currentDisplacement -= avgSpd * dt;
+    		}
     	}
     	this.lastTimeMilli = currentTimeMilli;
     	
@@ -71,10 +76,16 @@ public class DriveDistance extends TimedCommand {
 //    	if(this.targetDisplacement >= distanceDriven && this.targetDisplacement <= 0){
 //			return true;
 //		}
-    	
-    	if(this.currentDisplacement >= this.targetDisplacement) {
+    	if(this.targetDisplacement > 0){
+    		if(this.currentDisplacement >= this.targetDisplacement) {
+    			return true;
+    		}
+    	}
+    	else if(this.currentDisplacement <= this.targetDisplacement) {
     		return true;
     	}
+    	
+
 		return super.isFinished();
     }
 

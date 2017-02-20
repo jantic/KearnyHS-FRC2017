@@ -112,8 +112,8 @@ public class RobotMap {
 			talonLeftDrivetrain.reverseSensor(true);
 			talonLeftDrivetrain.configPeakOutputVoltage(12.0, -12.0);
 			talonLeftDrivetrain.setProfile(0);
-			talonLeftDrivetrain.setF(0.5);
-			talonLeftDrivetrain.setP(0.01);
+			talonLeftDrivetrain.setF(0.005);
+			talonLeftDrivetrain.setP(0.001);
 			talonLeftDrivetrain.setI(0);
 			talonLeftDrivetrain.setD(0);
 			talonLeftDrivetrain.set(0);
@@ -124,15 +124,19 @@ public class RobotMap {
 			talonRightDrivetrain.configNominalOutputVoltage(0, 0);
 			talonRightDrivetrain.configPeakOutputVoltage(12.0, -12.0);
 			talonRightDrivetrain.setProfile(0);
-			talonRightDrivetrain.setF(0.5);
-			talonRightDrivetrain.setP(0.01);
+			talonRightDrivetrain.setF(0.005);
+			talonRightDrivetrain.setP(0.001);
 			talonRightDrivetrain.setI(0);
 			talonRightDrivetrain.setD(0);
 			talonRightDrivetrain.set(0);
 		}
 		else {
 			talonLeftDrivetrain.changeControlMode(TalonControlMode.PercentVbus);
+			talonLeftDrivetrain.reverseSensor(false);
+			talonLeftDrivetrain.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 			talonRightDrivetrain.changeControlMode(TalonControlMode.PercentVbus);
+			talonRightDrivetrain.reverseSensor(true);
+			talonRightDrivetrain.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		}
 		
 		robotDrive = new RobotDrive(talonLeftDrivetrain, talonRightDrivetrain);

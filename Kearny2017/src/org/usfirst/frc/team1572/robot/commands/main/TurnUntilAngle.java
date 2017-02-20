@@ -45,7 +45,6 @@ public class TurnUntilAngle extends TimedCommand {
 		if(this.targetAngle >= 0){
 			return -Robot.TURNING_SPEED;
 		}
-		
 		return Robot.TURNING_SPEED;
 	}
 
