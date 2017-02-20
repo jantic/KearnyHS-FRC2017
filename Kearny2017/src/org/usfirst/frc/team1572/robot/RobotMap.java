@@ -38,7 +38,7 @@ public class RobotMap {
 	public static int sensorPort1 = 3;
 	public static int sensorPort = 4;
 	public static int analogSonarPort = 0;
-
+	public static int shooterIntakePort = 4;
 	
 	public static Victor victorLeftDriveTrain;
 	public static Victor victorRightDriveTrain;
@@ -81,12 +81,12 @@ public class RobotMap {
 		lift = new Victor(liftPort);
 		ballHopper = new Victor(ballHopperPort);
 		clawIntake = new Victor(clawIntakePort);
-		shooterIntake = new Victor(4);
-		encoder = new Encoder(1, 2 , true, Encoder.EncodingType.k4X);
-		encoder.setMaxPeriod(.1);
-		encoder.setMinRate(10);
-		encoder.setDistancePerPulse((8.0*Math.PI)/360);
-		encoder.setSamplesToAverage(7);
+		shooterIntake = new Victor(shooterIntakePort);
+		//encoder = new Encoder(1, 2 , true, Encoder.EncodingType.k4X);
+		//encoder.setMaxPeriod(.1);
+		//encoder.setMinRate(10);
+		//encoder.setDistancePerPulse((8.0*Math.PI)/360);
+		//encoder.setSamplesToAverage(7);
 		
 		//sensor = new Ultrasonic(pingChannel, echoChannel);
 		// FIX THIS SO AGUREMNTS MAKES SENSE

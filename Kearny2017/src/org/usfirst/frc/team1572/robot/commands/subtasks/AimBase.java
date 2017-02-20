@@ -42,7 +42,7 @@ public abstract class AimBase extends TimedCommand {
 		catch (ImageGrabFailedException e) {
 			System.out.println("Error while grabbing image auto aiming for peg:" + e.getMessage());
 		} 
-		catch (Exception e){
+		catch (Throwable e){
 			System.out.println("Error while auto aiming for peg:" + e.getMessage());
 		}
 	}

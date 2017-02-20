@@ -40,7 +40,7 @@ import org.usfirst.frc.team1572.robot.subsystems.VelocityTalonDriveSubsystem;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static final DriveType DRIVE_TYPE = DriveType.VICTOR; //TODO:  Switch to voltage talon for main robot.
+	public static final DriveType DRIVE_TYPE = DriveType.TALON_VOLTAGE; //TODO:  Switch to voltage talon for main robot.
 	public static final double TURNING_SPEED = 0.53;
 	public static BaseJoyDriveSubsystem joydriveSubystem;	
 	public static ClawHandSubsystem clawhandSubsystem;
@@ -53,11 +53,9 @@ public class Robot extends IterativeRobot {
 	public static CameraSubsystem cameraSubsystem;
 	public static BallHopperSubysystem ballHopperSubsystem;
 	public static HeadingSubsystem headingSubsystem;
-	public static EncoderSubsystem encoderSubsystem;
 	private final SendableChooser<Command> autonomousChooser = new SendableChooser<>();
 
 	private Command autonomousCommand;
-
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -81,7 +79,7 @@ public class Robot extends IterativeRobot {
 		cameraSubsystem = new CameraSubsystem();
 		headingSubsystem = new HeadingSubsystem();
     	sonarSubystem = new SonarSubsystem();
-    	encoderSubsystem = new EncoderSubsystem();
+    	//encoderSubsystem = new EncoderSubsystem();
 	}
 
 	private BaseJoyDriveSubsystem generateJoyDrive() {

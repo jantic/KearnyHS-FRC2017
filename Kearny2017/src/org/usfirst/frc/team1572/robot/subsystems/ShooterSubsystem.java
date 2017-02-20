@@ -18,18 +18,19 @@ public class ShooterSubsystem extends Subsystem {
     // here. Call these from Commands.
 	
 	public ShooterSubsystem(){
-        this.shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-        this.shooter.reverseSensor(false);
+        this.shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        this.shooter.reverseSensor(true);
         this.shooter.configEncoderCodesPerRev(3);
         this.shooter.configNominalOutputVoltage(+0.0f, -0.0f);
         this.shooter.configPeakOutputVoltage(+12.0f, -12.0f);
+        this.shooter.setVoltageRampRate(0.25);
         this.shooter.setProfile(0);
         this.shooter.enableBrakeMode(false);
         this.shooter.setPosition(0);
         this.shooter.setVoltageRampRate(24);
         this.shooter.changeControlMode(TalonControlMode.Speed);
-        this.shooter.setF(10);
-        this.shooter.setP(0);
+        this.shooter.setF(0.03);
+        this.shooter.setP(0.03);
         this.shooter.setI(0);
         this.shooter.setD(0);
 	}
@@ -38,17 +39,26 @@ public class ShooterSubsystem extends Subsystem {
 	public void initDefaultCommand() {
         setDefaultCommand(new StreamShooterOutput());
     }
-    
-    public void shoot(final double rpm) {
+
+    public void spinUpShooter(final double rpm) {
     	synchronized(this.targetRpm){
     		this.targetRpm = new Double(rpm);
-    		this.shooter.set(rpm);
+    		
+    		this.shooter.set(-rpm);
+    		//TODO: Shooting will call another motor to push ball into spinner
     	}
-    	this.shooterIntake.set(1);
+    	//this.shooterIntake.set(1);
+    }
+    public void startShooting() {
+    	this.shooterIntake.set(-1);	
+    }
+    
+    public void stopShooting() {
+    	this.shooterIntake.set(0); 	
     }
     
     public double getCurrentRPM(){
-    	return this.shooter.getSpeed();
+    	return -this.shooter.getSpeed();
     }
     
     public double getTargetRPM(){
@@ -57,16 +67,19 @@ public class ShooterSubsystem extends Subsystem {
     	}
     }
     
-    public void stop() {
+    public void stopAll() {
     	synchronized(this.targetRpm){
     		this.targetRpm = new Double(0);
     	}
-
-    	
 		this.shooter.set(0);
     	this.shooterIntake.set(0);
     }
-    
-
+	public boolean isAtTargetRPM() {
+		if (this.getTargetRPM() >= this.getCurrentRPM()) {
+			return true;
+		}
+		return false;
+	}
+	
 }
 

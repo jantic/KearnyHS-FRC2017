@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import org.usfirst.frc.team1572.robot.Robot;
+import org.usfirst.frc.team1572.robot.commands.streaming.StreamShooterOutput;
 import org.usfirst.frc.team1572.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -31,13 +32,13 @@ public class ChangeShooterRPM extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		//this.shooterSubsystem.setTargetRPM(targetRPM);
+		this.shooterSubsystem.spinUpShooter(targetRPM);
 		updateDisplay();
 	}
 	
     private void updateDisplay(){
     	final StreamShooterOutput outputStream = new StreamShooterOutput();
-    	outputStream.execute();
+    	outputStream.streamToDashboard();
     }
 	
 	// Make this return true when this Command no longer needs to run execute()
@@ -50,7 +51,7 @@ public class ChangeShooterRPM extends Command {
 			return true;
 		}
 			
-		return this.isAtTargetRPM();
+		return this.shooterSubsystem.isAtTargetRPM();
 	}
 
 	// Called once after isFinished returns true
@@ -65,10 +66,5 @@ public class ChangeShooterRPM extends Command {
 	protected void interrupted() {
 		// nothing to do here
 		}
-	private boolean isAtTargetRPM() {
-		if (this.targetRPM >= this.shooterSubsystem.getCurrentRPM()) {
-			return true;
-			}
-		return false;
-		}
+
 	}

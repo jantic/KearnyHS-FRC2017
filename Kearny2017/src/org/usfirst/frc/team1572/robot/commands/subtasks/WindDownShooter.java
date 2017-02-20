@@ -6,19 +6,16 @@ import org.usfirst.frc.team1572.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
-public class SpinUpShooter extends TimedCommand {
+public class WindDownShooter extends TimedCommand {
 	private final ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
-	private final double targetRPM;
-
-	public SpinUpShooter(final double targetRPM) {
+	public WindDownShooter() {
 		super(5);
-		this.targetRPM = targetRPM;
 		requires(Robot.shooterSubsystem);
 	}
 
 	@Override
 	protected void initialize() {
-		this.shooterSubsystem.spinUpShooter(this.targetRPM);
+		this.shooterSubsystem.stopAll();
 	}
 
 	@Override
