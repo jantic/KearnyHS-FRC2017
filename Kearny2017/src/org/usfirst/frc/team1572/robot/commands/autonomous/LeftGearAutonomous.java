@@ -19,10 +19,10 @@ public class LeftGearAutonomous extends CommandGroup {
     public LeftGearAutonomous() {
     	
     	addSequential(new DriveDistance(53.3));
-    	addSequential(new TurnUntilAngle(30,0.8));
-    	addSequential(new DriveDistance(25));
-    	addSequential(new AimForPegAutonomously());
-    	addSequential(new DriveDistance(13));
+    	addSequential(new TurnUntilAngle(30,0.7));
+    	addSequential(new DriveDistance(30));
+    	addParallel(new AimForPegAutonomously());
+    	addSequential(new DriveDistance(16));
     	addSequential(new Delay(0.25));
     	addParallel(new GearRelease());
     	addSequential(new DriveDistance(-2));
