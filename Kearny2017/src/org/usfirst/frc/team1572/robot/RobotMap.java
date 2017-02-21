@@ -70,9 +70,7 @@ public class RobotMap {
 		}
 		
 		sonarSensor = new AnalogInput(analogSonarPort);
-		shooter = new CANTalon(shooterPort);
-		shooter.changeControlMode(TalonControlMode.Speed);
-		shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);	
+		shooter = new CANTalon(shooterPort);	
 		compressor = new Compressor(compressorPort);	
 		clawHand = new DoubleSolenoid(clawHandPort1,clawHandPort);
 		clawHand.set(DoubleSolenoid.Value.kOff);

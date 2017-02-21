@@ -2,6 +2,7 @@ package org.usfirst.frc.team1572.robot;
 
 import org.usfirst.frc.team1572.robot.commands.HopperIntake;
 import org.usfirst.frc.team1572.robot.commands.HopperIntakeOff;
+import org.usfirst.frc.team1572.robot.commands.HopperReverseIntake;
 import org.usfirst.frc.team1572.robot.commands.main.AimForPegManually;
 import org.usfirst.frc.team1572.robot.commands.main.ClawUp;
 import org.usfirst.frc.team1572.robot.commands.main.GearGrabClose;
@@ -33,6 +34,7 @@ public class JoystickController {
 		//TODO:  Figure out a button mapping for GearRelease
 		setButtonBehavior(joystick, JoystickButtonMap.A, new GearGrabOpen(), new GearGrabClose());
 		setButtonBehavior(joystick,JoystickButtonMap.B, new GearRelease(), new ClawUp());
+		setButtonBehavior(joystick, JoystickButtonMap.X, new HopperIntake(), new HopperIntakeOff());
 		setButtonBehavior(joystick, JoystickButtonMap.Y, new RunLifterForwards(), new StopLifter());	
 		setButtonBehavior(joystick, JoystickButtonMap.LB, new AimForPegManually());
 		
@@ -41,16 +43,17 @@ public class JoystickController {
 
 	private static JoystickController generateCoPilotJoystick(){
 		final Joystick joystick = new Joystick(1);
-		setButtonBehavior(joystick, JoystickButtonMap.RB, new ShootClose(), new StopShooting());
-		setButtonBehavior(joystick, JoystickButtonMap.A, new ShootFar(), new StopShooting());
+		setButtonBehavior(joystick, JoystickButtonMap.six, new ShootClose(), new StopShooting());
+		setButtonBehavior(joystick, JoystickButtonMap.one, new ShootFar(), new StopShooting());
 		//Note: want to spin up shooter and automatically fire when target rpm is reached
-		setButtonBehavior(joystick, JoystickButtonMap.B, new RunLifterForwards(), new StopLifter());
+		setButtonBehavior(joystick, JoystickButtonMap.two, new RunLifterForwards(), new StopLifter());
 		
-		setButtonBehavior(joystick, JoystickButtonMap.X, new HopperIntake(), new HopperIntakeOff());
-		setButtonBehavior(joystick,JoystickButtonMap.LB, new GearRelease(), new ClawUp());
+		setButtonBehavior(joystick, JoystickButtonMap.three, new HopperIntake(), new HopperIntakeOff());
+		setButtonBehavior(joystick,JoystickButtonMap.five, new GearRelease(), new ClawUp());
 		//TODO:  Figure out a button mapping for GearRelease
-		setButtonBehavior(joystick, JoystickButtonMap.Y, new GearGrabOpen(), new GearGrabClose());
-		setButtonBehavior(joystick, JoystickButtonMap.Back, new StreamPegCamera(), new StreamGearCamera());
+		setButtonBehavior(joystick, JoystickButtonMap.four, new GearGrabOpen(), new GearGrabClose());
+		setButtonBehavior(joystick, JoystickButtonMap.seven, new StreamPegCamera(), new StreamGearCamera());
+		setButtonBehavior(joystick, JoystickButtonMap.eight, new HopperReverseIntake(), new HopperIntakeOff());
 		//setButtonBehavior(joystick, 5, new RunLifterBackwards(), new StopLifter());
 		return new JoystickController(joystick);
 	}

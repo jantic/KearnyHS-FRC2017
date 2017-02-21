@@ -29,10 +29,10 @@ public class ShooterSubsystem extends Subsystem {
         this.shooter.setPosition(0);
         this.shooter.setVoltageRampRate(24);
         this.shooter.changeControlMode(TalonControlMode.Speed);
-        this.shooter.setF(0.03);
-        this.shooter.setP(0.03);
-        this.shooter.setI(0);
-        this.shooter.setD(0);
+        this.shooter.setF(0.003);
+        this.shooter.setP(0.0005);
+        this.shooter.setI(0.00005);
+        this.shooter.setD(0.01);
 	}
 
     @Override
@@ -49,6 +49,7 @@ public class ShooterSubsystem extends Subsystem {
     	}
     	//this.shooterIntake.set(1);
     }
+    
     public void startShooting() {
     	this.shooterIntake.set(-1);	
     }
@@ -74,6 +75,7 @@ public class ShooterSubsystem extends Subsystem {
 		this.shooter.set(0);
     	this.shooterIntake.set(0);
     }
+    
 	public boolean isAtTargetRPM() {
 		if (this.getTargetRPM() >= this.getCurrentRPM()) {
 			return true;

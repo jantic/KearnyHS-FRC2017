@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ShootFar extends CommandGroup{
 	public ShootFar(){
-		this.addSequential(new SpinUpShooter(4000));
+		this.addSequential(new SpinUpShooter(3700));
 		this.addSequential(new ShootBalls());
 	}
 }

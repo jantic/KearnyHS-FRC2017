@@ -12,12 +12,14 @@ public class TurnUntilAngle extends TimedCommand {
 	private final HeadingSubsystem headingSubystem = Robot.headingSubsystem;
 	private final double targetAngle;
 	private final double angleTolerance = 1;
+	private final double turnSpeed;
 
-	public TurnUntilAngle(final double targetAngle) {
+	public TurnUntilAngle(final double targetAngle, final double speed) {
 		super(5);
 		this.targetAngle = targetAngle;
 		requires(Robot.joydriveSubystem);
 		requires(Robot.headingSubsystem);
+		turnSpeed = speed;
 	}
 
 
@@ -43,9 +45,9 @@ public class TurnUntilAngle extends TimedCommand {
 	
 	private double generateJoystickX(){
 		if(this.targetAngle >= 0){
-			return -Robot.TURNING_SPEED;
+			return -turnSpeed;
 		}
-		return Robot.TURNING_SPEED;
+		return turnSpeed;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

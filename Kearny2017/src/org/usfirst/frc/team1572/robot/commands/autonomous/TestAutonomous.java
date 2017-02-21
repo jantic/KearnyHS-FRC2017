@@ -10,7 +10,7 @@ public class TestAutonomous extends CommandGroup {
 	
     public TestAutonomous() {
     	addSequential(new DriveDistance(70));
-    	addSequential(new TurnUntilAngle(-90));
+    	addSequential(new TurnUntilAngle(-90,0.8));
     	addParallel(new AimForPegAutonomously());
     	addParallel(new DriveDistance(48));
     }

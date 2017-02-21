@@ -40,6 +40,7 @@ public class ShootBalls extends TimedCommand {
     			this.shooting = false;
     		}
     		else{
+    			// TODO: only do this if at target speed
     			this.shooterSubsystem.startShooting();
     			this.shooting = true;
     		}

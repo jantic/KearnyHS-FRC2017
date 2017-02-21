@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class MidGearAutonomous extends CommandGroup {
 	//TODO:  Update to make it work for this scenario
     public MidGearAutonomous() {
-    	addParallel(new AimForPegAutonomously());
-    	addParallel(new DriveDistance(63.3));
+    	//addParallel(new AimForPegAutonomously());
+    	addSequential(new DriveDistance(55));
     	addSequential(new Delay(0.25));
     	addParallel(new GearRelease());
-    	addParallel(new DriveDistance(-6));
+    	addSequential(new DriveDistance(-2));
     }
   }
     

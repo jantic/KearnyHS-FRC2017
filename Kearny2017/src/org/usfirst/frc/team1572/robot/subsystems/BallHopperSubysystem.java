@@ -22,5 +22,8 @@ public class BallHopperSubysystem extends Subsystem {
     public void stop() {
     	hopper.set(0);
     }
+    public void reverse() {
+    	hopper.set(0.5);
+    }
 }
 

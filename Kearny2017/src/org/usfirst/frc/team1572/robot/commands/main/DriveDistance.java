@@ -43,7 +43,12 @@ public class DriveDistance extends TimedCommand {
     		final long dt = currentTimeMilli - this.lastTimeMilli;
     		final double avgRpm = (Math.abs(this.leftDrive.getSpeed()) + Math.abs(this.rightDrive.getSpeed())) / 2d;
     		final double avgSpd = 4d * Math.PI * avgRpm / 60000d; // inches per millisecond
-    		
+    		System.out.println("leftRPM " + this.leftDrive.getSpeed());
+    		System.out.println("rightRPM " + this.rightDrive.getSpeed());
+    		System.out.println("RPM " + avgRpm);
+    		System.out.println("Speed " + avgSpd);
+    		System.out.println("Displacement " + this.currentDisplacement);
+    		System.out.println("Target Displacement " + this.targetDisplacement);
     		if(this.targetDisplacement > 0){
     			this.currentDisplacement += avgSpd * dt;
     		}
@@ -52,9 +57,14 @@ public class DriveDistance extends TimedCommand {
     		}
     	}
     	this.lastTimeMilli = currentTimeMilli;
-    	
+    	double joystickY = 0;
 		final double joystickX = 0.0;
-		final double joystickY = 0.5;
+		if(this.targetDisplacement < 0) {
+			joystickY = -0.65;
+		}
+		else{
+			joystickY = 0.65;
+		}
 		this.joyDrive.arcadeDrive(joystickX, joystickY);
 		updateDisplay();
     }

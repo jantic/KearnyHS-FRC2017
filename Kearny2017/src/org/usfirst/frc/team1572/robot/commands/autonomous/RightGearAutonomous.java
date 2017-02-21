@@ -13,12 +13,13 @@ public class RightGearAutonomous extends CommandGroup {
 	//TODO:  Update to make it work for this scenario
     public RightGearAutonomous() {
     	addSequential(new DriveDistance(53.3));
-    	addSequential(new TurnUntilAngle(-58));
-    	addParallel(new AimForPegAutonomously());
-    	addParallel(new DriveDistance(32));
+    	addSequential(new TurnUntilAngle(-30,0.8));
+    	addSequential(new DriveDistance(25));
+    	addSequential(new AimForPegAutonomously());
+    	addSequential(new DriveDistance(13));
     	addSequential(new Delay(0.25));
     	addParallel(new GearRelease());
-    	addParallel(new DriveDistance(-6));
+    	addSequential(new DriveDistance(-2));
     }
   }
     //93.3

@@ -19,6 +19,7 @@ public class HeadingSubsystem extends Subsystem{
 	public void reset(){
 		this.navxSensor.reset();
 		this.navxSensor.resetDisplacement();
+		
 	}
 	//-180 to 180
 	public double getAngle(){
