@@ -36,5 +36,8 @@ public class AutoAimUtils {
 		
 		return VisionCenteringCommand.RIGHT;
 	}
+	public static double getVisionError(final Point centerOfView, final Point objectLocation) {
+		return centerOfView.x - objectLocation.x;
+	}
 	
 }

@@ -16,12 +16,14 @@ public class DriveDistance extends TimedCommand {
 	private final CANTalon rightDrive = RobotMap.talonRightDrivetrain;
 	//private final EncoderSubsystem encoderSubsystem = Robot.encoderSubsystem;
 	private final double targetDisplacement; //positve or negative
-	
 	private double currentDisplacement;
 	private long lastTimeMilli;
+	private double headingHold;
+	private final double driveSpeed;
 	
-	public DriveDistance(final double targetDisplacement) {
-    	super(5);
+	public DriveDistance(final double targetDisplacement, final double speed) {
+		super(5);
+		this.driveSpeed = speed;
     	requires(Robot.joydriveSubystem);
     	//requires(Robot.encoderSubsystem);
     	this.targetDisplacement = targetDisplacement;
@@ -33,6 +35,7 @@ public class DriveDistance extends TimedCommand {
     	//this.encoderSubsystem.reset();
     	this.currentDisplacement = 0;
     	this.lastTimeMilli = -1;
+    	this.headingHold = Robot.headingSubsystem.getAngle();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -58,13 +61,17 @@ public class DriveDistance extends TimedCommand {
     	}
     	this.lastTimeMilli = currentTimeMilli;
     	double joystickY = 0;
-		final double joystickX = 0.0;
+		double joystickX = 0.0;
 		if(this.targetDisplacement < 0) {
-			joystickY = -0.65;
+			joystickY = -this.driveSpeed;
 		}
 		else{
-			joystickY = 0.65;
+			joystickY = this.driveSpeed;
 		}
+		double error = Robot.headingSubsystem.getAngle() - this.headingHold;
+		double p = 1 / 20d;
+		double maxTurnSpeed = 0.75;
+		joystickX = p * error * maxTurnSpeed;
 		this.joyDrive.arcadeDrive(joystickX, joystickY);
 		updateDisplay();
     }

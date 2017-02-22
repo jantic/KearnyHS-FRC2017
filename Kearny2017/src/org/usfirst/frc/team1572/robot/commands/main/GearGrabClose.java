@@ -4,6 +4,8 @@ import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.subsystems.ChipotleArmSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.ClawHandSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.ClawIntakeSubsystem;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
 public class GearGrabClose extends TimedCommand {
@@ -21,6 +23,7 @@ public class GearGrabClose extends TimedCommand {
 	@Override
 	protected void initialize() {
 		this.clawHandSubsystem.closeClaw();
+		//Timer.delay(0.05);
 		this.chipotleArmSubsystem.raiseArm(); 
 	}
 	

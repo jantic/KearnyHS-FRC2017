@@ -5,11 +5,13 @@ import org.opencv.core.Mat;
 import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.CameraSubsystem;
+import org.usfirst.frc.team1572.robot.vision.AutoAimUtils;
 import org.usfirst.frc.team1572.robot.vision.CameraType;
 import org.usfirst.frc.team1572.robot.vision.IAutoAim;
 import org.usfirst.frc.team1572.robot.vision.ImageGrabFailedException;
 import org.usfirst.frc.team1572.robot.vision.VisionCenteringCommand;
 
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,7 +22,7 @@ public abstract class AimBase extends TimedCommand {
 	private final CameraSubsystem cameraSubsystem = Robot.cameraSubsystem;
 
 	public AimBase() {
-		super(5);
+		super(1.25);
 		requires(Robot.joydriveSubystem);
 		requires(Robot.cameraSubsystem);
 	}
@@ -34,8 +36,8 @@ public abstract class AimBase extends TimedCommand {
 	protected final void alignRobotToTarget(final IAutoAim autoAim, final CameraType cameraType) {
 		try{
 			final Mat latestImage = this.cameraSubsystem.getLatestImage(cameraType);
-			final VisionCenteringCommand centeringCommand = autoAim.generateCenteringCommand(latestImage);	
-			executeTurn(centeringCommand);	
+			final VisionCenteringCommand centeringCommand = autoAim.generateCenteringCommand(latestImage);
+			executeTurn(centeringCommand);
 			SmartDashboard.putString("Centering Command", centeringCommand.name());
 			this.lastCenteringCommand = centeringCommand;
 		} 
@@ -46,13 +48,46 @@ public abstract class AimBase extends TimedCommand {
 			System.out.println("Error while auto aiming for peg:" + e.getMessage());
 		}
 	}
-	
+	@SuppressWarnings("deprecation")
+	protected final void alignRobotToTargetNotJason(final IAutoAim autoAim, final CameraType cameraType) {
+		try{
+			final Mat latestImage = this.cameraSubsystem.getLatestImage(cameraType);
+			double error = autoAim.centerError(latestImage);
+			executeTurnNotJason(error);
+			SmartDashboard.putDouble("Centering Error", error);
+		} 
+		catch (ImageGrabFailedException e) {
+			System.out.println("Error while grabbing image auto aiming for peg:" + e.getMessage());
+		} 
+		catch (Throwable e){
+			System.out.println("Error while auto aiming for peg:" + e.getMessage());
+		}
+	}
 	private void executeTurn(final VisionCenteringCommand centeringCommand){
 		final double joystickX = generateJoystickX(centeringCommand);
 		final double joystickY = 0.0;
 		this.joyDriveSubsystem.arcadeDrive(joystickX, joystickY);
 	}
-	
+	@SuppressWarnings("deprecation")
+	private void executeTurnNotJason(final double error){
+		final double p = 1/200d;
+		final double maxTurnSpeed = 0.8;
+		double joystickX;
+		double errorOffset = error + 10;//offset to right
+		if(error > 0)
+		{
+			joystickX = p * errorOffset * maxTurnSpeed + 0.55;
+		}
+		else{
+			joystickX = p * errorOffset * maxTurnSpeed - 0.55;
+		}
+		final double joystickY = 0.2;
+		if(error == -10000){//null
+			joystickX = 0;
+		}
+		SmartDashboard.putDouble("vision turn speed", joystickX);
+		this.joyDriveSubsystem.arcadeDrive(joystickX, joystickY);
+	}
 	private double generateJoystickX(final VisionCenteringCommand centeringCommand){
 		switch(centeringCommand){
 			case RIGHT:

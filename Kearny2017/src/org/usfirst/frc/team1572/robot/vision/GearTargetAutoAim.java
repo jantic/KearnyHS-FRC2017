@@ -39,4 +39,10 @@ public class GearTargetAutoAim implements IAutoAim {
 
 		return null;
 	}
+
+	@Override
+	public double centerError(Mat imageMatrix) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
