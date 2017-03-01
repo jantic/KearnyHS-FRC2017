@@ -12,10 +12,10 @@ public class MidGearAutonomous extends CommandGroup {
 	//TODO:  Update to make it work for this scenario
     public MidGearAutonomous() {
     	//addParallel(new AimForPegAutonomously());
-    	addSequential(new DriveDistance(55));
+    	addSequential(new DriveDistance(55,0.75));
     	addSequential(new Delay(0.25));
     	addParallel(new GearRelease());
-    	addSequential(new DriveDistance(-2));
+    	addSequential(new DriveDistance(-6,0.7));
     }
   }
     

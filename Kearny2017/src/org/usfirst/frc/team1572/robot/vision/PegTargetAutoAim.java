@@ -23,6 +23,18 @@ public class PegTargetAutoAim implements IAutoAim {
 		
 		return VisionCenteringCommand.NULL;
 	}
+	public double centerError(final Mat imageMatrix) {
+		this.pegTargetVision.process(imageMatrix);
+		final ArrayList<MatOfPoint> pegContours = this.pegTargetVision.filterContoursOutput();
+		final Point pegTargetCenter = getPegTargetCenterPoint(pegContours);
+
+		if (pegTargetCenter != null) {
+			final Point centerOfView = calculateCenterOfView(this.pegTargetVision);
+			return AutoAimUtils.getVisionError(centerOfView, pegTargetCenter);
+		}
+		//return null
+		return -10000;
+	}
 	
 	private static Point calculateCenterOfView(final PegTargetVision pegTargetVision){
 		final int width = pegTargetVision.cvResizeOutput().width();

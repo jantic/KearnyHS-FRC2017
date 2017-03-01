@@ -5,5 +5,5 @@ import org.opencv.core.Mat;
 public interface IAutoAim {
 
 	VisionCenteringCommand generateCenteringCommand(final Mat latestImage);
-
+	public double centerError(final Mat imageMatrix);
 }

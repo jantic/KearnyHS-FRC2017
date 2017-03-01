@@ -15,11 +15,13 @@ public class HeadingSubsystem extends Subsystem{
 	public HeadingSubsystem(){
 		this.navxSensor  = new AHRS(SPI.Port.kMXP);
 	}
-	
+	public AHRS getNavx(){
+		return navxSensor;
+	}
 	public void reset(){
 		this.navxSensor.reset();
 		this.navxSensor.resetDisplacement();
-		
+		this.navxSensor.zeroYaw();
 	}
 	//-180 to 180
 	public double getAngle(){

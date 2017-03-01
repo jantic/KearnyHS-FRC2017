@@ -10,16 +10,16 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 public class TurnUntilAngle extends TimedCommand {
 	private final BaseJoyDriveSubsystem joyDrive = Robot.joydriveSubystem;
 	private final HeadingSubsystem headingSubystem = Robot.headingSubsystem;
-	private final double targetAngle;
-	private final double angleTolerance = 1;
-	private final double turnSpeed;
+	private double targetAngle;
+	private final double angleTolerance = 3;
+	private double turnSpeed;
 
 	public TurnUntilAngle(final double targetAngle, final double speed) {
 		super(5);
 		this.targetAngle = targetAngle;
 		requires(Robot.joydriveSubystem);
 		requires(Robot.headingSubsystem);
-		turnSpeed = speed;
+		this.turnSpeed = speed;
 	}
 
 
@@ -27,6 +27,7 @@ public class TurnUntilAngle extends TimedCommand {
 	@Override
 	protected void initialize() {
 		this.headingSubystem.reset();
+		this.targetAngle = this.targetAngle + this.headingSubystem.getAngle();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -44,10 +45,12 @@ public class TurnUntilAngle extends TimedCommand {
     }
 	
 	private double generateJoystickX(){
-		if(this.targetAngle >= 0){
-			return -turnSpeed;
+		double p = 1/20d;
+		double error = this.targetAngle - this.headingSubystem.getAngle();
+		if(this.turnSpeed > 0){
+		return -this.turnSpeed * error * p - 0.25;
 		}
-		return turnSpeed;
+		return this.turnSpeed * error * p + 0.25;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

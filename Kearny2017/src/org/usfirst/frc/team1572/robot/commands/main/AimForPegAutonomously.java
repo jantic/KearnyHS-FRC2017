@@ -18,7 +18,8 @@ public class AimForPegAutonomously extends AimBase {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		alignRobotToTarget(this.autoAim, CameraType.PEG_CAMERA);
+		alignRobotToTargetNotJason(this.autoAim, CameraType.PEG_CAMERA);
+		//alignRobotToTarget(this.autoAim, CameraType.PEG_CAMERA);
 	}
 	
 }
