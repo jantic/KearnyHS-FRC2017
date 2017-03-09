@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1572.robot.commands;
+package org.usfirst.frc.team1572.robot.commands.main;
 
 import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.subsystems.BallHopperSubysystem;

@@ -1,13 +1,13 @@
 package org.usfirst.frc.team1572.robot;
 
-import org.usfirst.frc.team1572.robot.commands.HopperIntake;
-import org.usfirst.frc.team1572.robot.commands.HopperIntakeOff;
-import org.usfirst.frc.team1572.robot.commands.HopperReverseIntake;
 import org.usfirst.frc.team1572.robot.commands.main.AimForPegManually;
 import org.usfirst.frc.team1572.robot.commands.main.ClawUp;
 import org.usfirst.frc.team1572.robot.commands.main.GearGrabClose;
 import org.usfirst.frc.team1572.robot.commands.main.GearGrabOpen;
 import org.usfirst.frc.team1572.robot.commands.main.GearRelease;
+import org.usfirst.frc.team1572.robot.commands.main.HopperIntake;
+import org.usfirst.frc.team1572.robot.commands.main.HopperIntakeOff;
+import org.usfirst.frc.team1572.robot.commands.main.HopperReverseIntake;
 import org.usfirst.frc.team1572.robot.commands.main.RunLifterForwards;
 import org.usfirst.frc.team1572.robot.commands.main.ShootClose;
 import org.usfirst.frc.team1572.robot.commands.main.ShootFar;

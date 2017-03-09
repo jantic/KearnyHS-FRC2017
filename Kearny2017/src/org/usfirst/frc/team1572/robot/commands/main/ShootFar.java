@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1572.robot.commands.main;
 
 import org.usfirst.frc.team1572.robot.commands.subtasks.SpinUpShooter;
-import org.usfirst.frc.team1572.robot.commands.Delay;
+import org.usfirst.frc.team1572.robot.commands.subtasks.Delay;
 import org.usfirst.frc.team1572.robot.commands.subtasks.ShootBalls;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
