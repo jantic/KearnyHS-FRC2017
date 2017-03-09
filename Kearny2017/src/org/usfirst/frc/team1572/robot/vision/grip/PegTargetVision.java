@@ -1,9 +1,20 @@
 package org.usfirst.frc.team1572.robot.vision.grip;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.HashMap;
+
 import org.opencv.core.*;
+import org.opencv.core.Core.*;
+import org.opencv.features2d.FeatureDetector;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
+import org.opencv.objdetect.*;
 
 /**
 * PegTargetVision class.
@@ -16,13 +27,13 @@ public class PegTargetVision {
 
 	//Outputs
 	private Mat cvResizeOutput = new Mat();
-	private Mat hslThresholdOutput = new Mat();
+	private Mat hsvThresholdOutput = new Mat();
 	private Mat maskOutput = new Mat();
 	private Mat rgbThresholdOutput = new Mat();
 	private Mat cvErodeOutput = new Mat();
 	private Mat blurOutput = new Mat();
-	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<>();
-	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<>();
+	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
+	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -35,54 +46,54 @@ public class PegTargetVision {
 		// Step CV_resize0:
 		Mat cvResizeSrc = source0;
 		Size cvResizeDsize = new Size(0, 0);
-		double cvResizeFx = 0.50;
-		double cvResizeFy = 0.50;
+		double cvResizeFx = 0.5;
+		double cvResizeFy = 0.5;
 		int cvResizeInterpolation = Imgproc.INTER_CUBIC;
-		cvResize(cvResizeSrc, cvResizeDsize, cvResizeFx, cvResizeFy, cvResizeInterpolation, this.cvResizeOutput);
+		cvResize(cvResizeSrc, cvResizeDsize, cvResizeFx, cvResizeFy, cvResizeInterpolation, cvResizeOutput);
 
-		// Step HSL_Threshold0:
-		Mat hslThresholdInput = this.cvResizeOutput;
-		double[] hslThresholdHue = {13.559322033898304, 109.41176470588235};
-		double[] hslThresholdSaturation = {0.0, 189.09090909090907};
-		double[] hslThresholdLuminance = {200.90045735912656, 241.36363636363637};
-		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, this.hslThresholdOutput);
+		// Step HSV_Threshold0:
+		Mat hsvThresholdInput = cvResizeOutput;
+		double[] hsvThresholdHue = {48.58757277666511, 127.59358084775549};
+		double[] hsvThresholdSaturation = {6.4030128010248735, 174.69695524735886};
+		double[] hsvThresholdValue = {105.64970491969652, 255.0};
+		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step Mask0:
-		Mat maskInput = this.cvResizeOutput;
-		Mat maskMask = this.hslThresholdOutput;
-		mask(maskInput, maskMask, this.maskOutput);
+		Mat maskInput = cvResizeOutput;
+		Mat maskMask = hsvThresholdOutput;
+		mask(maskInput, maskMask, maskOutput);
 
 		// Step RGB_Threshold0:
-		Mat rgbThresholdInput = this.maskOutput;
-		double[] rgbThresholdRed = {170.48022598870057, 241.36363636363637};
-		double[] rgbThresholdGreen = {220.9039548022599, 250.45454545454547};
-		double[] rgbThresholdBlue = {201.69491525423732, 243.63636363636363};
-		rgbThreshold(rgbThresholdInput, rgbThresholdRed, rgbThresholdGreen, rgbThresholdBlue, this.rgbThresholdOutput);
+		Mat rgbThresholdInput = maskOutput;
+		double[] rgbThresholdRed = {160.07535322911318, 255.0};
+		double[] rgbThresholdGreen = {235.31074705770462, 255.0};
+		double[] rgbThresholdBlue = {176.08287492714356, 255.0};
+		rgbThreshold(rgbThresholdInput, rgbThresholdRed, rgbThresholdGreen, rgbThresholdBlue, rgbThresholdOutput);
 
 		// Step CV_erode0:
-		Mat cvErodeSrc = this.rgbThresholdOutput;
+		Mat cvErodeSrc = rgbThresholdOutput;
 		Mat cvErodeKernel = new Mat();
 		Point cvErodeAnchor = new Point(-1, -1);
-		double cvErodeIterations = 1.0;
+		double cvErodeIterations = 2.0;
 		int cvErodeBordertype = Core.BORDER_CONSTANT;
 		Scalar cvErodeBordervalue = new Scalar(-1);
-		cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, this.cvErodeOutput);
+		cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, cvErodeOutput);
 
 		// Step Blur0:
-		Mat blurInput = this.cvErodeOutput;
+		Mat blurInput = cvErodeOutput;
 		BlurType blurType = BlurType.get("Gaussian Blur");
-		double blurRadius = 1.886792452830189;
-		blur(blurInput, blurType, blurRadius, this.blurOutput);
+		double blurRadius = 1.8867942522156913;
+		blur(blurInput, blurType, blurRadius, blurOutput);
 
 		// Step Find_Contours0:
-		Mat findContoursInput = this.blurOutput;
+		Mat findContoursInput = blurOutput;
 		boolean findContoursExternalOnly = false;
-		findContours(findContoursInput, findContoursExternalOnly, this.findContoursOutput);
+		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
 		// Step Filter_Contours0:
-		ArrayList<MatOfPoint> filterContoursContours = this.findContoursOutput;
+		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
 		double filterContoursMinArea = 0.0;
-		double filterContoursMinPerimeter = 20.0;
+		double filterContoursMinPerimeter = 10.0;
 		double filterContoursMinWidth = 0.0;
 		double filterContoursMaxWidth = 1000.0;
 		double filterContoursMinHeight = 0.0;
@@ -92,7 +103,7 @@ public class PegTargetVision {
 		double filterContoursMinVertices = 0.0;
 		double filterContoursMinRatio = 0.0;
 		double filterContoursMaxRatio = 1000.0;
-		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, this.filterContoursOutput);
+		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 
 	}
 
@@ -101,15 +112,15 @@ public class PegTargetVision {
 	 * @return Mat output from CV_resize.
 	 */
 	public Mat cvResizeOutput() {
-		return this.cvResizeOutput;
+		return cvResizeOutput;
 	}
 
 	/**
-	 * This method is a generated getter for the output of a HSL_Threshold.
-	 * @return Mat output from HSL_Threshold.
+	 * This method is a generated getter for the output of a HSV_Threshold.
+	 * @return Mat output from HSV_Threshold.
 	 */
-	public Mat hslThresholdOutput() {
-		return this.hslThresholdOutput;
+	public Mat hsvThresholdOutput() {
+		return hsvThresholdOutput;
 	}
 
 	/**
@@ -117,7 +128,7 @@ public class PegTargetVision {
 	 * @return Mat output from Mask.
 	 */
 	public Mat maskOutput() {
-		return this.maskOutput;
+		return maskOutput;
 	}
 
 	/**
@@ -125,7 +136,7 @@ public class PegTargetVision {
 	 * @return Mat output from RGB_Threshold.
 	 */
 	public Mat rgbThresholdOutput() {
-		return this.rgbThresholdOutput;
+		return rgbThresholdOutput;
 	}
 
 	/**
@@ -133,7 +144,7 @@ public class PegTargetVision {
 	 * @return Mat output from CV_erode.
 	 */
 	public Mat cvErodeOutput() {
-		return this.cvErodeOutput;
+		return cvErodeOutput;
 	}
 
 	/**
@@ -141,7 +152,7 @@ public class PegTargetVision {
 	 * @return Mat output from Blur.
 	 */
 	public Mat blurOutput() {
-		return this.blurOutput;
+		return blurOutput;
 	}
 
 	/**
@@ -149,7 +160,7 @@ public class PegTargetVision {
 	 * @return ArrayList<MatOfPoint> output from Find_Contours.
 	 */
 	public ArrayList<MatOfPoint> findContoursOutput() {
-		return this.findContoursOutput;
+		return findContoursOutput;
 	}
 
 	/**
@@ -157,7 +168,7 @@ public class PegTargetVision {
 	 * @return ArrayList<MatOfPoint> output from Filter_Contours.
 	 */
 	public ArrayList<MatOfPoint> filterContoursOutput() {
-		return this.filterContoursOutput;
+		return filterContoursOutput;
 	}
 
 
@@ -179,19 +190,19 @@ public class PegTargetVision {
 	}
 
 	/**
-	 * Segment an image based on hue, saturation, and luminance ranges.
+	 * Segment an image based on hue, saturation, and value ranges.
 	 *
 	 * @param input The image on which to perform the HSL threshold.
 	 * @param hue The min and max hue
 	 * @param sat The min and max saturation
-	 * @param lum The min and max luminance
+	 * @param val The min and max value
 	 * @param output The image in which to store the output.
 	 */
-	private void hslThreshold(Mat input, double[] hue, double[] sat, double[] lum,
-		Mat out) {
-		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2HLS);
-		Core.inRange(out, new Scalar(hue[0], lum[0], sat[0]),
-			new Scalar(hue[1], lum[1], sat[1]), out);
+	private void hsvThreshold(Mat input, double[] hue, double[] sat, double[] val,
+	    Mat out) {
+		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2HSV);
+		Core.inRange(out, new Scalar(hue[0], sat[0], val[0]),
+			new Scalar(hue[1], sat[1], val[1]), out);
 	}
 
 	/**
@@ -287,7 +298,6 @@ public class PegTargetVision {
 	 * @param doubleRadius The radius for the blur.
 	 * @param output The image in which to store the output.
 	 */
-	@SuppressWarnings("incomplete-switch")
 	private void blur(Mat input, BlurType type, double doubleRadius,
 		Mat output) {
 		int radius = (int)(doubleRadius + 0.5);
