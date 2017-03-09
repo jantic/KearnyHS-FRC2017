@@ -10,6 +10,7 @@ import org.usfirst.frc.team1572.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ChangeShooterRPM extends Command {
+	private final StreamShooterOutput outputStream = new StreamShooterOutput();
 	private final ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
 	private double targetRPM;
 	private final double rpmIncremement;
@@ -36,8 +37,7 @@ public class ChangeShooterRPM extends Command {
 	}
 
 	private void updateDisplay() {
-		final StreamShooterOutput outputStream = new StreamShooterOutput();
-		outputStream.streamToDashboard();
+		this.outputStream.streamToDashboard();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

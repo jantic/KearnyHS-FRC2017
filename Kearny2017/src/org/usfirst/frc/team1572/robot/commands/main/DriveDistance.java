@@ -11,6 +11,9 @@ import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 import com.ctre.CANTalon;
 
 public class DriveDistance extends TimedCommand {
+	private final StreamHeadingOutput headingOutputStream = new StreamHeadingOutput();
+	private final StreamEncoderOutput encoderOutputStream = new StreamEncoderOutput();
+	
 	private final BaseJoyDriveSubsystem joyDrive = Robot.joydriveSubystem;
 	private final CANTalon leftDrive = RobotMap.talonLeftDrivetrain;
 	private final CANTalon rightDrive = RobotMap.talonRightDrivetrain;
@@ -77,10 +80,8 @@ public class DriveDistance extends TimedCommand {
     }
     
     private void updateDisplay() {
-    	final StreamHeadingOutput headingOutputStream = new StreamHeadingOutput();
-    	headingOutputStream.streamToDashboard();
-    	final StreamEncoderOutput encoderOutputStream = new StreamEncoderOutput();
-    	encoderOutputStream.streamToDashboard();
+    	this.headingOutputStream.streamToDashboard();
+    	this.encoderOutputStream.streamToDashboard();
     }
     
     // Make this return true when this Command no longer needs to run execute()

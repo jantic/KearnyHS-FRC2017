@@ -8,6 +8,7 @@ import org.usfirst.frc.team1572.robot.subsystems.HeadingSubsystem;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
 public class TurnUntilAngle extends TimedCommand {
+	private final StreamHeadingOutput outputStream = new StreamHeadingOutput();
 	private final BaseJoyDriveSubsystem joyDrive = Robot.joydriveSubystem;
 	private final HeadingSubsystem headingSubystem = Robot.headingSubsystem;
 	private double targetAngle;
@@ -40,8 +41,7 @@ public class TurnUntilAngle extends TimedCommand {
 	}
 	
     private void updateDisplay(){
-    	final StreamHeadingOutput outputStream = new StreamHeadingOutput();
-    	outputStream.streamToDashboard();
+    	this.outputStream.streamToDashboard();
     }
 	
 	private double generateJoystickX(){
