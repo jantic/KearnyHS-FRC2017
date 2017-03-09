@@ -112,11 +112,4 @@ public abstract class AimBase extends TimedCommand {
 	protected void end() {
 		this.joyDriveSubsystem.arcadeDrive(0, 0);
 	}
-
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	@Override
-	protected void interrupted() {
-		this.joyDriveSubsystem.arcadeDrive(0, 0);
-	}
 }

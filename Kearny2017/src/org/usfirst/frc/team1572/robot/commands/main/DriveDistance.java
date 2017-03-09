@@ -8,6 +8,8 @@ import org.usfirst.frc.team1572.robot.commands.streaming.StreamHeadingOutput;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
+import org.usfirst.frc.team1572.robot.subsystems.HeadingSubsystem;
+
 import com.ctre.CANTalon;
 
 public class DriveDistance extends TimedCommand {
@@ -15,6 +17,7 @@ public class DriveDistance extends TimedCommand {
 	private final StreamEncoderOutput encoderOutputStream = new StreamEncoderOutput();
 	
 	private final BaseJoyDriveSubsystem joyDrive = Robot.joydriveSubystem;
+	private final HeadingSubsystem headingSubsystem = Robot.headingSubsystem;
 	private final CANTalon leftDrive = RobotMap.talonLeftDrivetrain;
 	private final CANTalon rightDrive = RobotMap.talonRightDrivetrain;
 	//private final EncoderSubsystem encoderSubsystem = Robot.encoderSubsystem;
@@ -28,6 +31,7 @@ public class DriveDistance extends TimedCommand {
 		super(5);
 		this.driveSpeed = speed;
     	requires(Robot.joydriveSubystem);
+    	requires(Robot.headingSubsystem);
     	//requires(Robot.encoderSubsystem);
     	this.targetDisplacement = targetDisplacement;
     }
@@ -38,7 +42,7 @@ public class DriveDistance extends TimedCommand {
     	//this.encoderSubsystem.reset();
     	this.currentDisplacement = 0;
     	this.lastTimeMilli = -1;
-    	this.headingHold = Robot.headingSubsystem.getAngle();
+    	this.headingHold = this.headingSubsystem.getAngle();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -71,7 +75,7 @@ public class DriveDistance extends TimedCommand {
 		else{
 			joystickY = this.driveSpeed;
 		}
-		double error = Robot.headingSubsystem.getAngle() - this.headingHold;
+		double error = this.headingSubsystem.getAngle() - this.headingHold;
 		double p = 1 / 20d;
 		double maxTurnSpeed = 0.75;
 		joystickX = p * error * maxTurnSpeed;
@@ -111,12 +115,5 @@ public class DriveDistance extends TimedCommand {
     @Override
 	protected void end() {
 		this.joyDrive.arcadeDrive(0 , 0);
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-	protected void interrupted() {
-    	this.joyDrive.arcadeDrive(0 , 0);
     }
 }

@@ -72,10 +72,4 @@ public class TurnUntilAngle extends TimedCommand {
 		this.joyDrive.arcadeDrive(0, 0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	@Override
-	protected void interrupted() {
-		this.joyDrive.arcadeDrive(0, 0);
-	}
 }
