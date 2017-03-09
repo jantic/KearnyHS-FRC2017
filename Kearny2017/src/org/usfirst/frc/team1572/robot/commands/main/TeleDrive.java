@@ -6,9 +6,7 @@ import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
+
 public class TeleDrive extends Command {
 	private static final double ACTIVATION_THRESHOLD = 0.1;
 	private final JoystickController mainJoystick = JoystickController.MAIN_JOYSTICK;
@@ -16,17 +14,14 @@ public class TeleDrive extends Command {
 	private final BaseJoyDriveSubsystem joyDriveSubsystem = Robot.joydriveSubystem;
 
 	public TeleDrive() {
-		// Use requires() here to declare subsystem dependencies
 		requires(Robot.joydriveSubystem);
 	}
 
-	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		// Do nothing
 	}
 
-	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 
@@ -63,22 +58,14 @@ public class TeleDrive extends Command {
 		return this.mainJoystick.getRightTrigger() > ACTIVATION_THRESHOLD;
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
 		return false;
 	}
 
-	// Called once after isFinished returns true
 	@Override
 	protected void end() {
 		this.joyDriveSubsystem.arcadeDrive(0,0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	@Override
-	protected void interrupted() {
-		this.joyDriveSubsystem.arcadeDrive(0,0);
-	}
 }

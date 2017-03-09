@@ -13,13 +13,13 @@ public class VictorJoyDriveSubsystem extends BaseJoyDriveSubsystem {
     @Override
 	public void arcadeDrive(Joystick stick) {
     	arcadeDrive(getJoyMap().getLeftYAxis(stick), getJoyMap().getLeftXAxis(stick));
-		updateDisplay();
+		updateDisplay();	
 	}
     
 	@Override
 	public void arcadeDrive(double joystickX, double joystickY) {
 	   	getRobotDrive().arcadeDrive(-joystickY, joystickX);
-	   	updateDisplay();	
+		updateDisplay();		
 	}
 
     @Override
