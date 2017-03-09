@@ -21,43 +21,42 @@ public class ChangeShooterRPM extends Command {
 		requires(Robot.shooterSubsystem);
 	}
 
-
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		this.startTime = LocalDateTime.now();
-		this.targetRPM = Math.max(0.0, this.shooterSubsystem.getCurrentRPM() + rpmIncremement);
+		this.targetRPM = Math.max(0.0, this.shooterSubsystem.getCurrentRPM() + this.rpmIncremement);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		this.shooterSubsystem.spinUpShooter(targetRPM);
+		this.shooterSubsystem.spinUpShooter(this.targetRPM);
 		updateDisplay();
 	}
-	
-    private void updateDisplay(){
-    	final StreamShooterOutput outputStream = new StreamShooterOutput();
-    	outputStream.streamToDashboard();
-    }
-	
+
+	private void updateDisplay() {
+		final StreamShooterOutput outputStream = new StreamShooterOutput();
+		outputStream.streamToDashboard();
+	}
+
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
 		final LocalDateTime currentTime = LocalDateTime.now();
 		final long elapsedSeconds = ChronoUnit.SECONDS.between(this.startTime, currentTime);
-		
-		if(elapsedSeconds > TIMEOUT){
+
+		if (elapsedSeconds > TIMEOUT) {
 			return true;
 		}
-			
+
 		return this.shooterSubsystem.isAtTargetRPM();
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-
+		// Do nothing
 	}
 
 	// Called when another command which requires one or more of the same
@@ -65,6 +64,6 @@ public class ChangeShooterRPM extends Command {
 	@Override
 	protected void interrupted() {
 		// nothing to do here
-		}
-
 	}
+
+}

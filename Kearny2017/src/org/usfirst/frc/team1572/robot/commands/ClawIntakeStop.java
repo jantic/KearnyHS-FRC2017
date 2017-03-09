@@ -1,8 +1,6 @@
 package org.usfirst.frc.team1572.robot.commands;
 import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.subsystems.ClawIntakeSubsystem;
-import org.usfirst.frc.team1572.robot.subsystems.LiftSubsystem;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClawIntakeStop extends Command {

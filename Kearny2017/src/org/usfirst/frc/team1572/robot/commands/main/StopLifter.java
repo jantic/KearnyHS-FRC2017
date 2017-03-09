@@ -3,12 +3,9 @@ package org.usfirst.frc.team1572.robot.commands.main;
 import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.subsystems.LiftSubsystem;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
-/**
- *
- */
+
 public class StopLifter extends TimedCommand {
 		private final LiftSubsystem liftSubystem = Robot.liftSubystem;
   	

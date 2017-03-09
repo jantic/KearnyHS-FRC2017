@@ -40,13 +40,10 @@ public class ShooterSubsystem extends Subsystem {
         setDefaultCommand(new StreamShooterOutput());
     }
 
-    public void spinUpShooter(final double rpm) {
-    	synchronized(this.targetRpm){
-    		this.targetRpm = new Double(rpm);
-    		
-    		this.shooter.set(-rpm);
-    		//TODO: Shooting will call another motor to push ball into spinner
-    	}
+    public synchronized void spinUpShooter(final double rpm) {
+		this.targetRpm = new Double(rpm);	
+		this.shooter.set(-rpm);
+    	//TODO: Shooting will call another motor to push ball into spinner
     	//this.shooterIntake.set(1);
     }
     
@@ -62,16 +59,12 @@ public class ShooterSubsystem extends Subsystem {
     	return -this.shooter.getSpeed();
     }
     
-    public double getTargetRPM(){
-    	synchronized(this.targetRpm){
-    		return this.targetRpm.doubleValue();
-    	}
+    public synchronized double getTargetRPM(){
+    	return this.targetRpm.doubleValue();
     }
     
-    public void stopAll() {
-    	synchronized(this.targetRpm){
-    		this.targetRpm = new Double(0);
-    	}
+    public synchronized void stopAll() {
+    	this.targetRpm = new Double(0);
 		this.shooter.set(0);
     	this.shooterIntake.set(0);
     }

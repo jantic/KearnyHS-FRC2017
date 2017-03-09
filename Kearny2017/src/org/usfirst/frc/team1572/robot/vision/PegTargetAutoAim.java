@@ -23,6 +23,7 @@ public class PegTargetAutoAim implements IAutoAim {
 		
 		return VisionCenteringCommand.NULL;
 	}
+	@Override
 	public double centerError(final Mat imageMatrix) {
 		this.pegTargetVision.process(imageMatrix);
 		final ArrayList<MatOfPoint> pegContours = this.pegTargetVision.filterContoursOutput();

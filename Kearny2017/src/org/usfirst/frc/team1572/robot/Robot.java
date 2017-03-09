@@ -23,7 +23,6 @@ import org.usfirst.frc.team1572.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.ChipotleArmSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.ClawHandSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.ClawIntakeSubsystem;
-import org.usfirst.frc.team1572.robot.subsystems.EncoderSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.VictorJoyDriveSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.VoltageTalonDriveSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.LiftSubsystem;

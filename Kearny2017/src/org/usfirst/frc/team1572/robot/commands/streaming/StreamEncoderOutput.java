@@ -1,9 +1,6 @@
 package org.usfirst.frc.team1572.robot.commands.streaming;
 
-import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.subsystems.EncoderSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class StreamEncoderOutput extends Command {
 	//private final EncoderSubsystem encoderSubystem = Robot.encoderSubsystem;

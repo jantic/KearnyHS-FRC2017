@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class LogitechF310Map {
 	
-	private Joystick stick;
-	
 	public LogitechF310Map() {
 		
 	}

@@ -20,14 +20,11 @@ public class SpinUpShooter extends Command {
 		requires(Robot.shooterSubsystem);
 	}
 
-
-	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		this.startTime = LocalDateTime.now();
 	}
 
-	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		this.shooterSubsystem.spinUpShooter(this.targetRPM);
@@ -39,7 +36,6 @@ public class SpinUpShooter extends Command {
     	outputStream.streamToDashboard();
     }
 	
-	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
 		final LocalDateTime currentTime = LocalDateTime.now();
@@ -51,10 +47,10 @@ public class SpinUpShooter extends Command {
 		return this.shooterSubsystem.isAtTargetRPM();
 	}
 
-	// Called once after isFinished returns true
+
 	@Override
 	protected void end() {
-
+		//Do nothing
 	}
 
 	// Called when another command which requires one or more of the same

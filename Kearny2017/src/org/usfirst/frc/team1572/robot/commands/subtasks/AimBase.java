@@ -5,13 +5,11 @@ import org.opencv.core.Mat;
 import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.CameraSubsystem;
-import org.usfirst.frc.team1572.robot.vision.AutoAimUtils;
 import org.usfirst.frc.team1572.robot.vision.CameraType;
 import org.usfirst.frc.team1572.robot.vision.IAutoAim;
 import org.usfirst.frc.team1572.robot.vision.ImageGrabFailedException;
 import org.usfirst.frc.team1572.robot.vision.VisionCenteringCommand;
 
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

@@ -16,7 +16,7 @@ public class HeadingSubsystem extends Subsystem{
 		this.navxSensor  = new AHRS(SPI.Port.kMXP);
 	}
 	public AHRS getNavx(){
-		return navxSensor;
+		return this.navxSensor;
 	}
 	public void reset(){
 		this.navxSensor.reset();
