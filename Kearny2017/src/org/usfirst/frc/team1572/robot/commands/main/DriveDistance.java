@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1572.robot.commands.main;
 
 import org.usfirst.frc.team1572.robot.Robot;
-import org.usfirst.frc.team1572.robot.RobotMap;
 import org.usfirst.frc.team1572.robot.commands.streaming.StreamEncoderOutput;
 import org.usfirst.frc.team1572.robot.commands.streaming.StreamHeadingOutput;
 
@@ -10,16 +9,15 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
 import org.usfirst.frc.team1572.robot.subsystems.HeadingSubsystem;
 
-import com.ctre.CANTalon;
-
 public class DriveDistance extends TimedCommand {
 	private final StreamHeadingOutput headingOutputStream = new StreamHeadingOutput();
 	private final StreamEncoderOutput encoderOutputStream = new StreamEncoderOutput();
 	
 	private final BaseJoyDriveSubsystem joyDrive = Robot.joydriveSubystem;
 	private final HeadingSubsystem headingSubsystem = Robot.headingSubsystem;
-	private final CANTalon leftDrive = RobotMap.talonLeftDrivetrain;
-	private final CANTalon rightDrive = RobotMap.talonRightDrivetrain;
+	
+	//private final CANTalon leftDrive = RobotMap.talonLeftDrivetrain;
+	//private final CANTalon rightDrive = RobotMap.talonRightDrivetrain;
 	//private final EncoderSubsystem encoderSubsystem = Robot.encoderSubsystem;
 	private final double targetDisplacement; //positve or negative
 	private double currentDisplacement;
@@ -51,10 +49,10 @@ public class DriveDistance extends TimedCommand {
     	final long currentTimeMilli = System.currentTimeMillis();
     	if(this.lastTimeMilli > 0) {
     		final long dt = currentTimeMilli - this.lastTimeMilli;
-    		final double avgRpm = (Math.abs(this.leftDrive.getSpeed()) + Math.abs(this.rightDrive.getSpeed())) / 2d;
+    		final double avgRpm = (Math.abs(this.joyDrive.getLeftDriveTrainSpeed()) + Math.abs(this.joyDrive.getRightDriveTrainSpeed())) / 2d;
     		final double avgSpd = 4d * Math.PI * avgRpm / 60000d; // inches per millisecond
-    		System.out.println("leftRPM " + this.leftDrive.getSpeed());
-    		System.out.println("rightRPM " + this.rightDrive.getSpeed());
+    		System.out.println("leftRPM " + this.joyDrive.getLeftDriveTrainSpeed());
+    		System.out.println("rightRPM " + this.joyDrive.getRightDriveTrainSpeed());
     		System.out.println("RPM " + avgRpm);
     		System.out.println("Speed " + avgSpd);
     		System.out.println("Displacement " + this.currentDisplacement);

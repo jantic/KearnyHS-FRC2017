@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class HopperIntake extends Command {
 	private final BallHopperSubysystem ballHopperSubsystem = Robot.ballHopperSubsystem;
 
-	public void ClawintakeForwards() {
+	public HopperIntake() {
 		requires(Robot.ballHopperSubsystem);
 	}
 

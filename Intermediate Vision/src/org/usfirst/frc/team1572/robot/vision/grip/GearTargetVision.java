@@ -1,20 +1,9 @@
 package org.usfirst.frc.team1572.robot.vision.grip;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.HashMap;
-
 import org.opencv.core.*;
-import org.opencv.core.Core.*;
-import org.opencv.features2d.FeatureDetector;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
-import org.opencv.objdetect.*;
 
 /**
 * GripPipelineGear class.
@@ -31,8 +20,8 @@ public class GearTargetVision {
 	private Mat maskOutput = new Mat();
 	private Mat hsvThresholdOutput = new Mat();
 	private Mat blurOutput = new Mat();
-	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
-	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
+	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<>();
+	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<>();
 
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -48,40 +37,40 @@ public class GearTargetVision {
 		double cvResizeFx = 0.25;
 		double cvResizeFy = 0.25;
 		int cvResizeInterpolation = Imgproc.INTER_LINEAR;
-		cvResize(cvResizeSrc, cvResizeDsize, cvResizeFx, cvResizeFy, cvResizeInterpolation, cvResizeOutput);
+		cvResize(cvResizeSrc, cvResizeDsize, cvResizeFx, cvResizeFy, cvResizeInterpolation, this.cvResizeOutput);
 
 		// Step HSL_Threshold0:
-		Mat hslThresholdInput = cvResizeOutput;
+		Mat hslThresholdInput = this.cvResizeOutput;
 		double[] hslThresholdHue = {27.11864406779661, 29.197860962566843};
 		double[] hslThresholdSaturation = {192.090395480226, 255.0};
 		double[] hslThresholdLuminance = {0.0, 205.0};
-		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
+		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, this.hslThresholdOutput);
 
 		// Step Mask0:
-		Mat maskInput = cvResizeOutput;
-		Mat maskMask = hslThresholdOutput;
-		mask(maskInput, maskMask, maskOutput);
+		Mat maskInput = this.cvResizeOutput;
+		Mat maskMask = this.hslThresholdOutput;
+		mask(maskInput, maskMask, this.maskOutput);
 
 		// Step HSV_Threshold0:
-		Mat hsvThresholdInput = maskOutput;
+		Mat hsvThresholdInput = this.maskOutput;
 		double[] hsvThresholdHue = {0.0, 53.2620320855615};
 		double[] hsvThresholdSaturation = {0.0, 255.0};
 		double[] hsvThresholdValue = {206.49717514124293, 255.0};
-		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
+		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, this.hsvThresholdOutput);
 
 		// Step Blur0:
-		Mat blurInput = hsvThresholdOutput;
+		Mat blurInput = this.hsvThresholdOutput;
 		BlurType blurType = BlurType.get("Gaussian Blur");
 		double blurRadius = 6.603773584905662;
-		blur(blurInput, blurType, blurRadius, blurOutput);
+		blur(blurInput, blurType, blurRadius, this.blurOutput);
 
 		// Step Find_Contours0:
-		Mat findContoursInput = blurOutput;
+		Mat findContoursInput = this.blurOutput;
 		boolean findContoursExternalOnly = false;
-		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
+		findContours(findContoursInput, findContoursExternalOnly, this.findContoursOutput);
 
 		// Step Filter_Contours0:
-		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
+		ArrayList<MatOfPoint> filterContoursContours = this.findContoursOutput;
 		double filterContoursMinArea = 0.0;
 		double filterContoursMinPerimeter = 0.0;
 		double filterContoursMinWidth = 0.0;
@@ -93,7 +82,7 @@ public class GearTargetVision {
 		double filterContoursMinVertices = 0.0;
 		double filterContoursMinRatio = 0.0;
 		double filterContoursMaxRatio = 1000.0;
-		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
+		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, this.filterContoursOutput);
 
 	}
 
@@ -102,7 +91,7 @@ public class GearTargetVision {
 	 * @return Mat output from CV_resize.
 	 */
 	public Mat cvResizeOutput() {
-		return cvResizeOutput;
+		return this.cvResizeOutput;
 	}
 
 	/**
@@ -110,7 +99,7 @@ public class GearTargetVision {
 	 * @return Mat output from HSL_Threshold.
 	 */
 	public Mat hslThresholdOutput() {
-		return hslThresholdOutput;
+		return this.hslThresholdOutput;
 	}
 
 	/**
@@ -118,7 +107,7 @@ public class GearTargetVision {
 	 * @return Mat output from Mask.
 	 */
 	public Mat maskOutput() {
-		return maskOutput;
+		return this.maskOutput;
 	}
 
 	/**
@@ -126,7 +115,7 @@ public class GearTargetVision {
 	 * @return Mat output from HSV_Threshold.
 	 */
 	public Mat hsvThresholdOutput() {
-		return hsvThresholdOutput;
+		return this.hsvThresholdOutput;
 	}
 
 	/**
@@ -134,7 +123,7 @@ public class GearTargetVision {
 	 * @return Mat output from Blur.
 	 */
 	public Mat blurOutput() {
-		return blurOutput;
+		return this.blurOutput;
 	}
 
 	/**
@@ -142,7 +131,7 @@ public class GearTargetVision {
 	 * @return ArrayList<MatOfPoint> output from Find_Contours.
 	 */
 	public ArrayList<MatOfPoint> findContoursOutput() {
-		return findContoursOutput;
+		return this.findContoursOutput;
 	}
 
 	/**
@@ -150,7 +139,7 @@ public class GearTargetVision {
 	 * @return ArrayList<MatOfPoint> output from Filter_Contours.
 	 */
 	public ArrayList<MatOfPoint> filterContoursOutput() {
-		return filterContoursOutput;
+		return this.filterContoursOutput;
 	}
 
 
