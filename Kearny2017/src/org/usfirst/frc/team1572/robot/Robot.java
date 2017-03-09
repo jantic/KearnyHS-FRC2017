@@ -9,8 +9,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 import org.usfirst.frc.team1572.robot.commands.autonomous.LeftGearAutonomous;
+import org.usfirst.frc.team1572.robot.commands.autonomous.LeftGearHopperShoot;
+import org.usfirst.frc.team1572.robot.commands.autonomous.LeftHopperShoot;
 import org.usfirst.frc.team1572.robot.commands.autonomous.MidGearAutonomous;
 import org.usfirst.frc.team1572.robot.commands.autonomous.RightGearAutonomous;
+import org.usfirst.frc.team1572.robot.commands.autonomous.RightHopperShoot;
 import org.usfirst.frc.team1572.robot.commands.autonomous.TestAutonomous;
 import org.usfirst.frc.team1572.robot.commands.main.AimForGearAutonomously;
 import org.usfirst.frc.team1572.robot.commands.main.AimForGearManually;
@@ -106,6 +109,9 @@ public class Robot extends IterativeRobot {
 		this.autonomousChooser.addObject("Mid Gear", new MidGearAutonomous());
 		this.autonomousChooser.addObject("Right Gear", new RightGearAutonomous());
 		this.autonomousChooser.addObject("Test", new TestAutonomous());
+		this.autonomousChooser.addObject("Left Hopper", new LeftHopperShoot());
+		this.autonomousChooser.addObject("Right Hopper", new RightHopperShoot());
+		this.autonomousChooser.addObject("Left Gear Shoot", new LeftGearHopperShoot());
 		SmartDashboard.putData("Autonomous Mode", this.autonomousChooser);
 	}
 

@@ -52,7 +52,7 @@ public class JoystickController {
 		setButtonBehavior(joystick,JoystickButtonMap.five, new GearRelease(), new ClawUp());
 		//TODO:  Figure out a button mapping for GearRelease
 		setButtonBehavior(joystick, JoystickButtonMap.four, new GearGrabOpen(), new GearGrabClose());
-		setButtonBehavior(joystick, JoystickButtonMap.seven, new StreamPegCamera(), new StreamGearCamera());
+		//setButtonBehavior(joystick, JoystickButtonMap.seven, new StreamPegCamera(), new StreamGearCamera());
 		setButtonBehavior(joystick, JoystickButtonMap.eight, new HopperReverseIntake(), new HopperIntakeOff());
 		//setButtonBehavior(joystick, 5, new RunLifterBackwards(), new StopLifter());
 		return new JoystickController(joystick);

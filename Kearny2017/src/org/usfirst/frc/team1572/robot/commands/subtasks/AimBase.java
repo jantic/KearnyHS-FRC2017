@@ -16,11 +16,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public abstract class AimBase extends TimedCommand {
 	private final BaseJoyDriveSubsystem joyDriveSubsystem = Robot.joydriveSubystem;
-	private VisionCenteringCommand lastCenteringCommand = VisionCenteringCommand.NULL;
 	private final CameraSubsystem cameraSubsystem = Robot.cameraSubsystem;
+	private double errorOffset;
 
 	public AimBase() {
-		super(1.25);
+		super(1);
 		requires(Robot.joydriveSubystem);
 		requires(Robot.cameraSubsystem);
 	}
@@ -37,7 +37,6 @@ public abstract class AimBase extends TimedCommand {
 			final VisionCenteringCommand centeringCommand = autoAim.generateCenteringCommand(latestImage);
 			executeTurn(centeringCommand);
 			SmartDashboard.putString("Centering Command", centeringCommand.name());
-			this.lastCenteringCommand = centeringCommand;
 		} 
 		catch (ImageGrabFailedException e) {
 			System.out.println("Error while grabbing image auto aiming for peg:" + e.getMessage());
@@ -71,13 +70,16 @@ public abstract class AimBase extends TimedCommand {
 		final double p = 1/200d;
 		final double maxTurnSpeed = 0.8;
 		double joystickX;
-		double errorOffset = error + 10;//offset to right
-		if(error > 0)
+		this.errorOffset = error + 10;//offset to right
+		if(error > 10)
 		{
-			joystickX = p * errorOffset * maxTurnSpeed + 0.55;
+			joystickX = p * this.errorOffset * maxTurnSpeed + 0.55;
+		}
+		else if(error < 10){
+			joystickX = p * this.errorOffset * maxTurnSpeed - 0.55;
 		}
 		else{
-			joystickX = p * errorOffset * maxTurnSpeed - 0.55;
+			joystickX = 0;
 		}
 		final double joystickY = 0.2;
 		if(error == -10000){//null
@@ -100,10 +102,12 @@ public abstract class AimBase extends TimedCommand {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		if(this.lastCenteringCommand.equals(VisionCenteringCommand.CENTER)){
+		//if(this.lastCenteringCommand.equals(VisionCenteringCommand.CENTER)){
+			//return true;
+		//}
+		if(this.errorOffset <= 10 && this.errorOffset >= -10){
 			return true;
 		}
-		
 		return super.isFinished();
 	}
 

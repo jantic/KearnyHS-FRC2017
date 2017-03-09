@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1572.robot.commands.main;
 
+import org.usfirst.frc.team1572.robot.JoystickButtonMap;
 import org.usfirst.frc.team1572.robot.JoystickController;
 import org.usfirst.frc.team1572.robot.Robot;
 import org.usfirst.frc.team1572.robot.subsystems.BaseJoyDriveSubsystem;
@@ -27,9 +28,14 @@ public class TeleDrive extends Command {
 
 		if (isCoPilotJoystickEngaged()) {
 			driveWithCoPilot();
-		} else if (isOverdriveActivated()) {
+		}
+		else if (isCoPilotOverdriveEngaged()) {
+			driveWithCoPilotOverdrive();
+		}
+		else if (isOverdriveActivated()) {
 			driveWithOverridrive();
-		} else {
+		} 
+		else {
 			defaultDrive();
 		}
 	}
@@ -45,13 +51,25 @@ public class TeleDrive extends Command {
 	}
 
 	private void driveWithCoPilot() {
-		this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-this.coPilotJoystick.getLeftStickY() * 0.5,
+		this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-this.coPilotJoystick.getLeftStickY() * 0.65,
 				-this.coPilotJoystick.getLeftStickX() * 0.75);
+	}
+	
+	private void driveWithCoPilotOverdrive() {
+		this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-this.coPilotJoystick.getLeftStickY() * 0.9,
+				-this.coPilotJoystick.getLeftStickX() * 0.9);
 	}
 
 	private boolean isCoPilotJoystickEngaged() {
 		return this.coPilotJoystick.getLeftStickX() < -ACTIVATION_THRESHOLD || this.coPilotJoystick.getLeftStickX() > ACTIVATION_THRESHOLD
 				|| this.coPilotJoystick.getLeftStickY() < -ACTIVATION_THRESHOLD || this.coPilotJoystick.getLeftStickY() > ACTIVATION_THRESHOLD;
+	}
+	
+	private boolean isCoPilotOverdriveEngaged() {
+		if(JoystickButtonMap.seven != null){
+			return true;
+		}
+		return false;
 	}
 
 	private boolean isOverdriveActivated() {
