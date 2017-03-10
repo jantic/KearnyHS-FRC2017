@@ -22,12 +22,13 @@ public class GearGrabClose extends TimedCommand {
 	@Override
 	protected void initialize() {
 		this.clawHandSubsystem.closeClaw();
-		//Timer.delay(0.05);
-		this.chipotleArmSubsystem.raiseArm(); 
+		 this.chipotleArmSubsystem.raiseArm();
 	}
+	
 	
 	@Override
 	protected void end() {
+		
 		this.clawIntakeSubsystem.stopIntake();
 		this.clawHandSubsystem.stop();
 		this.chipotleArmSubsystem.stop();

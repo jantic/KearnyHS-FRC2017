@@ -28,8 +28,8 @@ public class RobotMap {
 	public static int victorLeftDrivetrainPort = 8;
 	public static int victorRightDrivetrainPort = 9;
 	public static int eCPRPort = 1440;
-	public static int liftPort = 2;
-	public static int ballHopperPort = 1;
+	public static int liftPort = 1;
+	public static int ballHopperPort = 2;
 	public static int clawIntakePort = 3;
 	public static int clawHandPort1 = 2;
 	public static int clawHandPort = 3;
@@ -38,7 +38,7 @@ public class RobotMap {
 	public static int sensorPort1 = 3;
 	public static int sensorPort = 4;
 	public static int analogSonarPort = 0;
-	public static int shooterIntakePort = 4;
+	public static int shooterIntakePort = 0;
 	
 	public static Victor victorLeftDriveTrain;
 	public static Victor victorRightDriveTrain;
@@ -73,9 +73,9 @@ public class RobotMap {
 		shooter = new CANTalon(shooterPort);	
 		compressor = new Compressor(compressorPort);	
 		clawHand = new DoubleSolenoid(clawHandPort1,clawHandPort);
-		clawHand.set(DoubleSolenoid.Value.kOff);
+		clawHand.set(DoubleSolenoid.Value.kReverse);
 		Arm = new DoubleSolenoid(rightArmPort1,rightArmPort);
-		Arm.set(DoubleSolenoid.Value.kOff);		
+		Arm.set(DoubleSolenoid.Value.kReverse);		
 		lift = new Victor(liftPort);
 		ballHopper = new Victor(ballHopperPort);
 		clawIntake = new Victor(clawIntakePort);

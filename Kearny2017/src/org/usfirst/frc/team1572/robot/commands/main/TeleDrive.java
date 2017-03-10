@@ -25,18 +25,14 @@ public class TeleDrive extends Command {
 
 	@Override
 	protected void execute() {
-
-		if (isCoPilotJoystickEngaged()) {
-			driveWithCoPilot();
-		}
-		else if (isCoPilotOverdriveEngaged()) {
-			driveWithCoPilotOverdrive();
+		if (isDefaultEngaged()) {
+			defaultDrive();
 		}
 		else if (isOverdriveActivated()) {
 			driveWithOverridrive();
 		} 
 		else {
-			defaultDrive();
+			driveWithCoPilot();
 		}
 	}
 
@@ -51,7 +47,7 @@ public class TeleDrive extends Command {
 	}
 
 	private void driveWithCoPilot() {
-		this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-this.coPilotJoystick.getLeftStickY() * 0.65,
+		this.joyDriveSubsystem.getRobotDrive().arcadeDrive(-this.coPilotJoystick.getLeftStickY() * 0.75,
 				-this.coPilotJoystick.getLeftStickX() * 0.75);
 	}
 	
@@ -65,11 +61,9 @@ public class TeleDrive extends Command {
 				|| this.coPilotJoystick.getLeftStickY() < -ACTIVATION_THRESHOLD || this.coPilotJoystick.getLeftStickY() > ACTIVATION_THRESHOLD;
 	}
 	
-	private boolean isCoPilotOverdriveEngaged() {
-		if(JoystickButtonMap.seven != null){
-			return true;
-		}
-		return false;
+	private boolean isDefaultEngaged() {
+		return this.mainJoystick.getLeftStickX() < -ACTIVATION_THRESHOLD || this.mainJoystick.getLeftStickX() > ACTIVATION_THRESHOLD
+				|| this.mainJoystick.getLeftStickY() < -ACTIVATION_THRESHOLD || this.mainJoystick.getLeftStickY() > ACTIVATION_THRESHOLD;
 	}
 
 	private boolean isOverdriveActivated() {

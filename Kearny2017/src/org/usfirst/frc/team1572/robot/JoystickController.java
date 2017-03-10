@@ -1,13 +1,16 @@
 package org.usfirst.frc.team1572.robot;
 
 import org.usfirst.frc.team1572.robot.commands.main.AimForPegManually;
+import org.usfirst.frc.team1572.robot.commands.main.ClawDown;
 import org.usfirst.frc.team1572.robot.commands.main.ClawUp;
+import org.usfirst.frc.team1572.robot.commands.main.CloseClaw;
 import org.usfirst.frc.team1572.robot.commands.main.GearGrabClose;
 import org.usfirst.frc.team1572.robot.commands.main.GearGrabOpen;
 import org.usfirst.frc.team1572.robot.commands.main.GearRelease;
 import org.usfirst.frc.team1572.robot.commands.main.HopperIntake;
 import org.usfirst.frc.team1572.robot.commands.main.HopperIntakeOff;
 import org.usfirst.frc.team1572.robot.commands.main.HopperReverseIntake;
+import org.usfirst.frc.team1572.robot.commands.main.OpenClaw;
 import org.usfirst.frc.team1572.robot.commands.main.RunLifterForwards;
 import org.usfirst.frc.team1572.robot.commands.main.ShootClose;
 import org.usfirst.frc.team1572.robot.commands.main.ShootFar;
@@ -36,14 +39,14 @@ public class JoystickController {
 		setButtonBehavior(joystick,JoystickButtonMap.B, new GearRelease(), new ClawUp());
 		setButtonBehavior(joystick, JoystickButtonMap.X, new HopperIntake(), new HopperIntakeOff());
 		setButtonBehavior(joystick, JoystickButtonMap.Y, new RunLifterForwards(), new StopLifter());	
-		setButtonBehavior(joystick, JoystickButtonMap.LB, new AimForPegManually());
-		
+		setButtonBehavior(joystick, JoystickButtonMap.RB, new OpenClaw(), new CloseClaw());
+		setButtonBehavior(joystick, JoystickButtonMap.LB, new ClawDown(), new ClawUp());
 		return new JoystickController(joystick);
 	}
 
 	private static JoystickController generateCoPilotJoystick(){
 		final Joystick joystick = new Joystick(1);
-		setButtonBehavior(joystick, JoystickButtonMap.six, new ShootClose(), new StopShooting());
+		//setButtonBehavior(joystick, JoystickButtonMap.six, new ShootClose(), new StopShooting());
 		setButtonBehavior(joystick, JoystickButtonMap.one, new ShootFar(), new StopShooting());
 		//Note: want to spin up shooter and automatically fire when target rpm is reached
 		setButtonBehavior(joystick, JoystickButtonMap.two, new RunLifterForwards(), new StopLifter());
@@ -53,8 +56,10 @@ public class JoystickController {
 		//TODO:  Figure out a button mapping for GearRelease
 		setButtonBehavior(joystick, JoystickButtonMap.four, new GearGrabOpen(), new GearGrabClose());
 		//setButtonBehavior(joystick, JoystickButtonMap.seven, new StreamPegCamera(), new StreamGearCamera());
-		setButtonBehavior(joystick, JoystickButtonMap.eight, new HopperReverseIntake(), new HopperIntakeOff());
+		setButtonBehavior(joystick, JoystickButtonMap.six, new HopperReverseIntake(), new HopperIntakeOff());
 		//setButtonBehavior(joystick, 5, new RunLifterBackwards(), new StopLifter());
+		setButtonBehavior(joystick, JoystickButtonMap.eight, new ClawDown(), new ClawUp());
+		setButtonBehavior(joystick, JoystickButtonMap.nine, new OpenClaw(), new CloseClaw());
 		return new JoystickController(joystick);
 	}
 	

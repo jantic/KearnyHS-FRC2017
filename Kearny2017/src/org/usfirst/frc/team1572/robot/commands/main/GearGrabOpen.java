@@ -13,7 +13,7 @@ public class GearGrabOpen extends TimedCommand {
 	private final ClawIntakeSubsystem clawIntakeSubsystem = Robot.clawIntakeSubsystem;
 
     public GearGrabOpen() {
-    	super(1);
+    	super(5);
     	requires(Robot.clawhandSubsystem);
     	requires(Robot.chipotlearmSubystem);
     	requires(Robot.clawIntakeSubsystem);

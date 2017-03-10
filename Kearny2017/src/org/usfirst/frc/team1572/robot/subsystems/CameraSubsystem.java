@@ -66,7 +66,7 @@ public class CameraSubsystem extends Subsystem{
 			this.currentCameraType = cameraType;
 			this.currentCamera = this.cameraServer.startAutomaticCapture(cameraType.getDeviceNum());
 			this.currentCamera.setBrightness(5);
-			this.currentCamera.setVideoMode(PixelFormat.kMJPEG, 640, 480, 15);
+			this.currentCamera.setVideoMode(PixelFormat.kMJPEG, 320, 240, 15);
 			this.currentCameraVideoFeed = this.cameraServer.getVideo(this.currentCamera);
 		}
 		catch(Exception e){

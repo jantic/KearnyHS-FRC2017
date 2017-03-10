@@ -46,8 +46,8 @@ public class PegTargetVision {
 		// Step CV_resize0:
 		Mat cvResizeSrc = source0;
 		Size cvResizeDsize = new Size(0, 0);
-		double cvResizeFx = 0.5;
-		double cvResizeFy = 0.5;
+		double cvResizeFx = 0.50;
+		double cvResizeFy = 0.50;
 		int cvResizeInterpolation = Imgproc.INTER_CUBIC;
 		cvResize(cvResizeSrc, cvResizeDsize, cvResizeFx, cvResizeFy, cvResizeInterpolation, cvResizeOutput);
 

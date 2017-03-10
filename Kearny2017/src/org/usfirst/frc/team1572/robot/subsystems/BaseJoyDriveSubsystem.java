@@ -12,7 +12,7 @@ import org.usfirst.frc.team1572.robot.utls.LogitechF310Map;
 import com.ctre.CANTalon.TalonControlMode;
 
 public abstract class BaseJoyDriveSubsystem extends Subsystem {
-	final StreamJoyDriveOutput streamJoyDriveOutput = new StreamJoyDriveOutput();
+	//final StreamJoyDriveOutput streamJoyDriveOutput = new StreamJoyDriveOutput();
 	private final RobotDrive robotDrive = RobotMap.robotDrive;
 	private final LogitechF310Map joyMap = new LogitechF310Map();
 	
@@ -22,7 +22,7 @@ public abstract class BaseJoyDriveSubsystem extends Subsystem {
 	
     @Override
 	public final void initDefaultCommand() {
-        setDefaultCommand(new StreamJoyDriveOutput());
+        //setDefaultCommand(new StreamJoyDriveOutput());
     }
     
 	public final RobotDrive getRobotDrive(){
@@ -34,7 +34,7 @@ public abstract class BaseJoyDriveSubsystem extends Subsystem {
 	}
 
 	protected final void updateDisplay() {
-		this.streamJoyDriveOutput.streamToDashboard();
+		//this.streamJoyDriveOutput.streamToDashboard();
 	}
 	
 	public final void stop() {
