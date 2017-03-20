@@ -2,6 +2,8 @@ package org.usfirst.frc.team1572.robot;
 
 import org.usfirst.frc.team1572.robot.commands.main.AimForPegManually;
 import org.usfirst.frc.team1572.robot.commands.main.ClawDown;
+import org.usfirst.frc.team1572.robot.commands.main.ClawIntake;
+import org.usfirst.frc.team1572.robot.commands.main.ClawIntakeReverse;
 import org.usfirst.frc.team1572.robot.commands.main.ClawUp;
 import org.usfirst.frc.team1572.robot.commands.main.CloseClaw;
 import org.usfirst.frc.team1572.robot.commands.main.GearGrabClose;
@@ -59,7 +61,8 @@ public class JoystickController {
 		setButtonBehavior(joystick, JoystickButtonMap.six, new HopperReverseIntake(), new HopperIntakeOff());
 		//setButtonBehavior(joystick, 5, new RunLifterBackwards(), new StopLifter());
 		setButtonBehavior(joystick, JoystickButtonMap.eight, new ClawDown(), new ClawUp());
-		setButtonBehavior(joystick, JoystickButtonMap.nine, new OpenClaw(), new CloseClaw());
+		//setButtonBehavior(joystick, JoystickButtonMap.nine, new OpenClaw(), new CloseClaw());
+		setButtonBehavior(joystick, JoystickButtonMap.nine, new ClawIntake(), new ClawIntakeReverse());
 		return new JoystickController(joystick);
 	}
 	
